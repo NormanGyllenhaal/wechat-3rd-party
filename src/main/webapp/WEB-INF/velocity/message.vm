@@ -1,0 +1,14 @@
+<html>
+<head>
+    <title>Title</title>
+</head>
+<body>
+微信测试
+用户信息
+$user.nickname
+$user.sex
+$user.city
+$user.language
+<img src="$user.headImgUrl">
+</body>
+</html>

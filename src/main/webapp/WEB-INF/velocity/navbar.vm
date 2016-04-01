@@ -1,0 +1,268 @@
+<div class="navbar navbar-fixed-top scroll-hide">
+    <div class="container-fluid top-bar">
+        <div class="pull-right">
+            <ul class="nav navbar-nav pull-right">
+
+                <li class="dropdown notifications hidden-xs">
+
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span aria-hidden="true" class="se7en-flag"></span>
+                        <div class="sr-only">
+                            通知
+                        </div>
+                        <p class="counter">
+                            4
+                        </p>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">
+                            <div class="notifications label label-info">
+                                新
+                            </div>
+                            <p>
+                                新加入用户：王晓
+                            </p></a>
+
+                        </li>
+                        <li><a href="#">
+                            <div class="notifications label label-info">
+                                新
+                            </div>
+                            <p>
+                                销售目标
+                            </p></a>
+
+                        </li>
+                        <li><a href="#">
+                            <div class="notifications label label-info">
+                                新
+                            </div>
+                            <p>
+                                新性能指标
+                            </p></a>
+
+                        </li>
+                        <li><a href="#">
+                            <div class="notifications label label-info">
+                                新
+                            </div>
+                            <p>
+                                提供新的经济增长数据
+                            </p></a>
+
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown messages hidden-xs">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span aria-hidden="true" class="se7en-envelope"></span>
+                        <div class="sr-only">
+                            消息
+                        </div>
+                        <p class="counter">
+                            3
+                        </p>
+                    </a>
+                    <ul class="dropdown-menu messages">
+                        <li><a href="#">
+                            <img width="34" height="34" src="images/avatar-male2.png" />我们可以见面吗？我想...</a>
+                        </li>
+                        <li><a href="#">
+                            <img width="34" height="34" src="images/avatar-female.png" />重要的数据需要分析...</a>
+                        </li>
+                        <li><a href="#">
+                            <img width="34" height="34" src="images/avatar-male2.png" />Se7en是一款不错的主题。</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown settings hidden-xs">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span aria-hidden="true" class="se7en-gear"></span>
+                        <div class="sr-only">
+                            设置
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="settings-link blue" href="javascript:chooseStyle('none', 30)"><span></span>蓝色</a>
+                        </li>
+                        <li>
+                            <a class="settings-link green" href="javascript:chooseStyle('green-theme', 30)"><span></span>绿色</a>
+                        </li>
+                        <li>
+                            <a class="settings-link orange" href="javascript:chooseStyle('orange-theme', 30)"><span></span>橘黄色</a>
+                        </li>
+                        <li>
+                            <a class="settings-link magenta" href="javascript:chooseStyle('magenta-theme', 30)"><span></span>品红</a>
+                        </li>
+                        <li>
+                            <a class="settings-link gray" href="javascript:chooseStyle('gray-theme', 30)"><span></span>灰色</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown user hidden-xs"><a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                    <img width="34" height="34" src="images/avatar-male.jpg" />管理员<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">
+                            <i class="icon-user"></i>我的账户</a>
+                        </li>
+                        <li><a href="#">
+                            <i class="icon-gear"></i>账户设置</a>
+                        </li>
+                        <li><a href="login1.html">
+                            <i class="icon-signout"></i>退出</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <button class="navbar-toggle"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="logo" href="index.vm">se7en</a>
+        <form class="navbar-form form-inline col-lg-2 hidden-xs">
+            <input class="form-control" placeholder="搜索" type="text">
+        </form>
+    </div>
+    <div class="container-fluid main-nav clearfix">
+        <div class="nav-collapse">
+            <ul class="nav">
+                <li>
+                    <a class="current" href="index.vm"><span aria-hidden="true" class="se7en-home"></span>控制台</a>
+                </li>
+                <li><a href="social.html">
+                    <span aria-hidden="true" class="se7en-feed"></span>社交订阅</a>
+                </li>
+                <li class="dropdown"><a data-toggle="dropdown" href="#">
+                    <span aria-hidden="true" class="se7en-star"></span>特色<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="buttons.html">按钮</a>
+                        </li>
+                        <li>
+                            <a href="fontawesome.html">Font Awesome Icons</a>
+                        </li>
+                        <li><a href="glyphicons.html">
+                            <span class="notifications label label-warning">新</span>
+                            <p>
+                                Glyphicons
+                            </p></a>
+
+                        </li>
+                        <li>
+                            <a href="components.html">组件</a>
+                        </li>
+                        <li>
+                            <a href="widgets.html">小工具</a>
+                        </li>
+                        <li>
+                            <a href="typo.html">排版</a>
+                        </li>
+                        <li>
+                            <a href="grid.html">栅格</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown"><a data-toggle="dropdown" href="#">
+                    <span aria-hidden="true" class="se7en-forms"></span>表单<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="form-components.html">
+                            <span class="notifications label label-warning">新</span>
+                            <p>
+                                表格组件
+                            </p></a>
+
+                        </li>
+                        <li>
+                            <a href="form-advanced.html">高级形式</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown"><a data-toggle="dropdown" href="#">
+                    <span aria-hidden="true" class="se7en-tables"></span>表格<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="tables.html">基本表格</a>
+                        </li>
+                        <li>
+                            <a href="datatables.html">数据表格</a>
+                        </li>
+                        <li><a href="datatables-editable.html">
+                            <div class="notifications label label-warning">
+                                新
+                            </div>
+                            <p>
+                                编辑数据表格
+                            </p></a>
+
+                        </li>
+                    </ul>
+                </li>
+                <li><a href="charts.html">
+                    <span aria-hidden="true" class="se7en-charts"></span>图表</a>
+                </li>
+                <li class="dropdown"><a data-toggle="dropdown" href="#">
+                    <span aria-hidden="true" class="se7en-pages"></span>页面<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="chat.html">
+                            <span class="notifications label label-warning">新</span>
+                            <p>
+                                图表
+                            </p></a>
+                        </li>
+                        <li>
+                            <a href="calendar.html">日历</a>
+                        </li>
+                        <li><a href="timeline.html">
+                            <span class="notifications label label-warning">新</span>
+                            <p>
+                                时间轴
+                            </p></a>
+
+                        </li>
+                        <li><a href="login1.html">
+                            <span class="notifications label label-warning">新</span>
+                            <p>
+                                登录(1)
+                            </p></a>
+
+                        </li>
+                        <li>
+                            <a href="login2.html">登录(2)</a>
+                        </li>
+                        <li><a href="signup1.html">
+                            <span class="notifications label label-warning">新</span>
+                            <p>
+                                注册(1)
+                            </p></a>
+
+                        </li>
+                        <li>
+                            <a href="signup2.html">注册(2)</a>
+                        </li>
+                        <li><a href="invoice.html">
+                            <span class="notifications label label-warning">新</span>
+                            <p>
+                                订单
+                            </p></a>
+
+                        </li>
+                        <li><a href="faq.html">
+                            <span class="notifications label label-warning">新</span>
+                            <p>
+                                FAQ
+                            </p></a>
+
+                        </li>
+                        <li>
+                            <a href="filters.html">筛选结果</a>
+                        </li>
+                        <li>
+                            <a href="404-page.html">404页面</a>
+                        </li>
+                    </ul>
+                </li>
+                <li><a href="gallery.html">
+                    <span aria-hidden="true" class="se7en-gallery"></span>相册</a>
+                </li>
+                <li><a href="docs/index.html" target="_blank">
+                    <span aria-hidden="true" class="se7en-doc"></span>帮助文档</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

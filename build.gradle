@@ -1,0 +1,56 @@
+group 'site.lovecode'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'war'
+
+sourceCompatibility = 1.5
+
+repositories {
+    mavenCentral()
+}
+
+String springVersion = "4.2.5.RELEASE"
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+
+    //spring
+    compile("org.springframework:spring-context:" + springVersion)
+    compile("org.springframework:spring-context-support:" + springVersion)
+    compile("org.springframework:spring-aop:" + springVersion)
+    compile("org.springframework:spring-beans:" + springVersion)
+    compile("org.springframework:spring-core:" + springVersion)
+    compile("org.springframework:spring-expression:" + springVersion)
+    compile("org.springframework:spring-webmvc:" + springVersion)
+    compile('org.springframework:spring-jdbc:'+ springVersion)
+
+    //mybatis
+    compile 'org.mybatis:mybatis:3.2.8'
+    compile 'org.mybatis:mybatis-spring:1.2.2'
+    //mysql
+    compile "mysql:mysql-connector-java:5.1.30"
+    //mybatis generator
+    compile 'org.mybatis.generator:mybatis-generator-core:1.3.2'
+    // 通用mybatis mapper
+    compile 'tk.mybatis:mapper:3.3.7'
+    //druid连接池
+    compile 'com.alibaba:druid:1.0.18'
+    //spring aop支持
+    compile 'org.aspectj:aspectjweaver:1.8.9'
+    //logback日志
+    compile 'ch.qos.logback:logback-classic:1.1.6'
+    //servlet
+    compile 'javax.servlet:javax.servlet-api:3.0.1'
+
+    //velocity 模板引擎
+    compile 'org.apache.velocity:velocity:1.7'
+    //fastjson
+    compile 'com.alibaba:fastjson:1.2.8'
+
+    compile 'me.chanjar:weixin-java-mp:1.3.3'
+
+    compile files('lib/aes-jre1.6.jar')
+
+
+}

@@ -1,0 +1,11 @@
+<html>
+<head>
+    <title>Title</title>
+</head>
+<body>
+hello world 哈哈哈
+#foreach($input in $list)
+    $input.id $input.name
+#end
+</body>
+</html>

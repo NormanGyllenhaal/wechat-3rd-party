@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+	<classPathEntry location="D:\maven repository\mysql\mysql-connector-java\5.1.29\mysql-connector-java-5.1.29.jar"
+		/>
+
+	<context id="Mysql" targetRuntime="MyBatis3Simple"
+		defaultModelType="flat">
+
+		<property name="beginningDelimiter" value="`" />
+		<property name="endingDelimiter" value="`" />
+
+
+		<plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+			<property name="mappers" value="tk.mybatis.mapper.common.Mapper" />
+			<!-- caseSensitive默认false，当数据库表名区分大小写时，可以将该属性设置为true -->
+			<property name="caseSensitive" value="true" />
+		</plugin>
+
+	    <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+		<plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
+       <!-- <plugin type="site.lovecode.util.IdentityPlugin" />-->
+
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://localhost:3306/test" userId="root"
+			password="">
+		</jdbcConnection>
+
+		<javaModelGenerator targetPackage="site.lovecode.entity"
+			targetProject="C:\Users\Administrator\IdeaProjects\javagenerate\src\main\java" />
+
+		<sqlMapGenerator targetPackage="site.lovecode.mapper"
+			targetProject="C:\Users\Administrator\IdeaProjects\javagenerate\src\main\resources" />
+
+		<javaClientGenerator type="XMLMAPPER"
+			targetPackage="site.lovecode.mapper" targetProject="C:\Users\Administrator\IdeaProjects\javagenerate\src\main\java" />
+
+		<!-- <table schema="pagehelper" tableName="COUNTRY" domainObjectName="Country2" 
+			/> -->
+
+		<table tableName="%">
+			<generatedKey column="id" sqlStatement="Mysql" identity="true" />
+		</table>
+
+	</context>
+</generatorConfiguration>
