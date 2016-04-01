@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 import site.lovecode.client.WechatClient;
+import site.lovecode.client.WechatThirdPartyClient;
 import site.lovecode.entity.User;
 import site.lovecode.mapper.UserMapper;
 import site.lovecode.support.bean.TicketDecryptingBean;
@@ -23,6 +24,7 @@ import site.lovecode.support.bean.TicketEncryptingBean;
 
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -43,6 +45,8 @@ public class WeiXinTest {
 
 
     WechatClient wechatClient = (WechatClient) ctx.getBean("wechatClientImpl");
+
+    WechatThirdPartyClient wechatThirdPartyClient = (WechatThirdPartyClient) ctx.getBean("wechatThirdPartyClientImpl");
 
     //@Test
     public void getAccessToken() throws Exception {
@@ -130,7 +134,7 @@ public class WeiXinTest {
         }
     }
 
-    @Test
+    //@Test
     public void testXml(){
         String sb = "<xml><AppId><![CDATA[wxe817ddf41e533ba1]]></AppId>    <Encrypt><![CDATA[EWFAZvJAzoAcNXu3aOJzok1jA9pLLeye1T64vMTFv3oIdxj065oeFCO0YHmONX9fRgp+ndd9lMISCKmr6noVobahnSUMGKvCLWYslA/2pNnfWKJCqzH1ym7x+T6emw5GlAfX8Suu8BEgotO4JDuG06VBCPQsuVEurn+5l1muOzKJuvcxlQVOY+NGxsJkKN2DMGcSOb+adn4Y/pyQ8tduZ+GoWLvWetiuHi5jCrIIabQQcNCHJkr6lxl+4I/Fwa+Lm2GXce5ZJnGnDF0gLGVObL/QSqEIY6B7SjjBe1MISC2oFciPXMCGwEF7QcAi4OViNE++7VU0AJy9cXxPqCgbrILuIurdIP7iU4Ma6QY+PoMFHX/JY5TZ50YQZqDntHgP4k6f4QTUqPnziVHXJ7TedkL6kHJJxI6sXYsQh2zKd/YzOs/ctATEedWYBc253vPD7LXUoKNrUcgoSnCQuYMLsQ==]]></Encrypt></xml>";
         XStream xStream = XStreamInitializer.getInstance();
@@ -150,6 +154,16 @@ public class WeiXinTest {
         logger.info("解密后明文: " + result);
         TicketDecryptingBean ticketDecryptingBean = (TicketDecryptingBean) xStream2.fromXML(result);
         logger.info("----------javaBean"+ticketDecryptingBean.toString());
+    }
+
+
+    @Test
+    public void testWechatThirdPart(){
+        try {
+            logger.info(wechatThirdPartyClient.getComponentAccessToken().toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
