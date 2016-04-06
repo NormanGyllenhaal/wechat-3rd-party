@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="site.lovecode.mapper.WechatThirdPartyConfigMapper">
+  <resultMap id="BaseResultMap" type="site.lovecode.entity.WechatThirdPartyConfig">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="component_appid" jdbcType="VARCHAR" property="componentAppid" />
+    <result column="component_appsecret" jdbcType="VARCHAR" property="componentAppsecret" />
+    <result column="token" jdbcType="VARCHAR" property="token" />
+    <result column="encoding_aes_key" jdbcType="VARCHAR" property="encodingAesKey" />
+  </resultMap>
+</mapper>

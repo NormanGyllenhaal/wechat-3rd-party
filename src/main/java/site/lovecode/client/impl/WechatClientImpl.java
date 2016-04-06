@@ -46,7 +46,7 @@ public class WechatClientImpl implements WechatClient {
         config.setSecret("706702fb42c55f793ddb6b206ec4f348"); // 设置微信公众号的app corpSecret
         config.setToken("..."); // 设置微信公众号的token
         config.setAesKey("..."); // 设置微信公众号的EncodingAESKey
-        config.setOauth2redirectUri("http://148vp79959.iok.la/weixin-tool-1.0-SNAPSHOT/getMessage.html");
+        config.setOauth2redirectUri("http://310517fd.nat123.net/weixin-tool-1.0-SNAPSHOT/getUserInfo.html");
         WxMpService wxService = new WxMpServiceImpl();
         wxService.setWxMpConfigStorage(config);
         return wxService;

@@ -18,9 +18,9 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
 import site.lovecode.client.WechatClient;
 import site.lovecode.client.WechatThirdPartyClient;
 import site.lovecode.entity.User;
+import site.lovecode.mapper.ComponentVerifyTicketMapper;
 import site.lovecode.mapper.UserMapper;
-import site.lovecode.support.bean.TicketDecryptingBean;
-import site.lovecode.support.bean.TicketEncryptingBean;
+import site.lovecode.support.bean.*;
 
 
 import java.io.BufferedReader;
@@ -106,7 +106,7 @@ public class WeiXinTest {
     public void testSetMenu() {
         String url = wechatClient.getWxMpService().oauth2buildAuthorizationUrl(WxConsts.OAUTH2_SCOPE_USER_INFO, null);
         logger.info(url);
-        String json = "{\"menu\":{\"button\":[{\"type\":\"click\",\"name\":\"新的测试\",\"key\":\"非的付费的沙发放四大发送到发送到发疯的冯绍峰水电费水电费\",\"sub_button\":[]},{\"type\":\"click\",\"name\":\"想得美啊\",\"key\":\"V1001_TODAY_SINGER\",\"sub_button\":[]},{\"name\":\"二级菜单\",\"sub_button\":[{\"type\":\"view\",\"name\":\"测试授权\",\"url\":\""+url+"\",\"sub_button\":[]},{\"type\":\"view\",\"name\":\"视频\",\"url\":\"http://v.qq.com/\",\"sub_button\":[]},{\"type\":\"click\",\"name\":\"赞一下我们\",\"key\":\"V1001_GOOD\",\"sub_button\":[]}]}]}}";
+        String json = "{\"menu\":{\"button\":[{\"type\":\"click\",\"name\":\"新的测试\",\"key\":\"哇哈哈哈哈啊\",\"sub_button\":[]},{\"type\":\"click\",\"name\":\"测试哇哈哈\",\"key\":\"V1001_TODAY_SINGER\",\"sub_button\":[]},{\"name\":\"二级菜单\",\"sub_button\":[{\"type\":\"view\",\"name\":\"测试授权\",\"url\":\""+url+"\",\"sub_button\":[]},{\"type\":\"view\",\"name\":\"视频\",\"url\":\"http://v.qq.com/\",\"sub_button\":[]},{\"type\":\"click\",\"name\":\"赞一下我们\",\"key\":\"V1001_GOOD\",\"sub_button\":[]}]}]}}";
         Boolean result = wechatClient.setMenu(WxMenu.fromJson(json));
         logger.info(result.toString());
     }
@@ -157,13 +157,32 @@ public class WeiXinTest {
     }
 
 
-    @Test
+    //@Test
     public void testWechatThirdPart(){
         try {
-            logger.info(wechatThirdPartyClient.getComponentAccessToken().toString());
+            ComponentAccessTokenBean componentAccessTokenBean = wechatThirdPartyClient.getComponentAccessToken();
+            logger.info(componentAccessTokenBean.toString());
+            PreAuthCodeBean preAuthCodeBean = wechatThirdPartyClient.getPreAuthCode(componentAccessTokenBean.getComponentAccessToken());
+            logger.info(preAuthCodeBean.toString());
+            String url = wechatThirdPartyClient.getAuthOrizationUrl(preAuthCodeBean.getPreAuthCode(),"http://310517fd.nat123.net/weixin-tool-1.0-SNAPSHOT/getAuthCode.html");
+            logger.info(url);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    //@Test
+    public void getUrl(){
+        String json = "{\"authorization_info\":{\"authorizer_appid\":\"wx6f2613cb148826e0\",\"authorizer_access_token\":\"FJOdUh6Ztqnqs0-ywYh8AtMLAC2ujQv-CAenXz6L4Wjz-vuksu2IVcsRuMaQ08vRZzOdyinfHOJ8PSFtMdSOHR8VgL6yVEeJiFBvoMt6Jw74bpo9wbX948iTzHesKWsjLWTjAFDTEB\",\"expires_in\":7200,\"authorizer_refresh_token\":\"refreshtoken@@@vFiO1FOFiFvCHFJlNgsZDUoN62CG-_aChmBDIOZng18\",\"func_info\":[{\"funcscope_category\":{\"id\":1}},{\"funcscope_category\":{\"id\":15}},{\"funcscope_category\":{\"id\":4}},{\"funcscope_category\":{\"id\":7}},{\"funcscope_category\":{\"id\":2}},{\"funcscope_category\":{\"id\":3}},{\"funcscope_category\":{\"id\":11}},{\"funcscope_category\":{\"id\":6}}]}}";
+        QueryAuthBean queryAuthBean = JSON.parseObject(json, QueryAuthBean.class);
+        logger.info(queryAuthBean.getAuthOrizationInfo().getFuncInfoList().toString());
+    }
+
+
+    @Test
+    public void testDao(){
+        ComponentVerifyTicketMapper mapper = (ComponentVerifyTicketMapper) ctx.getBean("componentVerifyTicketMapper");
+        mapper.selectAll();
     }
 
 

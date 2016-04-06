@@ -1,0 +1,9 @@
+<html>
+<head>
+    <title>公众号信息</title>
+</head>
+<body>
+公众号信息：$info
+$userInfo
+</body>
+</html>

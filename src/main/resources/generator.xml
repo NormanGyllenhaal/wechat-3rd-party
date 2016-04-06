@@ -25,25 +25,24 @@
        <!-- <plugin type="site.lovecode.util.IdentityPlugin" />-->
 
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://localhost:3306/test" userId="root"
+			connectionURL="jdbc:mysql://localhost:3306/weixintool" userId="root"
 			password="">
 		</jdbcConnection>
 
 		<javaModelGenerator targetPackage="site.lovecode.entity"
-			targetProject="C:\Users\Administrator\IdeaProjects\javagenerate\src\main\java" />
+			targetProject="C:\Users\Administrator\IdeaProjects\weixin-tool\src\main\java" />
 
 		<sqlMapGenerator targetPackage="site.lovecode.mapper"
-			targetProject="C:\Users\Administrator\IdeaProjects\javagenerate\src\main\resources" />
+			targetProject="C:\Users\Administrator\IdeaProjects\weixin-tool\src\main\resources" />
 
 		<javaClientGenerator type="XMLMAPPER"
-			targetPackage="site.lovecode.mapper" targetProject="C:\Users\Administrator\IdeaProjects\javagenerate\src\main\java" />
+			targetPackage="site.lovecode.mapper" targetProject="C:\Users\Administrator\IdeaProjects\weixin-tool\src\main\java" />
 
-		<!-- <table schema="pagehelper" tableName="COUNTRY" domainObjectName="Country2" 
-			/> -->
-
-		<table tableName="%">
-			<generatedKey column="id" sqlStatement="Mysql" identity="true" />
-		</table>
+		<table  tableName="wx_wechat_third_party_config" domainObjectName="WechatThirdPartyConfig"/>
+		<!--<table  tableName="wx_component_verify_ticket" domainObjectName="ComponentVerifyTicket"/>-->
+		<!--<table tableName="%">-->
+			<!--<generatedKey column="id" sqlStatement="Mysql" identity="true" />-->
+		<!--</table>-->
 
 	</context>
 </generatorConfiguration>
