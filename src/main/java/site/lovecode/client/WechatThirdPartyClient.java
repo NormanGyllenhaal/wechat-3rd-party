@@ -1,8 +1,6 @@
 package site.lovecode.client;
 
-import site.lovecode.support.bean.ComponentAccessTokenBean;
-import site.lovecode.support.bean.PreAuthCodeBean;
-import site.lovecode.support.bean.TicketDecryptingBean;
+import site.lovecode.support.bean.*;
 
 import java.io.IOException;
 
@@ -11,19 +9,22 @@ import java.io.IOException;
  */
 public interface WechatThirdPartyClient {
 
-
-    public ComponentAccessTokenBean getComponentAccessToken() throws IOException;
+    /**
+     * 获取刷新component_access_token
+     *
+     * @return
+     */
+    public ComponentAccessTokenBean refreshComponentAccessToken();
 
 
 
     /**
-     * 获取预授权码
+     * 获取预授权码pre_auth_code
      *
-     * @param componentAccessToken
      * @return
      * @throws IOException
      */
-    public PreAuthCodeBean getPreAuthCode(String componentAccessToken) throws IOException;
+    public PreAuthCodeBean getPreAuthCode() throws IOException;
 
 
 
@@ -31,10 +32,9 @@ public interface WechatThirdPartyClient {
      * 获取授权页面地址
      *
      * @param perAuthCode
-     * @param redirectUri
      * @return
      */
-    public String getAuthOrizationUrl( String perAuthCode, String redirectUri);
+    public String getAuthOrizationUrl( String perAuthCode);
 
 
 
@@ -42,36 +42,29 @@ public interface WechatThirdPartyClient {
      * 使用授权码换取公众号的接口调用凭据和授权信息
      *
      * @param authorizationCode
-     * @param componentAccessToken
      * @return
      * @throws IOException
      */
-    public String queryAuth(String authorizationCode, String componentAccessToken) throws IOException;
+    public QueryAuthBean queryAuth(String authorizationCode) throws IOException;
 
 
 
     /**
      * 获取授权方公账号信息
-     * @param componentAccessToken
      * @param authorizerAppid
      * @return
      */
-    public String getQuthorizerInfo( String componentAccessToken,String authorizerAppid);
-
-
-    /**
-     * 保存 component_verify_ticket
-     *
-     * @param ticketDecryptingBean
-     */
-    public void saveComponentVerifyTicket(TicketDecryptingBean ticketDecryptingBean);
+    public AuthorizerInfoBean getAuthorizerInfo(String authorizerAppid) throws IOException;
 
 
 
-    /**
-     * 获取 ComponentVerifyTicket
-     */
-    public String getComponentVerifyTicket();
+
+
+
+
+
+
+
 
 
 }

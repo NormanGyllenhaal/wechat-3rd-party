@@ -17,9 +17,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 import site.lovecode.client.WechatClient;
 import site.lovecode.client.WechatThirdPartyClient;
-import site.lovecode.entity.User;
+import site.lovecode.entity.FuncInfo;
 import site.lovecode.mapper.ComponentVerifyTicketMapper;
-import site.lovecode.mapper.UserMapper;
+import site.lovecode.mapper.FuncInfoMapper;
 import site.lovecode.support.bean.*;
 
 
@@ -137,10 +137,16 @@ public class WeiXinTest {
     //@Test
     public void testXml(){
         String sb = "<xml><AppId><![CDATA[wxe817ddf41e533ba1]]></AppId>    <Encrypt><![CDATA[EWFAZvJAzoAcNXu3aOJzok1jA9pLLeye1T64vMTFv3oIdxj065oeFCO0YHmONX9fRgp+ndd9lMISCKmr6noVobahnSUMGKvCLWYslA/2pNnfWKJCqzH1ym7x+T6emw5GlAfX8Suu8BEgotO4JDuG06VBCPQsuVEurn+5l1muOzKJuvcxlQVOY+NGxsJkKN2DMGcSOb+adn4Y/pyQ8tduZ+GoWLvWetiuHi5jCrIIabQQcNCHJkr6lxl+4I/Fwa+Lm2GXce5ZJnGnDF0gLGVObL/QSqEIY6B7SjjBe1MISC2oFciPXMCGwEF7QcAi4OViNE++7VU0AJy9cXxPqCgbrILuIurdIP7iU4Ma6QY+PoMFHX/JY5TZ50YQZqDntHgP4k6f4QTUqPnziVHXJ7TedkL6kHJJxI6sXYsQh2zKd/YzOs/ctATEedWYBc253vPD7LXUoKNrUcgoSnCQuYMLsQ==]]></Encrypt></xml>";
-        XStream xStream = XStreamInitializer.getInstance();
+        /*XStream xStream = XStreamInitializer.getInstance();
         xStream.processAnnotations(new Class[]{TicketEncryptingBean.class});
-        TicketEncryptingBean ticketEncryptingBean = (TicketEncryptingBean) xStream.fromXML(sb);
+        TicketEncryptingBean ticketEncryptingBean = (TicketEncryptingBean) xStream.fromXML(sb);*/
 
+        TicketEncryptingBean ticketEncryptingBean = (TicketEncryptingBean)  new XStream(){
+            {
+                processAnnotations(TicketEncryptingBean.class);
+            }
+        }.fromXML(sb.toString());
+        logger.info(ticketEncryptingBean.toString());
         String format = "<xml><ToUserName><![CDATA[toUser]]></ToUserName><Encrypt><![CDATA[%1$s]]></Encrypt></xml>";
         String fromXML = String.format(format, ticketEncryptingBean.getEncrypt());
         String result = "<xml><AppId><![CDATA[wxe817ddf41e533ba1]]></AppId>\n" +
@@ -159,16 +165,7 @@ public class WeiXinTest {
 
     //@Test
     public void testWechatThirdPart(){
-        try {
-            ComponentAccessTokenBean componentAccessTokenBean = wechatThirdPartyClient.getComponentAccessToken();
-            logger.info(componentAccessTokenBean.toString());
-            PreAuthCodeBean preAuthCodeBean = wechatThirdPartyClient.getPreAuthCode(componentAccessTokenBean.getComponentAccessToken());
-            logger.info(preAuthCodeBean.toString());
-            String url = wechatThirdPartyClient.getAuthOrizationUrl(preAuthCodeBean.getPreAuthCode(),"http://310517fd.nat123.net/weixin-tool-1.0-SNAPSHOT/getAuthCode.html");
-            logger.info(url);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
     }
 
     //@Test
@@ -179,10 +176,18 @@ public class WeiXinTest {
     }
 
 
+
+
+
     @Test
     public void testDao(){
-        ComponentVerifyTicketMapper mapper = (ComponentVerifyTicketMapper) ctx.getBean("componentVerifyTicketMapper");
-        mapper.selectAll();
+        FuncInfoMapper mapper = (FuncInfoMapper) ctx.getBean("funcInfoMapper");
+        mapper.insert(new FuncInfo(){
+            {
+                setAuthorizerInfoId(1L);
+                setFuncName(1);
+            }
+        });
     }
 
 

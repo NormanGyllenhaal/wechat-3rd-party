@@ -75,4 +75,8 @@ public interface WechatClient {
 	public void setMessage(String openId) throws WxErrorException;
 
 
+
+
+
+
 }

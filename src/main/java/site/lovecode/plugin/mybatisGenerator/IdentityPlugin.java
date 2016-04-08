@@ -1,4 +1,4 @@
-package site.lovecode.util;
+package site.lovecode.plugin.mybatisGenerator;
 
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.PluginAdapter;
@@ -10,7 +10,7 @@ import java.util.List;
 
 public class IdentityPlugin extends PluginAdapter {
 
-	private FullyQualifiedJavaType identity = new FullyQualifiedJavaType("com.jiajiao.core.common.mybatis.identity");
+	private FullyQualifiedJavaType identity = new FullyQualifiedJavaType("site.lovecode.common.mybatis.Identity");
 	
 	@Override
 	public boolean validate(List<String> warnings) {

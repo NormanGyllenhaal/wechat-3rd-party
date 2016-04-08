@@ -5,10 +5,17 @@
     <!--
       WARNING - @mbggenerated
     -->
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="component_appid" jdbcType="VARCHAR" property="componentAppid" />
-    <result column="component_appsecret" jdbcType="VARCHAR" property="componentAppsecret" />
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="componentAppid" jdbcType="VARCHAR" property="componentAppid" />
+    <result column="componentAppsecret" jdbcType="VARCHAR" property="componentAppsecret" />
     <result column="token" jdbcType="VARCHAR" property="token" />
-    <result column="encoding_aes_key" jdbcType="VARCHAR" property="encodingAesKey" />
+    <result column="encodeingAesKey" jdbcType="VARCHAR" property="encodeingAesKey" />
+    <result column="authorizationUrl" jdbcType="VARCHAR" property="authorizationUrl" />
+    <result column="redirectUrl" jdbcType="VARCHAR" property="redirectUrl" />
+    <result column="componentAccessToken" jdbcType="VARCHAR" property="componentAccessToken" />
+    <result column="messgesUrl" jdbcType="VARCHAR" property="messgesUrl" />
+    <result column="componentVerifyTicket" jdbcType="VARCHAR" property="componentVerifyTicket" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="updateTime" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
 </mapper>

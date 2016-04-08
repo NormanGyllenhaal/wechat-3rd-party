@@ -5,6 +5,6 @@ import tk.mybatis.mapper.common.Mapper;
 
 public interface ComponentVerifyTicketMapper extends Mapper<ComponentVerifyTicket> {
 
-    public String selectOrderByCreateTime(String appid);
+    public String selectOrderByCreateTime(String componentAppid);
 
 }

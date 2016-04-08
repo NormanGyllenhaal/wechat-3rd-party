@@ -4,45 +4,72 @@
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 
 <generatorConfiguration>
-	<classPathEntry location="D:\maven repository\mysql\mysql-connector-java\5.1.29\mysql-connector-java-5.1.29.jar"
-		/>
+    <classPathEntry location="D:\maven repository\mysql\mysql-connector-java\5.1.29\mysql-connector-java-5.1.29.jar"
+    />
 
-	<context id="Mysql" targetRuntime="MyBatis3Simple"
-		defaultModelType="flat">
+    <context id="Mysql" targetRuntime="MyBatis3Simple"
+             defaultModelType="flat">
 
-		<property name="beginningDelimiter" value="`" />
-		<property name="endingDelimiter" value="`" />
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
 
 
-		<plugin type="tk.mybatis.mapper.generator.MapperPlugin">
-			<property name="mappers" value="tk.mybatis.mapper.common.Mapper" />
-			<!-- caseSensitive默认false，当数据库表名区分大小写时，可以将该属性设置为true -->
-			<property name="caseSensitive" value="true" />
-		</plugin>
 
-	    <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
-		<plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
-       <!-- <plugin type="site.lovecode.util.IdentityPlugin" />-->
+        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+            <property name="mappers" value="tk.mybatis.mapper.common.Mapper"/>
+            <!-- caseSensitive默认false，当数据库表名区分大小写时，可以将该属性设置为true -->
+            <property name="caseSensitive" value="true"/>
+        </plugin>
 
-		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://localhost:3306/weixintool" userId="root"
-			password="">
-		</jdbcConnection>
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+        <plugin type="site.lovecode.plugin.mybatisGenerator.IdentityPlugin"/>
 
-		<javaModelGenerator targetPackage="site.lovecode.entity"
-			targetProject="C:\Users\Administrator\IdeaProjects\weixin-tool\src\main\java" />
 
-		<sqlMapGenerator targetPackage="site.lovecode.mapper"
-			targetProject="C:\Users\Administrator\IdeaProjects\weixin-tool\src\main\resources" />
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/weixintool" userId="root"
+                        password="">
+        </jdbcConnection>
 
-		<javaClientGenerator type="XMLMAPPER"
-			targetPackage="site.lovecode.mapper" targetProject="C:\Users\Administrator\IdeaProjects\weixin-tool\src\main\java" />
+        <javaTypeResolver type="site.lovecode.plugin.mybatisGenerator.JavaTypeResolverImpl"></javaTypeResolver>
 
-		<table  tableName="wx_wechat_third_party_config" domainObjectName="WechatThirdPartyConfig"/>
-		<!--<table  tableName="wx_component_verify_ticket" domainObjectName="ComponentVerifyTicket"/>-->
-		<!--<table tableName="%">-->
-			<!--<generatedKey column="id" sqlStatement="Mysql" identity="true" />-->
-		<!--</table>-->
+        <javaModelGenerator targetPackage="site.lovecode.entity"
+                            targetProject="C:\Users\Administrator\IdeaProjects\weixin-tool\src\main\java"/>
 
-	</context>
+        <sqlMapGenerator targetPackage="site.lovecode.mapper"
+                         targetProject="C:\Users\Administrator\IdeaProjects\weixin-tool\src\main\resources"/>
+
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="site.lovecode.mapper"
+                             targetProject="C:\Users\Administrator\IdeaProjects\weixin-tool\src\main\java"/>
+
+        <table tableName="wx_wechat_third_party_config" domainObjectName="WechatThirdPartyConfig">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+       <!-- <table tableName="wx_component_verify_ticket" domainObjectName="ComponentVerifyTicket">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table tableName="WX_AUTHORIZRE_INFO" domainObjectName="AuthorizerInfo">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table tableName="WX_BUSINESS_INFO" domainObjectName="businessInfo">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table tableName="WX_COMPONENT_ACCESS_TOKEN" domainObjectName="ComponentAccessToken">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table tableName="WX_FUNC_INFO" domainObjectName="FuncInfo">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table tableName="WX_PRE_AUTH_CODE" domainObjectName="PreAuthCode">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table tableName="WX_USER_ACCESS_TOKEN" domainObjectName="UserAccessToken">
+            <property name="useActualColumnNames" value="true"/>
+        </table>-->
+        <!--<table tableName="%">-->
+        <!--<generatedKey column="id" sqlStatement="Mysql" identity="true" />-->
+        <!--</table>-->
+
+    </context>
 </generatorConfiguration>

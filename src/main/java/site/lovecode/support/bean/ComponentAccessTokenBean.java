@@ -11,7 +11,7 @@ public class ComponentAccessTokenBean {
     private String componentAccessToken;
 
     @JSONField(name="expires_in")
-    private String expiresIn;
+    private Integer expiresIn;
 
 
     public String getComponentAccessToken() {
@@ -22,11 +22,11 @@ public class ComponentAccessTokenBean {
         this.componentAccessToken = componentAccessToken;
     }
 
-    public String getExpiresIn() {
+    public Integer getExpiresIn() {
         return expiresIn;
     }
 
-    public void setExpiresIn(String expiresIn) {
+    public void setExpiresIn(Integer expiresIn) {
         this.expiresIn = expiresIn;
     }
 

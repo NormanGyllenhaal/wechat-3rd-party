@@ -93,8 +93,4 @@ public class WechatClientImpl implements WechatClient {
 
 
 
-
-
-
-
 }

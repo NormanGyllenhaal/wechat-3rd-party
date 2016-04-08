@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="site.lovecode.mapper.ComponentAccessTokenMapper">
+  <resultMap id="BaseResultMap" type="site.lovecode.entity.ComponentAccessToken">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="componentAppid" jdbcType="VARCHAR" property="componentAppid" />
+    <result column="componentAccessToken" jdbcType="VARCHAR" property="componentAccessToken" />
+    <result column="expiresIn" jdbcType="INTEGER" property="expiresIn" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="failureTime" jdbcType="TIMESTAMP" property="failureTime" />
+  </resultMap>
+</mapper>

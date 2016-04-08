@@ -1,5 +1,7 @@
 package site.lovecode.util;
 
+import me.chanjar.weixin.common.bean.result.WxError;
+import me.chanjar.weixin.common.exception.WxErrorException;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -275,6 +277,7 @@ public class HttpUtil {
                 return null;
             }
             httpStr = EntityUtils.toString(entity, "utf-8");
+            throwWxException(httpStr);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -328,6 +331,13 @@ public class HttpUtil {
         return sslsf;
     }
 
+
+    private static void throwWxException(String httpStr) throws WxErrorException {
+        WxError error = WxError.fromJson(httpStr);
+        if (error.getErrorCode() != 0) {
+            throw new WxErrorException(error);
+        }
+    }
 
     /**
      * 测试方法
