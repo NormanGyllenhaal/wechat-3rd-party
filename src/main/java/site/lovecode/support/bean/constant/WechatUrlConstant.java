@@ -34,4 +34,22 @@ public class WechatUrlConstant {
     public  static final String API_GET_AUTHORIZER_INFO = "https://api.weixin.qq.com/cgi-bin/component/api_get_authorizer_info?component_access_token=";
 
 
+    /**
+     * 获取（刷新）授权公众号的接口调用凭据（令牌）
+     */
+    public static final String API_AUTHORIZER_TOKEN = "https:// api.weixin.qq.com /cgi-bin/component/api_authorizer_token?component_access_token=";
+
+
+    /**
+     * 获取授权方选项设置信息
+     */
+    public static final String API_GET_AUTHORIZER_OPTION = "https://api.weixin.qq.com/cgi-bin/component/ api_get_authorizer_option?component_access_token=";
+
+
+    /**
+     * 设置授权方选项信息
+     */
+    public static final String API_SET_AUTHORIZER_OPTION = "https://api.weixin.qq.com/cgi-bin/component/ api_set_authorizer_option?component_access_token=";
+
+
 }

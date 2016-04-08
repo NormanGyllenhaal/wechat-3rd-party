@@ -20,4 +20,13 @@ public class WechatParameterConstant {
     public static final String AUTHORIZER_APPID = "authorizer_appid";
 
 
+    private static final String AUTHORIZER_REFRESH_TOKEN = "authorizer_refresh_token";
+
+
+    public static final String OPTION_NAME ="option_name";
+
+
+    public static final String OPTION_VALUE = "option_value";
+
+
 }
