@@ -62,10 +62,4 @@ public interface WechatThirdPartyClient {
 
 
 
-
-
-
-
-
-
 }
