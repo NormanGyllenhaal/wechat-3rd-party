@@ -1,5 +1,6 @@
 package site.lovecode.service;
 
+import site.lovecode.support.bean.AuthorizerInfoBean;
 import site.lovecode.support.bean.TicketDecryptingBean;
 
 import java.io.IOException;
@@ -22,7 +23,7 @@ public interface WechatThridPartyService {
      * @param authCode
      * @throws IOException
      */
-    public void saveAuthorizerInfo(String authCode) throws IOException;
+    public AuthorizerInfoBean saveAuthorizerInfo(String authCode) throws Exception;
 
 
 

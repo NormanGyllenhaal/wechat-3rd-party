@@ -28,6 +28,11 @@ public class ComponentVerifyTicket implements Identity, Serializable {
      */
     private Date createTime;
 
+    /**
+     * 失效时间
+     */
+    private Date deadline;
+
     private static final long serialVersionUID = 1L;
 
     /**
@@ -102,6 +107,24 @@ public class ComponentVerifyTicket implements Identity, Serializable {
         this.createTime = createTime;
     }
 
+    /**
+     * 获取失效时间
+     *
+     * @return deadline - 失效时间
+     */
+    public Date getDeadline() {
+        return deadline;
+    }
+
+    /**
+     * 设置失效时间
+     *
+     * @param deadline 失效时间
+     */
+    public void setDeadline(Date deadline) {
+        this.deadline = deadline;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -112,6 +135,7 @@ public class ComponentVerifyTicket implements Identity, Serializable {
         sb.append(", componentAppid=").append(componentAppid);
         sb.append(", componentVerifyTicket=").append(componentVerifyTicket);
         sb.append(", createTime=").append(createTime);
+        sb.append(", deadline=").append(deadline);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

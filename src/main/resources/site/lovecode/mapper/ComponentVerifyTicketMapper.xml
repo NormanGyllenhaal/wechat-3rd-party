@@ -9,9 +9,11 @@
     <result column="componentAppid" jdbcType="VARCHAR" property="componentAppid" />
     <result column="componentVerifyTicket" jdbcType="VARCHAR" property="componentVerifyTicket" />
     <result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="deadline" jdbcType="TIMESTAMP" property="deadline" />
   </resultMap>
 
-  <select id="selectOrderByCreateTime" parameterType="java.lang.String" resultType="java.lang.String">
-       select componentVerifyTicket from wx_component_verify_ticket where componentAppid = #{componentAppid} order by createTime DESC  limit 1 ;
+
+  <select id="selectOrderByCreateTime" parameterType="java.lang.String" resultMap="BaseResultMap">
+       select componentVerifyTicket,deadline from wx_component_verify_ticket where componentAppid = #{componentAppid} order by createTime DESC  limit 1 ;
   </select>
 </mapper>

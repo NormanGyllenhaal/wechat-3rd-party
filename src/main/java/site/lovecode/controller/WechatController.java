@@ -60,9 +60,9 @@ public class WechatController {
      * @param request
      * @param response
      */
-    @RequestMapping(value = "/message.html")
+    //@RequestMapping(value = "/$message.html")
     public void get(HttpServletRequest request, HttpServletResponse response) {
-        try {
+       /* try {
             WxMpXmlMessage msg = WxMpXmlMessage.fromXml(request.getInputStream());
             WxMpXmlOutMessage reMsg = WxMpXmlOutMessage.TEXT()
                     .content("you message is :" + msg.getContent() + "...好讨厌")
@@ -72,7 +72,7 @@ public class WechatController {
             response.getWriter().write(reMsg.toXml());
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
 
         //微信消息验证
 

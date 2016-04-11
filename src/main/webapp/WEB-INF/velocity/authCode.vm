@@ -3,7 +3,9 @@
     <title>公众号信息</title>
 </head>
 <body>
-公众号信息：$info
-$userInfo
+公众号信息：<br/>
+    微信公众号名称：$info.authorizerInfo.nickName<br/>
+    公众号头像: <img src="$info.authorizerInfo.headImg"><br/>
+    appid: $info.authorizeationInfo.authorizerAppid
 </body>
 </html>

@@ -43,10 +43,14 @@
                              targetPackage="site.lovecode.mapper"
                              targetProject="C:\Users\Administrator\IdeaProjects\weixin-tool\src\main\java"/>
 
-        <table tableName="wx_wechat_third_party_config" domainObjectName="WechatThirdPartyConfig">
+        <table tableName="wx_user_info" domainObjectName="UserInfo">
             <property name="useActualColumnNames" value="true"/>
         </table>
-       <!-- <table tableName="wx_component_verify_ticket" domainObjectName="ComponentVerifyTicket">
+        <!--
+        <table tableName="wx_component_verify_ticket" domainObjectName="ComponentVerifyTicket">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table tableName="wx_wechat_third_party_config" domainObjectName="WechatThirdPartyConfig">
             <property name="useActualColumnNames" value="true"/>
         </table>
         <table tableName="WX_AUTHORIZRE_INFO" domainObjectName="AuthorizerInfo">

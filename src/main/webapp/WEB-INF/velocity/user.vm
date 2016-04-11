@@ -1,0 +1,18 @@
+<html>
+<head>
+    <title>用户信息</title>
+</head>
+<body>
+微信测试
+用户列表
+    #foreach($user in $userList)
+      用户openid：  $user.openid    向这个用户发送一条消息：
+       <form action="receiveMessage.html" method="get">
+           <input type="text" name="message"/>
+           <input type="text" name="openid" value="$user.openid "/>
+           <input type="submit" value="Submit" />
+       </form>
+    #end
+
+</body>
+</html>

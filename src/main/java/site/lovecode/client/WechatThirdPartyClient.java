@@ -3,6 +3,7 @@ package site.lovecode.client;
 import site.lovecode.support.bean.*;
 
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2016/4/1.
@@ -57,13 +58,21 @@ public interface WechatThirdPartyClient {
     public AuthorizerInfoBean getAuthorizerInfo(String authorizerAppid) throws IOException;
 
 
+    /**
+     * 获取授权方的选项设置信息
+     * @param authorizerAppid
+     * @param optionName
+     * @return
+     */
+    public GetAuthorizerOptionBean getAuthorizerOption(String authorizerAppid,String optionName);
 
 
-
-
-
-
-
+    /**
+     * 设置授权方选项信息
+     * @param authorizerAppid
+     * @param maps
+     */
+     public void setAuthorizerOption(String authorizerAppid,Map<String,String> maps);
 
 
 

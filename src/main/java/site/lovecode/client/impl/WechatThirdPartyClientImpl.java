@@ -7,15 +7,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import site.lovecode.client.WechatThirdPartyClient;
 import site.lovecode.entity.WechatThirdPartyConfig;
-import site.lovecode.support.bean.AuthorizerInfoBean;
-import site.lovecode.support.bean.ComponentAccessTokenBean;
-import site.lovecode.support.bean.PreAuthCodeBean;
-import site.lovecode.support.bean.QueryAuthBean;
+import site.lovecode.support.bean.*;
 import site.lovecode.support.bean.constant.WechatParameterConstant;
 import site.lovecode.support.bean.constant.WechatUrlConstant;
 import site.lovecode.util.HttpUtil;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -132,10 +130,41 @@ public class WechatThirdPartyClientImpl implements WechatThirdPartyClient {
     }
 
 
+    /**
+     * 获取授权方的选项设置信息
+     * @param authorizerAppid
+     * @param optionName
+     * @return
+     */
+    @Override
+    public GetAuthorizerOptionBean getAuthorizerOption(String authorizerAppid, String optionName) {
+        return JSON.parseObject(HttpUtil.doPostSSL(Stream.of(WechatUrlConstant.API_GET_AUTHORIZER_OPTION,wechatThirdPartyConfig.getComponentAccessToken()).reduce("",String::concat),new JSONObject(){
+            {
+                put(WechatParameterConstant.COMPONENT_APPID,wechatThirdPartyConfig.getComponentAppid());
+                put(WechatParameterConstant.AUTHORIZER_APPID,authorizerAppid);
+                put(WechatParameterConstant.OPTION_NAME,optionName);
+            }
+        }.toJSONString()),GetAuthorizerOptionBean.class);
+    }
 
 
 
+    /**
+     * 设置授权方选项信息
+     * @param authorizerAppid
+     * @param maps
+     */
+    @Override
+    public void setAuthorizerOption(String authorizerAppid, Map<String, String> maps) {
 
+     /*   HttpUtil.doPostSSL(Stream.of(WechatUrlConstant.API_SET_AUTHORIZER_OPTION,wechatThirdPartyConfig.getComponentAccessToken()).reduce("",String::concat),new JSONObject(){
+            {
+                put(WechatParameterConstant.COMPONENT_APPID,wechatThirdPartyConfig.getComponentAppid());
+                put(WechatParameterConstant.AUTHORIZER_APPID,authorizerAppid);
+                put(WechatParameterConstant.OPTION_NAME,optionName);
+            }
+        }.toJSONString());*/
+    }
 
 
 }

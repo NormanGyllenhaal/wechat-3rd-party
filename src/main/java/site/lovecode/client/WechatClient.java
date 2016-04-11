@@ -77,6 +77,4 @@ public interface WechatClient {
 
 
 
-
-
 }
