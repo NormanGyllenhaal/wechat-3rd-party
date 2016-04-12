@@ -15,6 +15,7 @@ import site.lovecode.util.HttpUtil;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.BiConsumer;
 import java.util.stream.Stream;
 
 /**
@@ -156,14 +157,14 @@ public class WechatThirdPartyClientImpl implements WechatThirdPartyClient {
      */
     @Override
     public void setAuthorizerOption(String authorizerAppid, Map<String, String> maps) {
-
-     /*   HttpUtil.doPostSSL(Stream.of(WechatUrlConstant.API_SET_AUTHORIZER_OPTION,wechatThirdPartyConfig.getComponentAccessToken()).reduce("",String::concat),new JSONObject(){
-            {
-                put(WechatParameterConstant.COMPONENT_APPID,wechatThirdPartyConfig.getComponentAppid());
-                put(WechatParameterConstant.AUTHORIZER_APPID,authorizerAppid);
-                put(WechatParameterConstant.OPTION_NAME,optionName);
-            }
-        }.toJSONString());*/
+       maps.forEach((key,value) -> HttpUtil.doPostSSL(Stream.of(WechatUrlConstant.API_SET_AUTHORIZER_OPTION,wechatThirdPartyConfig.getComponentAccessToken()).reduce("",String::concat),new JSONObject(){
+           {
+               put(WechatParameterConstant.COMPONENT_APPID,wechatThirdPartyConfig.getComponentAppid());
+               put(WechatParameterConstant.AUTHORIZER_APPID,authorizerAppid);
+               put(WechatParameterConstant.OPTION_NAME,key);
+               put(WechatParameterConstant.OPTION_VALUE,value);
+           }
+       }.toJSONString()));
     }
 
 

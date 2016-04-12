@@ -1,5 +1,6 @@
 package site.lovecode.plugin.mybatis;
 
+import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Properties;
 
@@ -11,6 +12,8 @@ import org.apache.ibatis.plugin.Intercepts;
 import org.apache.ibatis.plugin.Invocation;
 import org.apache.ibatis.plugin.Plugin;
 import org.apache.ibatis.plugin.Signature;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.defaults.DefaultSqlSession;
 import site.lovecode.common.mybatis.Identity;
 import site.lovecode.util.IdWorker;
 
@@ -37,7 +40,7 @@ public class IdentityInterceptor implements Interceptor {
 						continue;
 					}
 					identity.setId(IdWorker.getId());
-				} else if ( objs[i] instanceof List ) {
+				} else if ( objs[i] instanceof List || objs[i] instanceof DefaultSqlSession) {
 					List<?> list = (List<?>) objs[i];
 					for ( Object object : list ) {
 						if ( object instanceof Identity ) {
@@ -66,5 +69,8 @@ public class IdentityInterceptor implements Interceptor {
 	public void setProperties( Properties properties ) {
 
 	}
+
+
+
 
 }

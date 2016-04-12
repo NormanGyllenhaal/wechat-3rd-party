@@ -17,10 +17,13 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 import site.lovecode.client.WechatClient;
 import site.lovecode.client.WechatThirdPartyClient;
+import site.lovecode.entity.BusinessInfo;
 import site.lovecode.entity.FuncInfo;
+import site.lovecode.mapper.BusinessInfoMapper;
 import site.lovecode.mapper.ComponentVerifyTicketMapper;
 import site.lovecode.mapper.FuncInfoMapper;
 import site.lovecode.support.bean.*;
+import site.lovecode.support.bean.enums.BusinessInfoEnum;
 
 
 import java.io.BufferedReader;
@@ -29,6 +32,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 /**
@@ -179,7 +184,7 @@ public class WeiXinTest {
 
 
 
-    @Test
+    //@Test
     public void testDao(){
         FuncInfoMapper mapper = (FuncInfoMapper) ctx.getBean("funcInfoMapper");
         mapper.insert(new FuncInfo(){
@@ -189,6 +194,14 @@ public class WeiXinTest {
             }
         });
     }
+
+
+    @Test
+    public void testBatch(){
+        BusinessInfoMapper businessInfoMapper = (BusinessInfoMapper)ctx.getBean("businessInfoMapper");
+        List<BusinessInfo> businessInfoList = Stream.of(new BusinessInfo(123L, BusinessInfoEnum.OPEN_CARD.key(),1),new BusinessInfo(123L, BusinessInfoEnum.OPEN_CARD.key(),1)).collect(Collectors.toList());
+        businessInfoMapper.batchInsert(businessInfoList);
+     }
 
 
 }

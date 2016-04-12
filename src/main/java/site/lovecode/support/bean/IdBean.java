@@ -5,13 +5,13 @@ package site.lovecode.support.bean;
  */
 public class IdBean {
 
-    private String Id;
+    private Integer Id;
 
-    public String getId() {
+    public Integer getId() {
         return Id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         Id = id;
     }
 

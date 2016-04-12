@@ -35,7 +35,7 @@ public class QueryAuthBean {
         @JSONField(name="authorizer_access_token")
         private String authorizerAccessToken;
         @JSONField(name="expires_in")
-        private String expriesIn;
+        private Integer expriesIn;
         @JSONField(name="authorizer_refresh_token")
         private String authorizerRefreshToken;
         @JSONField(name="func_info")
@@ -58,11 +58,11 @@ public class QueryAuthBean {
             this.authorizerAccessToken = authorizerAccessToken;
         }
 
-        public String getExpriesIn() {
+        public Integer getExpriesIn() {
             return expriesIn;
         }
 
-        public void setExpriesIn(String expriesIn) {
+        public void setExpriesIn(Integer expriesIn) {
             this.expriesIn = expriesIn;
         }
 

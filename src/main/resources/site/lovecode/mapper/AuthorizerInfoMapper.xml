@@ -16,4 +16,6 @@
     <result column="qrcodeUrl" jdbcType="VARCHAR" property="qrcodeUrl" />
     <result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
+
+
 </mapper>

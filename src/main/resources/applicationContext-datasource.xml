@@ -56,10 +56,12 @@
 		<property name="basePackage" value="site.lovecode.mapper" />
 		<property name="properties">
 			<value>
+				mappers=site.lovecode.common.mybatis.MyMapper
 				style=normal
 			</value>
 		</property>
 	</bean>
+
 
 
 </beans>

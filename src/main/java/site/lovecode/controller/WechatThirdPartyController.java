@@ -19,6 +19,7 @@ import site.lovecode.entity.UserInfo;
 import site.lovecode.mapper.UserInfoMapper;
 import site.lovecode.service.WechatThridPartyService;
 import site.lovecode.support.bean.*;
+import site.lovecode.util.WechatMsgCryptUtil;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -40,7 +41,6 @@ public class WechatThirdPartyController {
 
     private Logger logger = LoggerFactory.getLogger(WechatThirdPartyController.class);
 
-    private static final String FORMAT = "<xml><ToUserName><![CDATA[toUser]]></ToUserName><Encrypt><![CDATA[%1$s]]></Encrypt></xml>";
 
     @Resource
     private UserInfoMapper userInfoMapper;
@@ -69,22 +69,16 @@ public class WechatThirdPartyController {
     @ResponseBody
     public String receiveTicket(HttpServletRequest request, HttpServletResponse response) {
         try {
-                WXBizMsgCrypt wxBizMsgCrypt = new WXBizMsgCrypt(WechatThirdPartyClientImpl.wechatThirdPartyConfig.getToken(), WechatThirdPartyClientImpl.wechatThirdPartyConfig.getEncodeingAesKey(), WechatThirdPartyClientImpl.wechatThirdPartyConfig.getComponentAppid());
-                TicketEncryptingBean ticketEncryptingBean = (TicketEncryptingBean) new XStream() {
-                    {
-                        processAnnotations(TicketEncryptingBean.class);
-                    }
-                }.fromXML(request.getInputStream());
-                String result = wxBizMsgCrypt.decryptMsg(request.getParameter("msg_signature"), request.getParameter("timestamp"), request.getParameter("nonce"), String.format(FORMAT, ticketEncryptingBean.getEncrypt()));
-                logger.info("解密后明文: " + result);
-                TicketDecryptingBean ticketDecryptingBean = (TicketDecryptingBean) new XStream() {
-                    {
-                        processAnnotations(TicketDecryptingBean.class);
-                    }
-                }.fromXML(result);
-                logger.info(ticketDecryptingBean.toString());
-                //保存componentVerifyTicket
-                wechatThridPartyService.saveComponentVerifyTicket(ticketDecryptingBean);
+            String result = WechatMsgCryptUtil.WechatMsgDecrypt(request.getInputStream(), request.getParameter("msg_signature"), request.getParameter("timestamp"), request.getParameter("nonce"));
+            logger.info("解密后明文: " + result);
+            TicketDecryptingBean ticketDecryptingBean = (TicketDecryptingBean) new XStream() {
+                {
+                    processAnnotations(TicketDecryptingBean.class);
+                }
+            }.fromXML(result);
+            logger.info(ticketDecryptingBean.toString());
+            //保存componentVerifyTicket
+            wechatThridPartyService.saveComponentVerifyTicket(ticketDecryptingBean);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -99,7 +93,7 @@ public class WechatThirdPartyController {
     public ModelAndView getAuthCode(HttpServletRequest request, Model model) {
         try {
             AuthorizerInfoBean authorizerInfo = wechatThridPartyService.saveAuthorizerInfo(request.getParameter("auth_code"));
-            model.addAttribute("info",authorizerInfo);
+            model.addAttribute("info", authorizerInfo);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -116,7 +110,7 @@ public class WechatThirdPartyController {
     @RequestMapping(value = "/getAuthorization.html")
     public ModelAndView getAuthorization(Model model) {
         try {
-            model.addAttribute("url",wechatThridPartyService.getCompoentLoginUrl());
+            model.addAttribute("url", wechatThridPartyService.getCompoentLoginUrl());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -124,21 +118,19 @@ public class WechatThirdPartyController {
     }
 
 
-
-
     @RequestMapping(value = "/{appid}/getAllMessage.html")
-    public void getAllMessage(HttpServletRequest request,HttpServletResponse response) {
+    public void getAllMessage(HttpServletRequest request, HttpServletResponse response) {
         logger.info("收到你的消息了呦");
         WxMpInMemoryConfigStorage config = new WxMpInMemoryConfigStorage();
         config.setAppId(WechatThirdPartyClientImpl.wechatThirdPartyConfig.getComponentAppid());
         config.setToken(WechatThirdPartyClientImpl.wechatThirdPartyConfig.getToken());
         config.setAesKey(WechatThirdPartyClientImpl.wechatThirdPartyConfig.getEncodeingAesKey());
         try {
-            WxMpXmlMessage msg  = WxMpXmlMessage.fromEncryptedXml(request.getInputStream(), config, request.getParameter("timestamp"), request.getParameter("nonce"), request.getParameter("msg_signature"));
+            WxMpXmlMessage msg = WxMpXmlMessage.fromEncryptedXml(request.getInputStream(), config, request.getParameter("timestamp"), request.getParameter("nonce"), request.getParameter("msg_signature"));
             logger.info(msg.toString());
-            userInfoMapper.insert(new UserInfo(){
+            userInfoMapper.insert(new UserInfo() {
                 {
-                     setOpenid(msg.getFromUserName());
+                    setOpenid(msg.getFromUserName());
                 }
             });
             WxMpXmlOutMessage reMsg = WxMpXmlOutMessage.TEXT()
@@ -159,8 +151,8 @@ public class WechatThirdPartyController {
 //        }
     }
 
-    @RequestMapping(value="/receiveMessage.html")
-    public void receiveMessage(HttpServletRequest request,HttpServletResponse response){
+    @RequestMapping(value = "/receiveMessage.html")
+    public void receiveMessage(HttpServletRequest request, HttpServletResponse response) {
         WxMpInMemoryConfigStorage config = new WxMpInMemoryConfigStorage();
         config.setAppId(WechatThirdPartyClientImpl.wechatThirdPartyConfig.getComponentAppid());
         config.setToken(WechatThirdPartyClientImpl.wechatThirdPartyConfig.getToken());
@@ -178,11 +170,11 @@ public class WechatThirdPartyController {
     }
 
 
-    @RequestMapping(value="/getUser.html")
-    public ModelAndView getUser(Model model){
+    @RequestMapping(value = "/getUser.html")
+    public ModelAndView getUser(Model model) {
         logger.info("获取用户列表");
         List<UserInfo> userInfoList = userInfoMapper.selectAll();
-        model.addAttribute("userList",userInfoList);
+        model.addAttribute("userList", userInfoList);
         return new ModelAndView("user");
     }
 

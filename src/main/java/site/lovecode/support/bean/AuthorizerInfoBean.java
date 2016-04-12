@@ -84,7 +84,7 @@ public class AuthorizerInfoBean {
         private String qrcodeUrl;
 
         @JSONField(name="business_info")
-        private BusinessInfo businessInfo;
+        private BusinessInfoBean businessInfoBean;
 
 
         public String getNickName() {
@@ -143,14 +143,13 @@ public class AuthorizerInfoBean {
             this.qrcodeUrl = qrcodeUrl;
         }
 
-        public BusinessInfo getBusinessInfo() {
-            return businessInfo;
+        public BusinessInfoBean getBusinessInfoBean() {
+            return businessInfoBean;
         }
 
-        public void setBusinessInfo(BusinessInfo businessInfo) {
-            this.businessInfo = businessInfo;
+        public void setBusinessInfoBean(BusinessInfoBean businessInfoBean) {
+            this.businessInfoBean = businessInfoBean;
         }
-
 
         @Override
         public String toString() {
@@ -162,11 +161,11 @@ public class AuthorizerInfoBean {
                     ", userName='" + userName + '\'' +
                     ", alizs='" + alizs + '\'' +
                     ", qrcodeUrl='" + qrcodeUrl + '\'' +
-                    ", businessInfo=" + businessInfo +
+                    ", businessInfo=" + businessInfoBean +
                     '}';
         }
 
-        public class BusinessInfo{
+        public class BusinessInfoBean{
 
             @JSONField(name="open_pay")
             private Integer openPay;

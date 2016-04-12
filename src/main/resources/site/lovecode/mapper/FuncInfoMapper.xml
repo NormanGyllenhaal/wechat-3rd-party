@@ -9,4 +9,11 @@
     <result column="authorizerInfoId" jdbcType="BIGINT" property="authorizerInfoId" />
     <result column="funcName" jdbcType="INTEGER" property="funcName" />
   </resultMap>
+
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into wx_func_info values
+    <foreach collection="list" item="item" index="index" separator=",">
+    (#{item.id},#{item.authorizerInfoId},#{item.funcName})
+  </foreach>
+  </insert>
 </mapper>

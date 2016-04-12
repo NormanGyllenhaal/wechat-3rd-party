@@ -7,6 +7,30 @@ import site.lovecode.common.mybatis.Identity;
 
 @Table(name = "wx_user_access_token")
 public class UserAccessToken implements Identity, Serializable {
+
+    public UserAccessToken(Long id, String authorizerAppid, String authorizerAccessToken, Integer expiresIn, String authorizerRefreshToken, Date createTime) {
+        this.id = id;
+        this.authorizerAppid = authorizerAppid;
+        this.authorizerAccessToken = authorizerAccessToken;
+        this.expiresIn = expiresIn;
+        this.authorizerRefreshToken = authorizerRefreshToken;
+        this.createTime = createTime;
+    }
+
+    public UserAccessToken(String authorizerAppid, String authorizerAccessToken, Integer expiresIn, String authorizerRefreshToken, Date createTime) {
+        this.authorizerAppid = authorizerAppid;
+        this.authorizerAccessToken = authorizerAccessToken;
+        this.expiresIn = expiresIn;
+        this.authorizerRefreshToken = authorizerRefreshToken;
+        this.createTime = createTime;
+    }
+
+    public UserAccessToken() {
+    }
+
+
+
+
     /**
      * 主键
      */
