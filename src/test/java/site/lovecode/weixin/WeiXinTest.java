@@ -6,34 +6,26 @@ import com.thoughtworks.xstream.XStream;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.bean.WxMenu;
 import me.chanjar.weixin.common.exception.WxErrorException;
-import me.chanjar.weixin.common.util.xml.XStreamInitializer;
 import me.chanjar.weixin.mp.api.WxMpInMemoryConfigStorage;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.WxMpServiceImpl;
-import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 import site.lovecode.client.WechatClient;
 import site.lovecode.client.WechatThirdPartyClient;
-import site.lovecode.entity.BusinessInfo;
+
 import site.lovecode.entity.FuncInfo;
-import site.lovecode.mapper.BusinessInfoMapper;
-import site.lovecode.mapper.ComponentVerifyTicketMapper;
+
 import site.lovecode.mapper.FuncInfoMapper;
 import site.lovecode.support.bean.*;
-import site.lovecode.support.bean.enums.BusinessInfoEnum;
 
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 
 /**
@@ -146,14 +138,14 @@ public class WeiXinTest {
         xStream.processAnnotations(new Class[]{TicketEncryptingBean.class});
         TicketEncryptingBean ticketEncryptingBean = (TicketEncryptingBean) xStream.fromXML(sb);*/
 
-        TicketEncryptingBean ticketEncryptingBean = (TicketEncryptingBean)  new XStream(){
+        XmlEncryptingBean xmlEncryptingBean = (XmlEncryptingBean)  new XStream(){
             {
-                processAnnotations(TicketEncryptingBean.class);
+                processAnnotations(XmlEncryptingBean.class);
             }
         }.fromXML(sb.toString());
-        logger.info(ticketEncryptingBean.toString());
+        logger.info(xmlEncryptingBean.toString());
         String format = "<xml><ToUserName><![CDATA[toUser]]></ToUserName><Encrypt><![CDATA[%1$s]]></Encrypt></xml>";
-        String fromXML = String.format(format, ticketEncryptingBean.getEncrypt());
+        String fromXML = String.format(format, xmlEncryptingBean.getEncrypt());
         String result = "<xml><AppId><![CDATA[wxe817ddf41e533ba1]]></AppId>\n" +
                 "<CreateTime>1459498313</CreateTime>\n" +
                 "<InfoType><![CDATA[component_verify_ticket]]></InfoType>\n" +
@@ -161,10 +153,10 @@ public class WeiXinTest {
                 "</xml>\n";
 
         XStream xStream2 = new XStream();
-        xStream2.processAnnotations(new Class[]{TicketDecryptingBean.class});
+        xStream2.processAnnotations(new Class[]{XmlDecryptingBean.class});
         logger.info("解密后明文: " + result);
-        TicketDecryptingBean ticketDecryptingBean = (TicketDecryptingBean) xStream2.fromXML(result);
-        logger.info("----------javaBean"+ticketDecryptingBean.toString());
+        XmlDecryptingBean xmlDecryptingBean = (XmlDecryptingBean) xStream2.fromXML(result);
+        logger.info("----------javaBean"+ xmlDecryptingBean.toString());
     }
 
 
@@ -196,12 +188,12 @@ public class WeiXinTest {
     }
 
 
-    @Test
+    /*@Test
     public void testBatch(){
         BusinessInfoMapper businessInfoMapper = (BusinessInfoMapper)ctx.getBean("businessInfoMapper");
         List<BusinessInfo> businessInfoList = Stream.of(new BusinessInfo(123L, BusinessInfoEnum.OPEN_CARD.key(),1),new BusinessInfo(123L, BusinessInfoEnum.OPEN_CARD.key(),1)).collect(Collectors.toList());
         businessInfoMapper.batchInsert(businessInfoList);
-     }
+     }*/
 
 
 }

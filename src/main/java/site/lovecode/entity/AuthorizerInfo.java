@@ -5,7 +5,7 @@ import java.util.Date;
 import javax.persistence.*;
 import site.lovecode.common.mybatis.Identity;
 
-@Table(name = "wx_authorizre_info")
+@Table(name = "wx_authorizer_info")
 public class AuthorizerInfo implements Identity, Serializable {
     /**
      * 主键
@@ -57,6 +57,11 @@ public class AuthorizerInfo implements Identity, Serializable {
      * 创建时间
      */
     private Date createTime;
+
+    /**
+     * 授权状态,0为已授权,1为已取消授权
+     */
+    private Integer authorizationStatus;
 
     private static final long serialVersionUID = 1L;
 
@@ -240,6 +245,24 @@ public class AuthorizerInfo implements Identity, Serializable {
         this.createTime = createTime;
     }
 
+    /**
+     * 获取授权状态,0为已授权,1为已取消授权
+     *
+     * @return authorizationStatus - 授权状态,0为已授权,1为已取消授权
+     */
+    public Integer getAuthorizationStatus() {
+        return authorizationStatus;
+    }
+
+    /**
+     * 设置授权状态,0为已授权,1为已取消授权
+     *
+     * @param authorizationStatus 授权状态,0为已授权,1为已取消授权
+     */
+    public void setAuthorizationStatus(Integer authorizationStatus) {
+        this.authorizationStatus = authorizationStatus;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -256,6 +279,7 @@ public class AuthorizerInfo implements Identity, Serializable {
         sb.append(", alias=").append(alias);
         sb.append(", qrcodeUrl=").append(qrcodeUrl);
         sb.append(", createTime=").append(createTime);
+        sb.append(", authorizationStatus=").append(authorizationStatus);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

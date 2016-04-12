@@ -1,8 +1,6 @@
 package site.lovecode.controller;
 
-import com.qq.weixin.mp.aes.WXBizMsgCrypt;
 import com.thoughtworks.xstream.XStream;
-import me.chanjar.weixin.mp.api.WxMpConfigStorage;
 import me.chanjar.weixin.mp.api.WxMpInMemoryConfigStorage;
 import me.chanjar.weixin.mp.bean.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.WxMpXmlOutMessage;
@@ -13,21 +11,19 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import site.lovecode.client.WechatThirdPartyClient;
 import site.lovecode.client.impl.WechatThirdPartyClientImpl;
 import site.lovecode.entity.UserInfo;
 import site.lovecode.mapper.UserInfoMapper;
 import site.lovecode.service.WechatThridPartyService;
 import site.lovecode.support.bean.*;
+import site.lovecode.support.bean.enums.AuthorizationInfoTypeEnum;
 import site.lovecode.util.WechatMsgCryptUtil;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Created by Administrator on 2016/3/25.
@@ -71,14 +67,20 @@ public class WechatThirdPartyController {
         try {
             String result = WechatMsgCryptUtil.WechatMsgDecrypt(request.getInputStream(), request.getParameter("msg_signature"), request.getParameter("timestamp"), request.getParameter("nonce"));
             logger.info("解密后明文: " + result);
-            TicketDecryptingBean ticketDecryptingBean = (TicketDecryptingBean) new XStream() {
+            XmlDecryptingBean xmlDecryptingBean = (XmlDecryptingBean) new XStream() {
                 {
-                    processAnnotations(TicketDecryptingBean.class);
+                    processAnnotations(XmlDecryptingBean.class);
                 }
             }.fromXML(result);
-            logger.info(ticketDecryptingBean.toString());
-            //保存componentVerifyTicket
-            wechatThridPartyService.saveComponentVerifyTicket(ticketDecryptingBean);
+            logger.info(xmlDecryptingBean.toString());
+            //如果是ticket推送消息，保存componentVerifyTicket
+            if (xmlDecryptingBean.getInfoType().equals(AuthorizationInfoTypeEnum.COMPONENT_VERIFY_TICKET.desc())) {
+                wechatThridPartyService.saveComponentVerifyTicket(xmlDecryptingBean);
+            }
+            //如果是取消授权通知
+            if(xmlDecryptingBean.getInfoType().equals(AuthorizationInfoTypeEnum.UNAUTHORIZED.desc())){
+                wechatThridPartyService.changeAuthorizationStatus(xmlDecryptingBean.getAuthorizerAppid());
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

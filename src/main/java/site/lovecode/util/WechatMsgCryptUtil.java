@@ -4,7 +4,7 @@ import com.qq.weixin.mp.aes.AesException;
 import com.qq.weixin.mp.aes.WXBizMsgCrypt;
 import com.thoughtworks.xstream.XStream;
 import site.lovecode.client.impl.WechatThirdPartyClientImpl;
-import site.lovecode.support.bean.TicketEncryptingBean;
+import site.lovecode.support.bean.XmlEncryptingBean;
 
 import java.io.InputStream;
 
@@ -19,11 +19,11 @@ public class WechatMsgCryptUtil {
 
     public static  String WechatMsgDecrypt(InputStream inputStream,String msgSignature, String timestamp, String nonce) throws AesException {
         WXBizMsgCrypt wxBizMsgCrypt = new WXBizMsgCrypt(WechatThirdPartyClientImpl.wechatThirdPartyConfig.getToken(), WechatThirdPartyClientImpl.wechatThirdPartyConfig.getEncodeingAesKey(), WechatThirdPartyClientImpl.wechatThirdPartyConfig.getComponentAppid());
-        TicketEncryptingBean ticketEncryptingBean = (TicketEncryptingBean) new XStream() {
+        XmlEncryptingBean xmlEncryptingBean = (XmlEncryptingBean) new XStream() {
             {
-                processAnnotations(TicketEncryptingBean.class);
+                processAnnotations(XmlEncryptingBean.class);
             }
         }.fromXML(inputStream);
-        return wxBizMsgCrypt.decryptMsg(msgSignature, timestamp,nonce, String.format(FORMAT, ticketEncryptingBean.getEncrypt()));
+        return wxBizMsgCrypt.decryptMsg(msgSignature, timestamp,nonce, String.format(FORMAT, xmlEncryptingBean.getEncrypt()));
     }
 }

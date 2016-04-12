@@ -8,7 +8,7 @@ import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
  * Created by Administrator on 2016/4/1.
  */
 @XStreamAlias("xml")
-public class TicketDecryptingBean {
+public class XmlDecryptingBean {
 
     @XStreamAlias("AppId")
     @XStreamConverter(value=XStreamCDataConverter.class)
@@ -25,6 +25,18 @@ public class TicketDecryptingBean {
     @XStreamAlias("ComponentVerifyTicket")
     @XStreamConverter(value=XStreamCDataConverter.class)
     private String componentVerifyTicket;
+
+    @XStreamAlias("AuthorizerAppid")
+    @XStreamConverter(value=XStreamCDataConverter.class)
+    private String authorizerAppid;
+
+    @XStreamAlias("AuthorizationCode")
+    @XStreamConverter(value=XStreamCDataConverter.class)
+    private String authorizationCode;
+
+    @XStreamAlias("AuthorizationCodeExpiredTime")
+    @XStreamConverter(value=XStreamCDataConverter.class)
+    private String authorizationCodeExpiredTime;
 
 
     public String getAppId() {
@@ -59,13 +71,40 @@ public class TicketDecryptingBean {
         this.infoType = infoType;
     }
 
+    public String getAuthorizerAppid() {
+        return authorizerAppid;
+    }
+
+    public void setAuthorizerAppid(String authorizerAppid) {
+        this.authorizerAppid = authorizerAppid;
+    }
+
+    public String getAuthorizationCode() {
+        return authorizationCode;
+    }
+
+    public void setAuthorizationCode(String authorizationCode) {
+        this.authorizationCode = authorizationCode;
+    }
+
+    public String getAuthorizationCodeExpiredTime() {
+        return authorizationCodeExpiredTime;
+    }
+
+    public void setAuthorizationCodeExpiredTime(String authorizationCodeExpiredTime) {
+        this.authorizationCodeExpiredTime = authorizationCodeExpiredTime;
+    }
+
     @Override
     public String toString() {
-        return "TicketDecryptingBean{" +
+        return "XmlDecryptingBean{" +
                 "appId='" + appId + '\'' +
                 ", createTime='" + createTime + '\'' +
                 ", infoType='" + infoType + '\'' +
                 ", componentVerifyTicket='" + componentVerifyTicket + '\'' +
+                ", authorizerAppid='" + authorizerAppid + '\'' +
+                ", authorizationCode='" + authorizationCode + '\'' +
+                ", authorizationCodeExpiredTime='" + authorizationCodeExpiredTime + '\'' +
                 '}';
     }
 }

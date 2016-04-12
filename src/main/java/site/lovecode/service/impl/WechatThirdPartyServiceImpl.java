@@ -12,14 +12,14 @@ import site.lovecode.mapper.*;
 import site.lovecode.service.WechatThridPartyService;
 import site.lovecode.support.bean.AuthorizerInfoBean;
 import site.lovecode.support.bean.QueryAuthBean;
-import site.lovecode.support.bean.TicketDecryptingBean;
+import site.lovecode.support.bean.XmlDecryptingBean;
+import site.lovecode.support.bean.enums.AuthorizationStatusEnum;
 import site.lovecode.support.bean.enums.BusinessInfoEnum;
 import site.lovecode.util.IdWorker;
 
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -54,8 +54,8 @@ public class WechatThirdPartyServiceImpl implements InitializingBean, WechatThri
     @Resource
     private FuncInfoMapper funcInfoMapper;
 
-   /* @Resource
-    private BusinessInfoMapper businessInfoMapper;*/
+   @Resource
+    private BusinessInfoMapper businessInfoMapper;
 
 
 
@@ -81,12 +81,12 @@ public class WechatThirdPartyServiceImpl implements InitializingBean, WechatThri
     /**
      * 保存ComponentVerifyTicket
      *
-     * @param ticketDecryptingBean
+     * @param xmlDecryptingBean
      */
     @Override
-    public void saveComponentVerifyTicket(TicketDecryptingBean ticketDecryptingBean) {
+    public void saveComponentVerifyTicket(XmlDecryptingBean xmlDecryptingBean) {
         //更新内存中的componentVerfiyTicket
-        WechatThirdPartyClientImpl.wechatThirdPartyConfig.setComponentVerifyTicket(ticketDecryptingBean.getComponentVerifyTicket());
+        WechatThirdPartyClientImpl.wechatThirdPartyConfig.setComponentVerifyTicket(xmlDecryptingBean.getComponentVerifyTicket());
         //检查componentAccessToken是否为空
         if (StringUtils.isEmpty(WechatThirdPartyClientImpl.wechatThirdPartyConfig.getComponentAccessToken())) {
             WechatThirdPartyClientImpl.wechatThirdPartyConfig.setComponentAccessToken(wechatThirdPartyClient.refreshComponentAccessToken().getComponentAccessToken());
@@ -94,9 +94,9 @@ public class WechatThirdPartyServiceImpl implements InitializingBean, WechatThri
         //保存到数据库
         componentVerifyTicketMapper.insert(new ComponentVerifyTicket() {
             {
-                setComponentVerifyTicket(ticketDecryptingBean.getComponentVerifyTicket());
-                setCreateTime(new Timestamp(Long.parseLong(ticketDecryptingBean.getCreateTime()) * 1000));
-                setComponentAppid(ticketDecryptingBean.getAppId());
+                setComponentVerifyTicket(xmlDecryptingBean.getComponentVerifyTicket());
+                setCreateTime(new Timestamp(Long.parseLong(xmlDecryptingBean.getCreateTime()) * 1000));
+                setComponentAppid(xmlDecryptingBean.getAppId());
                 setDeadline(new Timestamp(System.currentTimeMillis() + (60 * 60 * 1000)));
             }
         });
@@ -139,6 +139,7 @@ public class WechatThirdPartyServiceImpl implements InitializingBean, WechatThri
                 setServiceTypeInfo(authorizerInfoBean.getAuthorizerInfo().getServiceTypeInfo().getId());
                 setVerifyTypeInfo(authorizerInfoBean.getAuthorizerInfo().getVerifyTypeInfo().getId());
                 setUserName(authorizerInfoBean.getAuthorizerInfo().getUserName());
+                setAuthorizationStatus(AuthorizationStatusEnum.AUTHORIZED.key());
             }
         };
         if(info!=null){
@@ -163,14 +164,14 @@ public class WechatThirdPartyServiceImpl implements InitializingBean, WechatThri
         }).collect(Collectors.toList());
         funcInfoMapper.batchInsert(funcInfoList);
         //保存公众号的商业信息
-       /* Integer businessInfoNum = businessInfoMapper.delete(new BusinessInfo(){
+       Integer businessInfoNum = businessInfoMapper.delete(new BusinessInfo(){
             {
                 setAuthorizerInfoId(authorizerInfo.getId());
             }
         });
         logger.info("删除旧的商业信息："+ businessInfoNum);
         List<BusinessInfo> businessInfoList = Stream.of(new BusinessInfo(IdWorker.getId(),authorizerInfo.getId(),BusinessInfoEnum.OPEN_CARD.key(),authorizerInfoBean.getAuthorizerInfo().getBusinessInfoBean().getOpenCard()),new BusinessInfo(IdWorker.getId(),authorizerInfo.getId(),BusinessInfoEnum.OPEN_PAY.key(),authorizerInfoBean.getAuthorizerInfo().getBusinessInfoBean().getOpenPay()),new BusinessInfo(IdWorker.getId(),authorizerInfo.getId(),BusinessInfoEnum.OPEN_SCAN.key(),authorizerInfoBean.getAuthorizerInfo().getBusinessInfoBean().getOpenScan()),new BusinessInfo(IdWorker.getId(),authorizerInfo.getId(),BusinessInfoEnum.OPEN_SHAKE.key(),authorizerInfoBean.getAuthorizerInfo().getBusinessInfoBean().getOpenShake()),new BusinessInfo(IdWorker.getId(),authorizerInfo.getId(),BusinessInfoEnum.OPEN_STORE.key(),authorizerInfoBean.getAuthorizerInfo().getBusinessInfoBean().getOpenStore())).collect(Collectors.toList());
-        businessInfoMapper.batchInsert(businessInfoList);*/
+        businessInfoMapper.batchInsert(businessInfoList);
         logger.info(funcInfoList.toString());
         return authorizerInfoBean;
     }
@@ -186,6 +187,15 @@ public class WechatThirdPartyServiceImpl implements InitializingBean, WechatThri
         return wechatThirdPartyClient.getAuthOrizationUrl(wechatThirdPartyClient.getPreAuthCode().getPreAuthCode());
     }
 
+
+
+    /**
+     * 用户取消授权，变更授权状态为取消
+     */
+    public void changeAuthorizationStatus(String authorizerAppid){
+           logger.info("修改状态");
+           authorizerInfoMapper.updateAuthorizationStatus(AuthorizationStatusEnum.UNAUTHORIZED.key(),authorizerAppid);
+    }
 
 
 

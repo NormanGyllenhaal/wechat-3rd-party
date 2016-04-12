@@ -1,7 +1,7 @@
 package site.lovecode.service;
 
 import site.lovecode.support.bean.AuthorizerInfoBean;
-import site.lovecode.support.bean.TicketDecryptingBean;
+import site.lovecode.support.bean.XmlDecryptingBean;
 
 import java.io.IOException;
 
@@ -13,9 +13,9 @@ public interface WechatThridPartyService {
     /**
      * 保存 component_verify_ticket
      *
-     * @param ticketDecryptingBean
+     * @param xmlDecryptingBean
      */
-    public void saveComponentVerifyTicket(TicketDecryptingBean ticketDecryptingBean);
+    public void saveComponentVerifyTicket(XmlDecryptingBean xmlDecryptingBean);
 
 
     /**
@@ -34,4 +34,12 @@ public interface WechatThridPartyService {
      * @throws IOException
      */
     public String  getCompoentLoginUrl() throws IOException;
+
+
+    /**
+     *
+     * 用户取消授权，变更授权状态为取消
+     * @param authorizerAppid
+     */
+    public void changeAuthorizationStatus(String authorizerAppid);
 }

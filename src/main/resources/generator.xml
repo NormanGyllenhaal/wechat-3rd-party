@@ -44,7 +44,7 @@
                              targetProject="C:\Users\Administrator\IdeaProjects\weixin-tool\src\main\java"/>
 
 
-        <table tableName="WX_BUSINESS_INFO" domainObjectName="BusinessInfo">
+        <table tableName="WX_AUTHORIZER_INFO" domainObjectName="AuthorizerInfo">
             <property name="useActualColumnNames" value="true"/>
         </table>
         <!--
@@ -57,10 +57,9 @@
         <table tableName="wx_wechat_third_party_config" domainObjectName="WechatThirdPartyConfig">
             <property name="useActualColumnNames" value="true"/>
         </table>
-        <table tableName="WX_AUTHORIZRE_INFO" domainObjectName="AuthorizerInfo">
+         <table tableName="WX_BUSINESS_INFO" domainObjectName="BusinessInfo">
             <property name="useActualColumnNames" value="true"/>
         </table>
-
         <table tableName="WX_COMPONENT_ACCESS_TOKEN" domainObjectName="ComponentAccessToken">
             <property name="useActualColumnNames" value="true"/>
         </table>

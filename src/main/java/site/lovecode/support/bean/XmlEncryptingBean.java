@@ -10,7 +10,7 @@ import java.io.Serializable;
  * Created by Administrator on 2016/4/1.
  */
 @XStreamAlias("xml")
-public class TicketEncryptingBean implements Serializable {
+public class XmlEncryptingBean implements Serializable {
 
     @XStreamAlias("AppId")
     @XStreamConverter(value=XStreamCDataConverter.class)
@@ -39,7 +39,7 @@ public class TicketEncryptingBean implements Serializable {
 
     @Override
     public String toString() {
-        return "TicketEncryptingBean{" +
+        return "XmlEncryptingBean{" +
                 "appId='" + appId + '\'' +
                 ", encrypt='" + encrypt + '\'' +
                 '}';

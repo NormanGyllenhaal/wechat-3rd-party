@@ -15,7 +15,11 @@
     <result column="alias" jdbcType="VARCHAR" property="alias" />
     <result column="qrcodeUrl" jdbcType="VARCHAR" property="qrcodeUrl" />
     <result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="authorizationStatus" jdbcType="TINYINT" property="authorizationStatus" />
   </resultMap>
 
+  <update id="updateAuthorizationStatus">
+     update wx_authorizer_info set authorizationStatus = #{authorizationStatus} where authorizerAppid = #{authorizerAppid}
+  </update>
 
 </mapper>
