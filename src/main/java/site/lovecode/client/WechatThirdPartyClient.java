@@ -59,6 +59,15 @@ public interface WechatThirdPartyClient {
 
 
     /**
+     * 获取（刷新）授权公众号的接口调用凭据（令牌）
+     * @param authorizerAppid
+     * @param authorizerRefreshToken
+     * @return
+     */
+    public AuthorizerTokenBean refreshAuthorizerToken(String authorizerAppid,String authorizerRefreshToken);
+
+
+    /**
      * 获取授权方的选项设置信息
      * @param authorizerAppid
      * @param optionName
@@ -73,8 +82,6 @@ public interface WechatThirdPartyClient {
      * @param maps
      */
      public void setAuthorizerOption(String authorizerAppid,Map<String,String> maps);
-
-
 
 
 

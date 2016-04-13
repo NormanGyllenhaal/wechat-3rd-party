@@ -130,6 +130,23 @@ public class WechatThirdPartyClientImpl implements WechatThirdPartyClient {
         }.toJSONString()), AuthorizerInfoBean.class);
     }
 
+    /**
+     * 获取（刷新）授权公众号的接口调用凭据（令牌）
+     * @param authorizerAppid
+     * @param authorizerRefreshToken
+     * @return
+     */
+    @Override
+    public AuthorizerTokenBean refreshAuthorizerToken(String authorizerAppid, String authorizerRefreshToken) {
+        return JSON.parseObject(HttpUtil.doPostSSL(Stream.of(WechatUrlConstant.API_AUTHORIZER_TOKEN,wechatThirdPartyConfig.getComponentAccessToken()).reduce("",String::concat),new JSONObject(){
+            {
+                put(WechatParameterConstant.COMPONENT_APPID,wechatThirdPartyConfig.getComponentAppid());
+                put(WechatParameterConstant.AUTHORIZER_APPID,authorizerAppid);
+                put(WechatParameterConstant.AUTHORIZER_REFRESH_TOKEN,authorizerRefreshToken);
+            }
+        }.toJSONString()),AuthorizerTokenBean.class);
+    }
+
 
     /**
      * 获取授权方的选项设置信息

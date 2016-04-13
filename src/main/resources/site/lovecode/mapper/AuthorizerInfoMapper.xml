@@ -22,4 +22,5 @@
      update wx_authorizer_info set authorizationStatus = #{authorizationStatus} where authorizerAppid = #{authorizerAppid}
   </update>
 
+
 </mapper>

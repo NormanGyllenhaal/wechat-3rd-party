@@ -110,20 +110,9 @@ public class WechatThirdPartyServiceImpl implements InitializingBean, WechatThri
      */
     public AuthorizerInfoBean saveAuthorizerInfo(String authCode) throws Exception {
         QueryAuthBean queryAuthBean = wechatThirdPartyClient.queryAuth(authCode);
-        //保存公众号的access_token信息
-        UserAccessToken userAccessToken = userAccessTokenMapper.selectOne(new UserAccessToken(){
-            {
-                setAuthorizerAppid(queryAuthBean.getAuthOrizationInfo().getAuthorizerAppid());
-            }
-        });
-        UserAccessToken newUserAccessToken = new UserAccessToken(queryAuthBean.getAuthOrizationInfo().getAuthorizerAppid(),queryAuthBean.getAuthOrizationInfo().getAuthorizerAccessToken(),queryAuthBean.getAuthOrizationInfo().getExpriesIn(),queryAuthBean.getAuthOrizationInfo().getAuthorizerRefreshToken(),new Timestamp(System.currentTimeMillis()));
-        if(userAccessToken!=null){
-            newUserAccessToken.setId(userAccessToken.getId());
-        }
 
-        AuthorizerInfoBean authorizerInfoBean = wechatThirdPartyClient.getAuthorizerInfo(queryAuthBean.getAuthOrizationInfo().getAuthorizerAppid());
         //保存公众号基本信息
-
+        AuthorizerInfoBean authorizerInfoBean = wechatThirdPartyClient.getAuthorizerInfo(queryAuthBean.getAuthOrizationInfo().getAuthorizerAppid());
         AuthorizerInfo info = authorizerInfoMapper.selectOne(new AuthorizerInfo(){
             {
                 setAuthorizerAppid(queryAuthBean.getAuthOrizationInfo().getAuthorizerAppid());
@@ -147,6 +136,19 @@ public class WechatThirdPartyServiceImpl implements InitializingBean, WechatThri
         }
         authorizerInfoMapper.replace(authorizerInfo);
         logger.info(authorizerInfo.toString());
+
+        //保存公众号的access_token信息
+        UserAccessToken userAccessToken = userAccessTokenMapper.selectOne(new UserAccessToken(){
+            {
+                setAuthorizerAppid(queryAuthBean.getAuthOrizationInfo().getAuthorizerAppid());
+            }
+        });
+        UserAccessToken newUserAccessToken = new UserAccessToken(authorizerInfo.getId(),queryAuthBean.getAuthOrizationInfo().getAuthorizerAppid(),queryAuthBean.getAuthOrizationInfo().getAuthorizerAccessToken(),queryAuthBean.getAuthOrizationInfo().getExpriesIn(),queryAuthBean.getAuthOrizationInfo().getAuthorizerRefreshToken(),new Timestamp(System.currentTimeMillis()));
+        if(userAccessToken!=null){
+            newUserAccessToken.setId(userAccessToken.getId());
+        }
+        userAccessTokenMapper.replace(newUserAccessToken);
+
 
         //保存公众号的权限信息
         Integer num = funcInfoMapper.delete(new FuncInfo(){

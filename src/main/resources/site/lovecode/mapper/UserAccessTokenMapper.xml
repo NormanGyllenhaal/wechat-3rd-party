@@ -6,10 +6,14 @@
       WARNING - @mbggenerated
     -->
     <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="authorizerInfoId" jdbcType="BIGINT" property="authorizerInfoId" />
     <result column="authorizerAppid" jdbcType="VARCHAR" property="authorizerAppid" />
     <result column="authorizerAccessToken" jdbcType="VARCHAR" property="authorizerAccessToken" />
     <result column="expiresIn" jdbcType="INTEGER" property="expiresIn" />
     <result column="authorizerRefreshToken" jdbcType="VARCHAR" property="authorizerRefreshToken" />
     <result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
+  <update id="updateToken" parameterType="site.lovecode.entity.UserAccessToken">
+    update wx_user_access_token set authorizerAccessToken = #{authorizerAccessToken} ,authorizerRefreshToken = #{authorizerRefreshToken},createTime = #{createTime} where authorizerAppid = #{authorizerAppid}
+  </update>
 </mapper>

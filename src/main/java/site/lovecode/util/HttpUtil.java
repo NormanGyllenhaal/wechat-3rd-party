@@ -24,6 +24,8 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLException;
@@ -52,6 +54,9 @@ public class HttpUtil {
     private static PoolingHttpClientConnectionManager connMgr;
     private static RequestConfig requestConfig;
     private static final int MAX_TIMEOUT = 7000;
+
+
+    private static Logger logger = LoggerFactory.getLogger(HttpUtil.class);
 
     static {
         // 设置连接池

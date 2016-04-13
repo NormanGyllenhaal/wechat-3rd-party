@@ -1,17 +1,15 @@
 package site.lovecode.controller;
 
-import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.mp.bean.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.WxMpXmlOutMessage;
-import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
-import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import site.lovecode.client.WechatClient;
+import site.lovecode.service.WechatService;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -26,8 +24,7 @@ public class WechatController {
 
 
     @Resource
-    private WechatClient wechatClient;
-
+    private WechatService wechatService;
 
     private Logger logger  = LoggerFactory.getLogger(WechatController.class);
 
@@ -39,7 +36,8 @@ public class WechatController {
      */
     @RequestMapping(value = "/getUserInfo.html")
     public ModelAndView getUserInfo(Model model, String code) {
-        try {
+
+        /*try {
             WxMpOAuth2AccessToken wxMpOAuth2AccessToken;
             wxMpOAuth2AccessToken = wechatClient.getWxMpService().oauth2getAccessToken(code);
             logger.info(wxMpOAuth2AccessToken.toString());
@@ -49,7 +47,15 @@ public class WechatController {
         } catch (WxErrorException e) {
             e.printStackTrace();
         }
-        return new ModelAndView("userinfo");
+        return new ModelAndView("userinfo");*/
+        return null;
+    }
+
+    @RequestMapping(value="/getAccessToken.html")
+    @ResponseBody
+    public String getAccessToken(Model model){
+        wechatService.getAccessToken();
+        return "success";
     }
 
 

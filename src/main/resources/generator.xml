@@ -44,10 +44,13 @@
                              targetProject="C:\Users\Administrator\IdeaProjects\weixin-tool\src\main\java"/>
 
 
-        <table tableName="WX_AUTHORIZER_INFO" domainObjectName="AuthorizerInfo">
+        <table tableName="WX_USER_ACCESS_TOKEN" domainObjectName="UserAccessToken">
             <property name="useActualColumnNames" value="true"/>
         </table>
         <!--
+        <table tableName="WX_AUTHORIZER_INFO" domainObjectName="AuthorizerInfo">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
         <table tableName="wx_user_info" domainObjectName="UserInfo">
             <property name="useActualColumnNames" value="true"/>
         </table>

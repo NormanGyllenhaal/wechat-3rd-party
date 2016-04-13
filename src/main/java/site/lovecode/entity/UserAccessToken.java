@@ -8,8 +8,9 @@ import site.lovecode.common.mybatis.Identity;
 @Table(name = "wx_user_access_token")
 public class UserAccessToken implements Identity, Serializable {
 
-    public UserAccessToken(Long id, String authorizerAppid, String authorizerAccessToken, Integer expiresIn, String authorizerRefreshToken, Date createTime) {
+    public UserAccessToken(Long id, Long authorizerInfoId, String authorizerAppid, String authorizerAccessToken, Integer expiresIn, String authorizerRefreshToken, Date createTime) {
         this.id = id;
+        this.authorizerInfoId = authorizerInfoId;
         this.authorizerAppid = authorizerAppid;
         this.authorizerAccessToken = authorizerAccessToken;
         this.expiresIn = expiresIn;
@@ -17,7 +18,8 @@ public class UserAccessToken implements Identity, Serializable {
         this.createTime = createTime;
     }
 
-    public UserAccessToken(String authorizerAppid, String authorizerAccessToken, Integer expiresIn, String authorizerRefreshToken, Date createTime) {
+    public UserAccessToken(Long authorizerInfoId, String authorizerAppid, String authorizerAccessToken, Integer expiresIn, String authorizerRefreshToken, Date createTime) {
+        this.authorizerInfoId = authorizerInfoId;
         this.authorizerAppid = authorizerAppid;
         this.authorizerAccessToken = authorizerAccessToken;
         this.expiresIn = expiresIn;
@@ -28,14 +30,16 @@ public class UserAccessToken implements Identity, Serializable {
     public UserAccessToken() {
     }
 
-
-
-
     /**
      * 主键
      */
     @Id
     private Long id;
+
+    /**
+     * 关联微信公众号基本信息id
+     */
+    private Long authorizerInfoId;
 
     /**
      * 授权方appid
@@ -80,6 +84,24 @@ public class UserAccessToken implements Identity, Serializable {
      */
     public void setId(Long id) {
         this.id = id;
+    }
+
+    /**
+     * 获取关联微信公众号基本信息id
+     *
+     * @return authorizerInfoId - 关联微信公众号基本信息id
+     */
+    public Long getAuthorizerInfoId() {
+        return authorizerInfoId;
+    }
+
+    /**
+     * 设置关联微信公众号基本信息id
+     *
+     * @param authorizerInfoId 关联微信公众号基本信息id
+     */
+    public void setAuthorizerInfoId(Long authorizerInfoId) {
+        this.authorizerInfoId = authorizerInfoId;
     }
 
     /**
@@ -179,6 +201,7 @@ public class UserAccessToken implements Identity, Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
+        sb.append(", authorizerInfoId=").append(authorizerInfoId);
         sb.append(", authorizerAppid=").append(authorizerAppid);
         sb.append(", authorizerAccessToken=").append(authorizerAccessToken);
         sb.append(", expiresIn=").append(expiresIn);
@@ -188,4 +211,5 @@ public class UserAccessToken implements Identity, Serializable {
         sb.append("]");
         return sb.toString();
     }
+
 }

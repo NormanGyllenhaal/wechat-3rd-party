@@ -1,96 +1,63 @@
 package site.lovecode.client.impl;
 
-import me.chanjar.weixin.common.api.WxConsts;
-import me.chanjar.weixin.common.bean.WxMenu;
 import me.chanjar.weixin.common.exception.WxErrorException;
-import me.chanjar.weixin.mp.api.WxMpInMemoryConfigStorage;
-import me.chanjar.weixin.mp.api.WxMpMessageRouter;
-import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.WxMpServiceImpl;
-import me.chanjar.weixin.mp.bean.WxMpCustomMessage;
-import me.chanjar.weixin.mp.bean.WxMpXmlMessage;
-import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import site.lovecode.client.WechatClient;
+import site.lovecode.client.WechatThirdPartyClient;
+import site.lovecode.entity.UserAccessToken;
+import site.lovecode.mapper.UserAccessTokenMapper;
+import site.lovecode.support.bean.AuthorizerTokenBean;
+import site.lovecode.support.bean.config.WechatConfig;
+
+import javax.annotation.Resource;
+import java.sql.Timestamp;
+import java.util.Map;
+
 
 /**
  * Created by Administrator on 2016/3/30.
  */
-@Service
-public class WechatClientImpl implements WechatClient {
+@Service("wxMpService")
+public class WechatClientImpl extends WxMpServiceImpl {
 
     private Logger logger = LoggerFactory.getLogger(WechatClientImpl.class);
 
-    @Override
-    public String getAccessToken(String apWpid, String appsecret) throws Exception {
-        return null;
-    }
+    @Resource
+    private WechatThirdPartyClient wechatThirdPartyClient;
 
-    @Override
-    public String getOpenId(String appid, String secret, String code) throws Exception {
-        return null;
-    }
+    @Resource
+    private UserAccessTokenMapper userAccessTokenMapper;
 
-    @Override
-    public String getUser(String access_token, String openid) throws Exception {
-        return null;
-    }
+    public  static Map<Long,WechatConfig> wechatConfigMap;
+
 
 
     @Override
-    public WxMpService getWxMpService() {
-        WxMpInMemoryConfigStorage config = new WxMpInMemoryConfigStorage();
-        config.setAppId("wxa0803d1acc6a603a"); // 设置微信公众号的appid
-        config.setSecret("706702fb42c55f793ddb6b206ec4f348"); // 设置微信公众号的app corpSecret
-        config.setToken("..."); // 设置微信公众号的token
-        config.setAesKey("..."); // 设置微信公众号的EncodingAESKey
-        config.setOauth2redirectUri("http://310517fd.nat123.net/weixin-tool-1.0-SNAPSHOT/getUserInfo.html");
-        WxMpService wxService = new WxMpServiceImpl();
-        wxService.setWxMpConfigStorage(config);
-        return wxService;
-    }
-
-
-    public WxMpService getWxMpService(String appId,String secret,String token,String aeskey){
-        WxMpInMemoryConfigStorage config = new WxMpInMemoryConfigStorage();
-        config.setAppId(appId); // 设置微信公众号的appid
-        config.setSecret(secret); // 设置微信公众号的app corpSecret
-        config.setToken(token); // 设置微信公众号的token
-        config.setAesKey(aeskey); // 设置微信公众号的EncodingAESKey
-        WxMpService wxService = new WxMpServiceImpl();
-        wxService.setWxMpConfigStorage(config);
-        return wxService;
-    }
-
-    @Override
-    public Boolean setMenu(WxMenu wxMenu) {
-        try {
-            getWxMpService().menuCreate(wxMenu);
-            return true;
-        } catch (WxErrorException e) {
-            e.printStackTrace();
-            return false;
+    public String getAccessToken(boolean forceRefresh) throws WxErrorException {
+        if (forceRefresh) {
+            wxMpConfigStorage.expireAccessToken();
         }
+        if (wxMpConfigStorage.isAccessTokenExpired()) {
+            synchronized (globalAccessTokenRefreshLock) {
+                if (wxMpConfigStorage.isAccessTokenExpired()) {
+                    WechatConfig wechatConfig = (WechatConfig) wxMpConfigStorage;
+                    AuthorizerTokenBean authorizerTokenBean = wechatThirdPartyClient.refreshAuthorizerToken(wechatConfig.getAppId(),wechatConfig.getRefreshToken());
+                    wxMpConfigStorage.updateAccessToken(authorizerTokenBean.getAuthorizerAccessToken(), authorizerTokenBean.getExpiresIn());
+                    logger.info("更新数据库中的值");
+                    userAccessTokenMapper.updateToken(new UserAccessToken(){
+                        {
+                             setAuthorizerAppid(wechatConfig.getAppId());
+                             setCreateTime(new Timestamp(System.currentTimeMillis()));
+                             setAuthorizerRefreshToken(authorizerTokenBean.getAuthorizerRefreshToken());
+                             setAuthorizerAccessToken(authorizerTokenBean.getAuthorizerAccessToken());
+                        }
+                    });
 
+                }
+            }
+        }
+        return wxMpConfigStorage.getAccessToken();
     }
-
-
-    public WxMenu getMenu() throws WxErrorException {
-        return getWxMpService().menuGet();
-    }
-
-
-    public void setMessage(String openId) throws WxErrorException {
-        WxMpCustomMessage message = WxMpCustomMessage
-                .TEXT()
-                .toUser(openId)
-                .content("what's the matter")
-                .build();
-        getWxMpService().customMessageSend(message);
-    }
-
-
-
 }

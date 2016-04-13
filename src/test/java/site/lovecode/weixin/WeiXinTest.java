@@ -13,7 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
-import site.lovecode.client.WechatClient;
 import site.lovecode.client.WechatThirdPartyClient;
 
 import site.lovecode.entity.FuncInfo;
@@ -41,7 +40,6 @@ public class WeiXinTest {
     private ApplicationContext ctx = new FileSystemXmlApplicationContext("classpath*:applicationContext-*.xml");
 
 
-    WechatClient wechatClient = (WechatClient) ctx.getBean("wechatClientImpl");
 
     WechatThirdPartyClient wechatThirdPartyClient = (WechatThirdPartyClient) ctx.getBean("wechatThirdPartyClientImpl");
 
@@ -96,40 +94,6 @@ public class WeiXinTest {
     }
 
 
-    /**
-     * 测试增加菜单
-     */
-    //@Test
-    public void testSetMenu() {
-        String url = wechatClient.getWxMpService().oauth2buildAuthorizationUrl(WxConsts.OAUTH2_SCOPE_USER_INFO, null);
-        logger.info(url);
-        String json = "{\"menu\":{\"button\":[{\"type\":\"click\",\"name\":\"新的测试\",\"key\":\"哇哈哈哈哈啊\",\"sub_button\":[]},{\"type\":\"click\",\"name\":\"测试哇哈哈\",\"key\":\"V1001_TODAY_SINGER\",\"sub_button\":[]},{\"name\":\"二级菜单\",\"sub_button\":[{\"type\":\"view\",\"name\":\"测试授权\",\"url\":\""+url+"\",\"sub_button\":[]},{\"type\":\"view\",\"name\":\"视频\",\"url\":\"http://v.qq.com/\",\"sub_button\":[]},{\"type\":\"click\",\"name\":\"赞一下我们\",\"key\":\"V1001_GOOD\",\"sub_button\":[]}]}]}}";
-        Boolean result = wechatClient.setMenu(WxMenu.fromJson(json));
-        logger.info(result.toString());
-    }
-
-
-    /**
-     * 获取菜单
-     */
-    //@Test
-    public void testGetMen() {
-        WechatClient wechatClient = (WechatClient) ctx.getBean("wechatClientImpl");
-
-    }
-
-
-    /**
-     * 主动发送消息
-     */
-    //@Test
-    public void setMessage() {
-        try {
-            wechatClient.setMessage("oGRG5t8PNCWlZDT4jFBt7hXUmZnM");
-        } catch (WxErrorException e) {
-            e.printStackTrace();
-        }
-    }
 
     //@Test
     public void testXml(){

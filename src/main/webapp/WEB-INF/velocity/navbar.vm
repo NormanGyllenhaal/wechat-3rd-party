@@ -5,7 +5,8 @@
 
                 <li class="dropdown notifications hidden-xs">
 
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span aria-hidden="true" class="se7en-flag"></span>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span aria-hidden="true"
+                                                                                     class="se7en-flag"></span>
                         <div class="sr-only">
                             通知
                         </div>
@@ -53,7 +54,8 @@
                     </ul>
                 </li>
                 <li class="dropdown messages hidden-xs">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span aria-hidden="true" class="se7en-envelope"></span>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span aria-hidden="true"
+                                                                                     class="se7en-envelope"></span>
                         <div class="sr-only">
                             消息
                         </div>
@@ -63,18 +65,19 @@
                     </a>
                     <ul class="dropdown-menu messages">
                         <li><a href="#">
-                            <img width="34" height="34" src="images/avatar-male2.png" />我们可以见面吗？我想...</a>
+                            <img width="34" height="34" src="images/avatar-male2.png"/>我们可以见面吗？我想...</a>
                         </li>
                         <li><a href="#">
-                            <img width="34" height="34" src="images/avatar-female.png" />重要的数据需要分析...</a>
+                            <img width="34" height="34" src="images/avatar-female.png"/>重要的数据需要分析...</a>
                         </li>
                         <li><a href="#">
-                            <img width="34" height="34" src="images/avatar-male2.png" />Se7en是一款不错的主题。</a>
+                            <img width="34" height="34" src="images/avatar-male2.png"/>Se7en是一款不错的主题。</a>
                         </li>
                     </ul>
                 </li>
                 <li class="dropdown settings hidden-xs">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span aria-hidden="true" class="se7en-gear"></span>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span aria-hidden="true"
+                                                                                     class="se7en-gear"></span>
                         <div class="sr-only">
                             设置
                         </div>
@@ -84,13 +87,16 @@
                             <a class="settings-link blue" href="javascript:chooseStyle('none', 30)"><span></span>蓝色</a>
                         </li>
                         <li>
-                            <a class="settings-link green" href="javascript:chooseStyle('green-theme', 30)"><span></span>绿色</a>
+                            <a class="settings-link green"
+                               href="javascript:chooseStyle('green-theme', 30)"><span></span>绿色</a>
                         </li>
                         <li>
-                            <a class="settings-link orange" href="javascript:chooseStyle('orange-theme', 30)"><span></span>橘黄色</a>
+                            <a class="settings-link orange"
+                               href="javascript:chooseStyle('orange-theme', 30)"><span></span>橘黄色</a>
                         </li>
                         <li>
-                            <a class="settings-link magenta" href="javascript:chooseStyle('magenta-theme', 30)"><span></span>品红</a>
+                            <a class="settings-link magenta"
+                               href="javascript:chooseStyle('magenta-theme', 30)"><span></span>品红</a>
                         </li>
                         <li>
                             <a class="settings-link gray" href="javascript:chooseStyle('gray-theme', 30)"><span></span>灰色</a>
@@ -98,7 +104,7 @@
                     </ul>
                 </li>
                 <li class="dropdown user hidden-xs"><a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                    <img width="34" height="34" src="images/avatar-male.jpg" />管理员<b class="caret"></b></a>
+                    <img width="34" height="34" src="images/avatar-male.jpg"/>管理员<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><a href="#">
                             <i class="icon-user"></i>我的账户</a>
@@ -113,7 +119,9 @@
                 </li>
             </ul>
         </div>
-        <button class="navbar-toggle"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="logo" href="index.vm">se7en</a>
+        <button class="navbar-toggle"><span class="icon-bar"></span><span class="icon-bar"></span><span
+                class="icon-bar"></span></button>
+        <a class="logo" href="index.vm">se7en</a>
         <form class="navbar-form form-inline col-lg-2 hidden-xs">
             <input class="form-control" placeholder="搜索" type="text">
         </form>
@@ -122,13 +130,13 @@
         <div class="nav-collapse">
             <ul class="nav">
                 <li>
-                    <a class="current" href="index.vm"><span aria-hidden="true" class="se7en-home"></span>控制台</a>
+                    <a class="current" href="index.vm"><span aria-hidden="true" class="se7en-home"></span>首页</a>
                 </li>
                 <li><a href="social.html">
-                    <span aria-hidden="true" class="se7en-feed"></span>社交订阅</a>
+                    <span aria-hidden="true" class="se7en-feed"></span>群发功能</a>
                 </li>
                 <li class="dropdown"><a data-toggle="dropdown" href="#">
-                    <span aria-hidden="true" class="se7en-star"></span>特色<b class="caret"></b></a>
+                    <span aria-hidden="true" class="se7en-star"></span>自动回复<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
                             <a href="buttons.html">按钮</a>
@@ -158,7 +166,7 @@
                     </ul>
                 </li>
                 <li class="dropdown"><a data-toggle="dropdown" href="#">
-                    <span aria-hidden="true" class="se7en-forms"></span>表单<b class="caret"></b></a>
+                    <span aria-hidden="true" class="se7en-forms"></span>自定义菜单<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><a href="form-components.html">
                             <span class="notifications label label-warning">新</span>
@@ -173,7 +181,7 @@
                     </ul>
                 </li>
                 <li class="dropdown"><a data-toggle="dropdown" href="#">
-                    <span aria-hidden="true" class="se7en-tables"></span>表格<b class="caret"></b></a>
+                    <span aria-hidden="true" class="se7en-tables"></span>消息管理<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
                             <a href="tables.html">基本表格</a>
@@ -193,10 +201,10 @@
                     </ul>
                 </li>
                 <li><a href="charts.html">
-                    <span aria-hidden="true" class="se7en-charts"></span>图表</a>
+                    <span aria-hidden="true" class="se7en-charts"></span>用户管理</a>
                 </li>
                 <li class="dropdown"><a data-toggle="dropdown" href="#">
-                    <span aria-hidden="true" class="se7en-pages"></span>页面<b class="caret"></b></a>
+                    <span aria-hidden="true" class="se7en-pages"></span>素材管理<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><a href="chat.html">
                             <span class="notifications label label-warning">新</span>
@@ -257,7 +265,7 @@
                     </ul>
                 </li>
                 <li><a href="gallery.html">
-                    <span aria-hidden="true" class="se7en-gallery"></span>相册</a>
+                    <span aria-hidden="true" class="se7en-gallery"></span>数据统计</a>
                 </li>
                 <li><a href="docs/index.html" target="_blank">
                     <span aria-hidden="true" class="se7en-doc"></span>帮助文档</a>
