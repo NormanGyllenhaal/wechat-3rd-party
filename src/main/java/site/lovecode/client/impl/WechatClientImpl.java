@@ -6,8 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import site.lovecode.client.WechatThirdPartyClient;
-import site.lovecode.entity.UserAccessToken;
-import site.lovecode.mapper.UserAccessTokenMapper;
+import site.lovecode.entity.AuthorizerAccessToken;
+import site.lovecode.mapper.AuthorizerAccessTokenMapper;
 import site.lovecode.support.bean.AuthorizerTokenBean;
 import site.lovecode.support.bean.config.WechatConfig;
 
@@ -28,7 +28,7 @@ public class WechatClientImpl extends WxMpServiceImpl {
     private WechatThirdPartyClient wechatThirdPartyClient;
 
     @Resource
-    private UserAccessTokenMapper userAccessTokenMapper;
+    private AuthorizerAccessTokenMapper authorizerAccessTokenMapper;
 
     public  static Map<Long,WechatConfig> wechatConfigMap;
 
@@ -46,7 +46,7 @@ public class WechatClientImpl extends WxMpServiceImpl {
                     AuthorizerTokenBean authorizerTokenBean = wechatThirdPartyClient.refreshAuthorizerToken(wechatConfig.getAppId(),wechatConfig.getRefreshToken());
                     wxMpConfigStorage.updateAccessToken(authorizerTokenBean.getAuthorizerAccessToken(), authorizerTokenBean.getExpiresIn());
                     logger.info("更新数据库中的值");
-                    userAccessTokenMapper.updateToken(new UserAccessToken(){
+                    authorizerAccessTokenMapper.updateToken(new AuthorizerAccessToken(){
                         {
                              setAuthorizerAppid(wechatConfig.getAppId());
                              setCreateTime(new Timestamp(System.currentTimeMillis()));

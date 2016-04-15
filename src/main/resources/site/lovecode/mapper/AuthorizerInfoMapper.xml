@@ -6,12 +6,9 @@
       WARNING - @mbggenerated
     -->
     <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="officialAccountId" jdbcType="BIGINT" property="officialAccountId" />
     <result column="authorizerAppid" jdbcType="VARCHAR" property="authorizerAppid" />
-    <result column="nickName" jdbcType="VARCHAR" property="nickName" />
     <result column="headImg" jdbcType="VARCHAR" property="headImg" />
-    <result column="serviceTypeInfo" jdbcType="TINYINT" property="serviceTypeInfo" />
-    <result column="verifyTypeInfo" jdbcType="TINYINT" property="verifyTypeInfo" />
-    <result column="userName" jdbcType="VARCHAR" property="userName" />
     <result column="alias" jdbcType="VARCHAR" property="alias" />
     <result column="qrcodeUrl" jdbcType="VARCHAR" property="qrcodeUrl" />
     <result column="createTime" jdbcType="TIMESTAMP" property="createTime" />

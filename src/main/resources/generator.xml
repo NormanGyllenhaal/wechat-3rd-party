@@ -16,7 +16,7 @@
 
 
         <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
-            <property name="mappers" value="tk.mybatis.mapper.common.Mapper"/>
+            <property name="mappers" value="site.lovecode.common.mybatis.CommonMapper"/>
             <!-- caseSensitive默认false，当数据库表名区分大小写时，可以将该属性设置为true -->
             <property name="caseSensitive" value="true"/>
         </plugin>
@@ -44,37 +44,103 @@
                              targetProject="C:\Users\Administrator\IdeaProjects\weixin-tool\src\main\java"/>
 
 
-        <table tableName="WX_USER_ACCESS_TOKEN" domainObjectName="UserAccessToken">
+
+        <table tableName="WX_AUTHORIZER_ACCESS_TOKEN" domainObjectName="AuthorizerAccessToken">
             <property name="useActualColumnNames" value="true"/>
         </table>
-        <!--
+
+       <!-- <table tableName="WX_ARTICLE_SHARE_DAY" domainObjectName="ArticleShareDay">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table tableName="WX_ARTICLE_DAY" domainObjectName="ArticleDay">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table tableName="WX_ARTICLE_HOUR" domainObjectName="ArticleHour">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table tableName="WX_ARTICLE_SHARE_HOUR" domainObjectName="ArticleShareHour">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table tableName="WX_AUTHENTICATION_MESSAGE" domainObjectName="AuthenticationMessage">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
         <table tableName="WX_AUTHORIZER_INFO" domainObjectName="AuthorizerInfo">
             <property name="useActualColumnNames" value="true"/>
         </table>
-        <table tableName="wx_user_info" domainObjectName="UserInfo">
-            <property name="useActualColumnNames" value="true"/>
-        </table>
-        <table tableName="wx_component_verify_ticket" domainObjectName="ComponentVerifyTicket">
-            <property name="useActualColumnNames" value="true"/>
-        </table>
-        <table tableName="wx_wechat_third_party_config" domainObjectName="WechatThirdPartyConfig">
-            <property name="useActualColumnNames" value="true"/>
-        </table>
-         <table tableName="WX_BUSINESS_INFO" domainObjectName="BusinessInfo">
+        <table tableName="WX_BUSINESS_INFO" domainObjectName="BusinessInfo">
             <property name="useActualColumnNames" value="true"/>
         </table>
         <table tableName="WX_COMPONENT_ACCESS_TOKEN" domainObjectName="ComponentAccessToken">
             <property name="useActualColumnNames" value="true"/>
         </table>
+        <table tableName="wx_component_verify_ticket" domainObjectName="ComponentVerifyTicket">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table tableName="WX_CUSTOM_SERVICE" domainObjectName="CustomService">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table tableName="WX_EVENT" domainObjectName="Event">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
         <table tableName="WX_FUNC_INFO" domainObjectName="FuncInfo">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table tableName="WX_INTERFACE_SUMMARY" domainObjectName="InterfaceSummary">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table tableName=" WX_INTERFACE_SUMMARY_HOUR" domainObjectName="InterfaceSummaryHour">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table tableName="WX_MASS_MESSAGE" domainObjectName="MassMessage">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table tableName="WX_MEDIA" domainObjectName="Media">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table tableName="WX_MESSAGE" domainObjectName="Message">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table tableName="WX_MESSAGE_DISTRIBUTION_DAY" domainObjectName="MessageDistributionDay">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table tableName="WX_MESSAGE_SEND_DAY" domainObjectName="MessageSendDay">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table tableName="WX_MESSAGE_SEND_HOUR" domainObjectName="MessageSendHour">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table tableName="WX_OFFICIAL_ACCOUNT" domainObjectName="OfficialAccount">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table tableName="WX_OFFICIAL_ACCOUNT_ACCESS_TOKEN" domainObjectName="OfficialAccountAccessToken">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table tableName="WX_OFFICIAL_ACCOUNT_INFO" domainObjectName="OfficialAccountInfo">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table tableName="WX_PERSONAL_USER" domainObjectName="PersonalUser">
             <property name="useActualColumnNames" value="true"/>
         </table>
         <table tableName="WX_PRE_AUTH_CODE" domainObjectName="PreAuthCode">
             <property name="useActualColumnNames" value="true"/>
         </table>
-        <table tableName="WX_USER_ACCESS_TOKEN" domainObjectName="UserAccessToken">
+        <table tableName="WX_SYSTEM_USER" domainObjectName="SystemUser">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table tableName="WX_USER_DATA" domainObjectName="UserData">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table tableName="WX_USER_LOCATION" domainObjectName="UserLocation">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table tableName="wx_wechat_third_party_config" domainObjectName="WechatThirdPartyConfig">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table tableName="WX_USER_OFFICIAL_ACCOUNT" domainObjectName="UserOfficialAccount">
             <property name="useActualColumnNames" value="true"/>
         </table>-->
+
+
         <!--<table tableName="%">-->
         <!--<generatedKey column="id" sqlStatement="Mysql" identity="true" />-->
         <!--</table>-->

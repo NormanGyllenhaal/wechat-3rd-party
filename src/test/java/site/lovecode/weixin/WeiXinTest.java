@@ -145,7 +145,7 @@ public class WeiXinTest {
         FuncInfoMapper mapper = (FuncInfoMapper) ctx.getBean("funcInfoMapper");
         mapper.insert(new FuncInfo(){
             {
-                setAuthorizerInfoId(1L);
+                //setAuthorizerInfoId(1L);
                 setFuncName(1);
             }
         });

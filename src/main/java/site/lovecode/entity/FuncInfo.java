@@ -5,7 +5,7 @@ import javax.persistence.*;
 import site.lovecode.common.mybatis.Identity;
 
 @Table(name = "wx_func_info")
-public class FuncInfo implements  Serializable,Identity {
+public class FuncInfo implements Identity, Serializable {
     /**
      * zhujian
      */
@@ -13,9 +13,9 @@ public class FuncInfo implements  Serializable,Identity {
     private Long id;
 
     /**
-     * 微信授权方公众账号基本信息id,关联微信公众号基本信息表
+     * 微信公众账号基本信息表id，关联微信公众号基本信息表
      */
-    private Long authorizerInfoId;
+    private Long officialAccountId;
 
     /**
      * 权限的名称id
@@ -43,21 +43,21 @@ public class FuncInfo implements  Serializable,Identity {
     }
 
     /**
-     * 获取微信授权方公众账号基本信息id,关联微信公众号基本信息表
+     * 获取微信公众账号基本信息表id，关联微信公众号基本信息表
      *
-     * @return authorizerInfoId - 微信授权方公众账号基本信息id,关联微信公众号基本信息表
+     * @return officialAccountId - 微信公众账号基本信息表id，关联微信公众号基本信息表
      */
-    public Long getAuthorizerInfoId() {
-        return authorizerInfoId;
+    public Long getOfficialAccountId() {
+        return officialAccountId;
     }
 
     /**
-     * 设置微信授权方公众账号基本信息id,关联微信公众号基本信息表
+     * 设置微信公众账号基本信息表id，关联微信公众号基本信息表
      *
-     * @param authorizerInfoId 微信授权方公众账号基本信息id,关联微信公众号基本信息表
+     * @param officialAccountId 微信公众账号基本信息表id，关联微信公众号基本信息表
      */
-    public void setAuthorizerInfoId(Long authorizerInfoId) {
-        this.authorizerInfoId = authorizerInfoId;
+    public void setOfficialAccountId(Long officialAccountId) {
+        this.officialAccountId = officialAccountId;
     }
 
     /**
@@ -85,7 +85,7 @@ public class FuncInfo implements  Serializable,Identity {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", authorizerInfoId=").append(authorizerInfoId);
+        sb.append(", officialAccountId=").append(officialAccountId);
         sb.append(", funcName=").append(funcName);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");

@@ -1,10 +1,9 @@
 package site.lovecode.mapper;
 
-import site.lovecode.entity.ComponentAccessToken;
+import site.lovecode.common.mybatis.CommonMapper;
 import site.lovecode.entity.ComponentVerifyTicket;
-import tk.mybatis.mapper.common.Mapper;
 
-public interface ComponentVerifyTicketMapper extends Mapper<ComponentVerifyTicket> {
+public interface ComponentVerifyTicketMapper extends CommonMapper<ComponentVerifyTicket> {
 
-    public ComponentVerifyTicket selectOrderByCreateTime(String componentAppid);
+    ComponentVerifyTicket selectOrderByCreateTime(String componentAppId);
 }

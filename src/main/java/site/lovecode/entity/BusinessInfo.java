@@ -7,14 +7,14 @@ import site.lovecode.common.mybatis.Identity;
 @Table(name = "wx_business_info")
 public class BusinessInfo implements Identity, Serializable {
 
-    public BusinessInfo(Long id, Long authorizerInfoId, Integer businessInfoName, Integer businessInfoStatus) {
-        this.id = id;
-        this.authorizerInfoId = authorizerInfoId;
-        this.businessInfoName = businessInfoName;
-        this.businessInfoStatus = businessInfoStatus;
+    public BusinessInfo() {
     }
 
-    public BusinessInfo() {
+    public BusinessInfo(Long id, Long officialAccountId, Integer businessInfoName, Integer businessInfoStatus) {
+        this.id = id;
+        this.officialAccountId = officialAccountId;
+        this.businessInfoName = businessInfoName;
+        this.businessInfoStatus = businessInfoStatus;
     }
 
     /**
@@ -24,9 +24,9 @@ public class BusinessInfo implements Identity, Serializable {
     private Long id;
 
     /**
-     * 公众账号基本信息id
+     * 微信公众账号基本信息表id，关联微信公众号基本信息表
      */
-    private Long authorizerInfoId;
+    private Long officialAccountId;
 
     /**
      * 商业功能名称
@@ -59,21 +59,21 @@ public class BusinessInfo implements Identity, Serializable {
     }
 
     /**
-     * 获取公众账号基本信息id
+     * 获取微信公众账号基本信息表id，关联微信公众号基本信息表
      *
-     * @return authorizerInfoId - 公众账号基本信息id
+     * @return officialAccountId - 微信公众账号基本信息表id，关联微信公众号基本信息表
      */
-    public Long getAuthorizerInfoId() {
-        return authorizerInfoId;
+    public Long getOfficialAccountId() {
+        return officialAccountId;
     }
 
     /**
-     * 设置公众账号基本信息id
+     * 设置微信公众账号基本信息表id，关联微信公众号基本信息表
      *
-     * @param authorizerInfoId 公众账号基本信息id
+     * @param officialAccountId 微信公众账号基本信息表id，关联微信公众号基本信息表
      */
-    public void setAuthorizerInfoId(Long authorizerInfoId) {
-        this.authorizerInfoId = authorizerInfoId;
+    public void setOfficialAccountId(Long officialAccountId) {
+        this.officialAccountId = officialAccountId;
     }
 
     /**
@@ -119,7 +119,7 @@ public class BusinessInfo implements Identity, Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", authorizerInfoId=").append(authorizerInfoId);
+        sb.append(", officialAccountId=").append(officialAccountId);
         sb.append(", businessInfoName=").append(businessInfoName);
         sb.append(", businessInfoStatus=").append(businessInfoStatus);
         sb.append(", serialVersionUID=").append(serialVersionUID);

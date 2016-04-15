@@ -15,6 +15,7 @@ import site.lovecode.support.bean.QueryAuthBean;
 import site.lovecode.support.bean.XmlDecryptingBean;
 import site.lovecode.support.bean.enums.AuthorizationStatusEnum;
 import site.lovecode.support.bean.enums.BusinessInfoEnum;
+import site.lovecode.support.bean.enums.OfficialAccountTypeEnum;
 import site.lovecode.util.IdWorker;
 
 import javax.annotation.Resource;
@@ -38,8 +39,6 @@ public class WechatThirdPartyServiceImpl implements InitializingBean, WechatThri
     @Resource
     private ComponentVerifyTicketMapper componentVerifyTicketMapper;
 
-    @Resource
-    private UserAccessTokenMapper userAccessTokenMapper;
 
     @Resource
     private WechatThirdPartyConfigMapper wechatThirdPartyConfigMapper;
@@ -54,9 +53,14 @@ public class WechatThirdPartyServiceImpl implements InitializingBean, WechatThri
     @Resource
     private FuncInfoMapper funcInfoMapper;
 
-   @Resource
+    @Resource
     private BusinessInfoMapper businessInfoMapper;
 
+    @Resource
+    private OfficialAccountMapper officialAccountMapper;
+
+    @Resource
+    private AuthorizerAccessTokenMapper authorizerAccessTokenMapper;
 
 
     /**
@@ -103,76 +107,83 @@ public class WechatThirdPartyServiceImpl implements InitializingBean, WechatThri
     }
 
     /**
-     * 保存用户信息
+     * 授权成功后保存用户信息
      *
      * @param authCode
      * @throws IOException
      */
     public AuthorizerInfoBean saveAuthorizerInfo(String authCode) throws Exception {
+        //获取用户accessToken和refreshToken
         QueryAuthBean queryAuthBean = wechatThirdPartyClient.queryAuth(authCode);
-
-        //保存公众号基本信息
+        //获取公众号用户的基本信息
         AuthorizerInfoBean authorizerInfoBean = wechatThirdPartyClient.getAuthorizerInfo(queryAuthBean.getAuthOrizationInfo().getAuthorizerAppid());
-        AuthorizerInfo info = authorizerInfoMapper.selectOne(new AuthorizerInfo(){
+        //查询公众号基本信息表
+        OfficialAccount officialAccount = officialAccountMapper.selectOne(new OfficialAccount() {
             {
-                setAuthorizerAppid(queryAuthBean.getAuthOrizationInfo().getAuthorizerAppid());
+                setAppid(authorizerInfoBean.getAuthorizeationInfo().getAuthorizerAppid());
             }
         });
-        AuthorizerInfo authorizerInfo = new AuthorizerInfo() {
+        //如果存在记录更新，不存在直接插入
+        if (officialAccount != null) {
+            officialAccount.setAccountType(OfficialAccountTypeEnum.AUTHORIZATION.key());
+            officialAccount.setServiceTypeInfo(authorizerInfoBean.getAuthorizerInfo().getServiceTypeInfo().getId());
+            officialAccount.setVerifyTypeInfo(authorizerInfoBean.getAuthorizerInfo().getVerifyTypeInfo().getId());
+            officialAccountMapper.updateByPrimaryKeySelective(officialAccount);
+        } else {
+            officialAccount = new OfficialAccount() {
+                {
+                    setAppid(authorizerInfoBean.getAuthorizeationInfo().getAuthorizerAppid());
+                    setAccountType(OfficialAccountTypeEnum.AUTHORIZATION.key());
+                    setServiceTypeInfo(authorizerInfoBean.getAuthorizerInfo().getServiceTypeInfo().getId());
+                    setVerifyTypeInfo(authorizerInfoBean.getAuthorizerInfo().getVerifyTypeInfo().getId());
+                    setUserName(authorizerInfoBean.getAuthorizerInfo().getUserName());
+                    setNickName(authorizerInfoBean.getAuthorizerInfo().getNickName());
+                }
+            };
+            officialAccountMapper.insert(officialAccount);
+            //插入授权方公众号信息
+        }
+        final OfficialAccount finalOfficialAccount = officialAccount;
+
+        //保存授权公众号信息
+        authorizerInfoMapper.replace(new AuthorizerInfo() {
             {
+                setOfficialAccountId(finalOfficialAccount.getId());
                 setAuthorizerAppid(authorizerInfoBean.getAuthorizeationInfo().getAuthorizerAppid());
-                setNickName(authorizerInfoBean.getAuthorizerInfo().getNickName());
                 setAlias(authorizerInfoBean.getAuthorizerInfo().getAlizs());
                 setHeadImg(authorizerInfoBean.getAuthorizerInfo().getHeadImg());
                 setQrcodeUrl(authorizerInfoBean.getAuthorizerInfo().getQrcodeUrl());
-                setServiceTypeInfo(authorizerInfoBean.getAuthorizerInfo().getServiceTypeInfo().getId());
-                setVerifyTypeInfo(authorizerInfoBean.getAuthorizerInfo().getVerifyTypeInfo().getId());
-                setUserName(authorizerInfoBean.getAuthorizerInfo().getUserName());
                 setAuthorizationStatus(AuthorizationStatusEnum.AUTHORIZED.key());
             }
-        };
-        if(info!=null){
-            authorizerInfo.setId(info.getId());
-        }
-        authorizerInfoMapper.replace(authorizerInfo);
-        logger.info(authorizerInfo.toString());
+        });
 
         //保存公众号的access_token信息
-        UserAccessToken userAccessToken = userAccessTokenMapper.selectOne(new UserAccessToken(){
-            {
-                setAuthorizerAppid(queryAuthBean.getAuthOrizationInfo().getAuthorizerAppid());
-            }
-        });
-        UserAccessToken newUserAccessToken = new UserAccessToken(authorizerInfo.getId(),queryAuthBean.getAuthOrizationInfo().getAuthorizerAppid(),queryAuthBean.getAuthOrizationInfo().getAuthorizerAccessToken(),queryAuthBean.getAuthOrizationInfo().getExpriesIn(),queryAuthBean.getAuthOrizationInfo().getAuthorizerRefreshToken(),new Timestamp(System.currentTimeMillis()));
-        if(userAccessToken!=null){
-            newUserAccessToken.setId(userAccessToken.getId());
-        }
-        userAccessTokenMapper.replace(newUserAccessToken);
+        authorizerAccessTokenMapper.replace(new AuthorizerAccessToken(finalOfficialAccount.getId(), queryAuthBean.getAuthOrizationInfo().getAuthorizerAppid(), queryAuthBean.getAuthOrizationInfo().getAuthorizerAccessToken(), queryAuthBean.getAuthOrizationInfo().getExpriesIn(), queryAuthBean.getAuthOrizationInfo().getAuthorizerRefreshToken(), new Timestamp(System.currentTimeMillis())));
 
 
         //保存公众号的权限信息
-        Integer num = funcInfoMapper.delete(new FuncInfo(){
+        Integer num = funcInfoMapper.delete(new FuncInfo() {
             {
-                setAuthorizerInfoId(authorizerInfo.getId());
+                setOfficialAccountId(finalOfficialAccount.getId());
             }
         });
-        logger.info("删除旧的权限信息："+num);
+        logger.info("删除旧的权限信息：" + num);
         List<FuncInfo> funcInfoList = queryAuthBean.getAuthOrizationInfo().getFuncInfoList().stream().map(funcInfoObject -> new FuncInfo() {
             {
                 setId(IdWorker.getId());
                 setFuncName(funcInfoObject.getFuncscopeCategory().getId());
-                setAuthorizerInfoId(authorizerInfo.getId());
+                setOfficialAccountId(finalOfficialAccount.getId());
             }
         }).collect(Collectors.toList());
         funcInfoMapper.batchInsert(funcInfoList);
         //保存公众号的商业信息
-       Integer businessInfoNum = businessInfoMapper.delete(new BusinessInfo(){
+        Integer businessInfoNum = businessInfoMapper.delete(new BusinessInfo() {
             {
-                setAuthorizerInfoId(authorizerInfo.getId());
+                setOfficialAccountId(finalOfficialAccount.getId());
             }
         });
-        logger.info("删除旧的商业信息："+ businessInfoNum);
-        List<BusinessInfo> businessInfoList = Stream.of(new BusinessInfo(IdWorker.getId(),authorizerInfo.getId(),BusinessInfoEnum.OPEN_CARD.key(),authorizerInfoBean.getAuthorizerInfo().getBusinessInfoBean().getOpenCard()),new BusinessInfo(IdWorker.getId(),authorizerInfo.getId(),BusinessInfoEnum.OPEN_PAY.key(),authorizerInfoBean.getAuthorizerInfo().getBusinessInfoBean().getOpenPay()),new BusinessInfo(IdWorker.getId(),authorizerInfo.getId(),BusinessInfoEnum.OPEN_SCAN.key(),authorizerInfoBean.getAuthorizerInfo().getBusinessInfoBean().getOpenScan()),new BusinessInfo(IdWorker.getId(),authorizerInfo.getId(),BusinessInfoEnum.OPEN_SHAKE.key(),authorizerInfoBean.getAuthorizerInfo().getBusinessInfoBean().getOpenShake()),new BusinessInfo(IdWorker.getId(),authorizerInfo.getId(),BusinessInfoEnum.OPEN_STORE.key(),authorizerInfoBean.getAuthorizerInfo().getBusinessInfoBean().getOpenStore())).collect(Collectors.toList());
+        logger.info("删除旧的商业信息：" + businessInfoNum);
+        List<BusinessInfo> businessInfoList = Stream.of(new BusinessInfo(IdWorker.getId(), finalOfficialAccount.getId(), BusinessInfoEnum.OPEN_CARD.key(), authorizerInfoBean.getAuthorizerInfo().getBusinessInfoBean().getOpenCard()), new BusinessInfo(IdWorker.getId(), finalOfficialAccount.getId(), BusinessInfoEnum.OPEN_PAY.key(), authorizerInfoBean.getAuthorizerInfo().getBusinessInfoBean().getOpenPay()), new BusinessInfo(IdWorker.getId(), finalOfficialAccount.getId(), BusinessInfoEnum.OPEN_SCAN.key(), authorizerInfoBean.getAuthorizerInfo().getBusinessInfoBean().getOpenScan()), new BusinessInfo(IdWorker.getId(), finalOfficialAccount.getId(), BusinessInfoEnum.OPEN_SHAKE.key(), authorizerInfoBean.getAuthorizerInfo().getBusinessInfoBean().getOpenShake()), new BusinessInfo(IdWorker.getId(), finalOfficialAccount.getId(), BusinessInfoEnum.OPEN_STORE.key(), authorizerInfoBean.getAuthorizerInfo().getBusinessInfoBean().getOpenStore())).collect(Collectors.toList());
         businessInfoMapper.batchInsert(businessInfoList);
         logger.info(funcInfoList.toString());
         return authorizerInfoBean;
@@ -190,16 +201,13 @@ public class WechatThirdPartyServiceImpl implements InitializingBean, WechatThri
     }
 
 
-
     /**
      * 用户取消授权，变更授权状态为取消
      */
-    public void changeAuthorizationStatus(String authorizerAppid){
-           logger.info("修改状态");
-           authorizerInfoMapper.updateAuthorizationStatus(AuthorizationStatusEnum.UNAUTHORIZED.key(),authorizerAppid);
+    public void changeAuthorizationStatus(String authorizerAppid) {
+        logger.info("修改状态");
+        authorizerInfoMapper.updateAuthorizationStatus(AuthorizationStatusEnum.UNAUTHORIZED.key(), authorizerAppid);
     }
-
-
 
 
 }

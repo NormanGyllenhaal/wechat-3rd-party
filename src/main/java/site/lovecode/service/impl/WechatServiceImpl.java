@@ -7,8 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Service;
 import site.lovecode.client.impl.WechatClientImpl;
-import site.lovecode.entity.UserAccessToken;
-import site.lovecode.mapper.UserAccessTokenMapper;
+import site.lovecode.entity.AuthorizerAccessToken;
+import site.lovecode.mapper.AuthorizerAccessTokenMapper;
 import site.lovecode.service.WechatService;
 import site.lovecode.support.bean.config.WechatConfig;
 
@@ -28,18 +28,21 @@ public class WechatServiceImpl implements InitializingBean,WechatService{
     private UserAccessTokenMapper userAccessTokenMapper;
 
     @Resource
+    private AuthorizerAccessTokenMapper authorizerAccessTokenMapper;
+
+    @Resource
     private WxMpService wxMpService;
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        logger.info("加载所有公众号配置信息");
-        List<UserAccessToken> userAccessTokenList = userAccessTokenMapper.selectAll();
-        WechatClientImpl.wechatConfigMap = userAccessTokenList.stream().collect(Collectors.toMap(UserAccessToken::getAuthorizerInfoId,userAccessToken -> new WechatConfig(){
+       logger.info("加载所有公众号配置信息");
+        List<AuthorizerAccessToken> authorizerAccessTokenList = authorizerAccessTokenMapper.selectAll();
+        WechatClientImpl.wechatConfigMap = authorizerAccessTokenList.stream().collect(Collectors.toMap(AuthorizerAccessToken::getOfficialAccountId,authorizerAccessToken -> new WechatConfig(){
             {
-                setAppId(userAccessToken.getAuthorizerAppid());
-                setRefreshToken(userAccessToken.getAuthorizerRefreshToken());
-                setAccessToken(userAccessToken.getAuthorizerAccessToken());
-                setExpiresTime(userAccessToken.getCreateTime().getTime()+(userAccessToken.getExpiresIn()*1000));
+                setAppId(authorizerAccessToken.getAuthorizerAppid());
+                setRefreshToken(authorizerAccessToken.getAuthorizerRefreshToken());
+                setAccessToken(authorizerAccessToken.getAuthorizerAccessToken());
+                setExpiresTime(authorizerAccessToken.getCreateTime().getTime()+(authorizerAccessToken.getExpiresIn()*1000));
             }
         }));
         logger.info(WechatClientImpl.wechatConfigMap.toString());

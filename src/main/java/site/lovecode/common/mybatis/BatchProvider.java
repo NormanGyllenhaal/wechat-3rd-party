@@ -45,4 +45,6 @@ public class BatchProvider extends MapperTemplate {
         sql.append("</foreach>");
         return sql.toString();
     }
+
+
 }

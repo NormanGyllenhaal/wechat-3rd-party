@@ -1,7 +1,7 @@
 package site.lovecode.mapper;
 
+import site.lovecode.common.mybatis.CommonMapper;
 import site.lovecode.entity.ComponentAccessToken;
-import tk.mybatis.mapper.common.Mapper;
 
-public interface ComponentAccessTokenMapper extends Mapper<ComponentAccessToken> {
+public interface ComponentAccessTokenMapper extends CommonMapper<ComponentAccessToken> {
 }

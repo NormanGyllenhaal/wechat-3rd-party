@@ -22,12 +22,24 @@ public class ReplaceProvider extends MapperTemplate{
 
     public String replace(MappedStatement ms){
         final Class<?> entityClass = getEntityClass(ms);
+        //获取全部列
+        Set<EntityColumn> columnList = EntityHelper.getColumns(entityClass);
         //开始拼sql
         StringBuilder sql = new StringBuilder();
         sql.append("REPLACE INTO ").append(SqlHelper.getDynamicTableName(entityClass, tableName(entityClass))).append(" ");
-        sql.append(SqlHelper.insertColumns(entityClass, false, false, false));
+        sql.append("<trim prefix=\"(\" suffix=\")\" suffixOverrides=\",\">");
+        for (EntityColumn column : columnList) {
+            if (!column.isInsertable()) {
+                continue;
+            }
+            if (StringUtil.isNotEmpty(column.getSequenceName()) || column.isIdentity() || column.isUuid()) {
+                sql.append(column.getColumn() + ",");
+            } else {
+                sql.append(SqlHelper.getIfNotNull(column, column.getColumn() + ",", isNotEmpty()));
+            }
+        }
+        sql.append("</trim>");
         sql.append("<trim prefix=\"VALUES(\" suffix=\")\" suffixOverrides=\",\">");
-        Set<EntityColumn> columnList = EntityHelper.getColumns(entityClass);
         for (EntityColumn column : columnList) {
             if (!column.isInsertable()) {
                 continue;
@@ -43,17 +55,16 @@ public class ReplaceProvider extends MapperTemplate{
             //当属性为null时，如果存在主键策略，会自动获取值，如果不存在，则使用null
             //序列的情况
             if (StringUtil.isNotEmpty(column.getSequenceName())) {
-                sql.append(SqlHelper.getIfIsNull(column, getSeqNextVal(column) + " ,", false));
+                sql.append(SqlHelper.getIfIsNull(column, getSeqNextVal(column) + " ,", isNotEmpty()));
             } else if (column.isIdentity()) {
                 sql.append(SqlHelper.getIfCacheIsNull(column, column.getColumnHolder() + ","));
             } else if (column.isUuid()) {
                 sql.append(SqlHelper.getIfIsNull(column, column.getColumnHolder(null, "_bind", ","), isNotEmpty()));
-            } else {
-                //当null的时候，如果不指定jdbcType，oracle可能会报异常，指定VARCHAR不影响其他
-                sql.append(SqlHelper.getIfIsNull(column, column.getColumnHolder(null, null, ","), isNotEmpty()));
             }
         }
         sql.append("</trim>");
         return sql.toString();
     }
+
+
 }

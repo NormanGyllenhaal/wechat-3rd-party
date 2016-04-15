@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="site.lovecode.mapper.MassMessageMapper" >
+  <resultMap id="BaseResultMap" type="site.lovecode.entity.MassMessage" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="officialAccountId" property="officialAccountId" jdbcType="BIGINT" />
+    <result column="groupId" property="groupId" jdbcType="VARCHAR" />
+    <result column="mediaId" property="mediaId" jdbcType="VARCHAR" />
+    <result column="msgType" property="msgType" jdbcType="TINYINT" />
+    <result column="touser" property="touser" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="thumbMediaId" property="thumbMediaId" jdbcType="VARCHAR" />
+    <result column="isToAll" property="isToAll" jdbcType="TINYINT" />
+    <result column="msgDataId" property="msgDataId" jdbcType="VARCHAR" />
+    <result column="msgId" property="msgId" jdbcType="VARCHAR" />
+    <result column="totalCount" property="totalCount" jdbcType="INTEGER" />
+    <result column="filterCount" property="filterCount" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="errorCount" property="errorCount" jdbcType="INTEGER" />
+    <result column="sendCount" property="sendCount" jdbcType="INTEGER" />
+    <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+</mapper>

@@ -68,15 +68,6 @@ public class WechatThirdPartyConfig implements Identity, Serializable {
      */
     private Date updateTime;
 
-
-
-    /**
-     * 过期时间点
-     */
-    private static Long deadline;
-
-
-
     private static final long serialVersionUID = 1L;
 
     /**
