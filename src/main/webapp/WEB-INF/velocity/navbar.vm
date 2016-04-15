@@ -130,7 +130,7 @@
         <div class="nav-collapse">
             <ul class="nav">
                 <li>
-                    <a class="current" href="index.vm"><span aria-hidden="true" class="se7en-home"></span>首页</a>
+                    <a class="current" href="index.html"><span aria-hidden="true" class="se7en-home"></span>首页</a>
                 </li>
                 <li><a href="social.html">
                     <span aria-hidden="true" class="se7en-feed"></span>群发功能</a>

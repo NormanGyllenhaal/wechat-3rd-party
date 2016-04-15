@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    #include("head.vm")
-  </head>
+  #include("head.vm")
   <body>
     <div class="modal-shiftfix">
       <!-- Navigation -->
@@ -114,62 +112,9 @@
           <!-- end Weather --><!-- Bar Graph -->
           <div class="col-md-4">
             <div class="widget-container small">
-              <div class="heading">
-                <i class="icon-signal"></i>新注册<i class="icon-list pull-right"></i><i class="icon-refresh pull-right"></i>
-              </div>
-              <div class="widget-content padded">
-                <div class="bar-chart-widget">
-                  <div class="chart-graph">
-                    <div id="barcharts">
-                         加载中…
-                    </div>
-                    <ul class="chart-text-axis">
-                      <li>
-                        1
-                      </li>
-                      <li>
-                        2
-                      </li>
-                      <li>
-                        3
-                      </li>
-                      <li>
-                        4
-                      </li>
-                      <li>
-                        5
-                      </li>
-                      <li>
-                        6
-                      </li>
-                      <li>
-                        7
-                      </li>
-                      <li>
-                        8
-                      </li>
-                      <li>
-                        9
-                      </li>
-                      <li>
-                        10
-                      </li>
-                      <li>
-                        11
-                      </li>
-                      <li>
-                        12
-                      </li>
-                      <li>
-                        13
-                      </li>
-                      <li>
-                        14
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
+                <a href="">公众号授权绑定</a>
+                <br>
+                <a href="binding.html">公众号手动绑定</a>
             </div>
           </div>
           <!-- End Bar Graph -->

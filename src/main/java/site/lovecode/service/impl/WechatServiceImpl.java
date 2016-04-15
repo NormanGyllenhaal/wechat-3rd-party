@@ -24,8 +24,6 @@ public class WechatServiceImpl implements InitializingBean,WechatService{
 
     private Logger logger = LoggerFactory.getLogger(WechatServiceImpl.class);
 
-    @Resource
-    private UserAccessTokenMapper userAccessTokenMapper;
 
     @Resource
     private AuthorizerAccessTokenMapper authorizerAccessTokenMapper;

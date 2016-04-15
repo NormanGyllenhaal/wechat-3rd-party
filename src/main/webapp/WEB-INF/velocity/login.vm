@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    #include("head.vm")
+<body class="login1">
+<!-- Login Screen -->
+<div class="login-wrapper">
+    <div class="login-container">
+        <a href="qoofan-aliapp-com.html">微信第三方平台</a>
+        <form action="check.html">
+            <div class="form-group">
+                <input class="form-control" placeholder="用户名/邮箱地址" type="text" name="username">
+            </div>
+            <div class="form-group">
+                <input class="form-control" placeholder="密码" type="text" name="password"><input type="submit" value="&#xf054;">
+            </div>
+            <div class="form-options clearfix">
+                <a class="pull-right" href="#">忘记密码了？</a>
+                <div class="text-left">
+                    <label class="checkbox"><input type="checkbox"><span>自动登录</span></label>
+                </div>
+            </div>
+        </form>
+        #if($msg)
+            <span style="color:red">$msg</span>
+        #end
+
+        <div class="social-login clearfix">
+            <a class="btn btn-primary pull-left weibo" href="index.html"><i class="icon-weibo"></i>微博 账户登录</a><a
+                class="btn btn-primary pull-right renren" href="index.html"><i class="icon-renren"></i>人人 账户登录</a>
+        </div>
+        <p class="signup">
+            还没有账号？<a href="signup1.html">立即注册</a>
+        </p>
+    </div>
+</div>
+<!-- End Login Screen -->
+</body>
+</html>

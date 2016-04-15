@@ -88,6 +88,8 @@ public class WechatThirdPartyController {
     }
 
 
+
+
     /**
      * 授权后的回调url，微信第三方授权跳转页面，可以获取到授权码
      */
