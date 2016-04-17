@@ -15,7 +15,7 @@ public interface WechatThridPartyService {
      *
      * @param xmlDecryptingBean
      */
-    public void saveComponentVerifyTicket(XmlDecryptingBean xmlDecryptingBean);
+   void saveComponentVerifyTicket(XmlDecryptingBean xmlDecryptingBean);
 
 
     /**
@@ -23,7 +23,7 @@ public interface WechatThridPartyService {
      * @param authCode
      * @throws IOException
      */
-    public AuthorizerInfoBean saveAuthorizerInfo(String authCode) throws Exception;
+    AuthorizerInfoBean saveAuthorizerInfo(String authCode) throws Exception;
 
 
 
@@ -33,7 +33,7 @@ public interface WechatThridPartyService {
      * @return
      * @throws IOException
      */
-    public String  getCompoentLoginUrl() throws IOException;
+    String  getCompoentLoginUrl() throws IOException;
 
 
     /**
@@ -41,5 +41,5 @@ public interface WechatThridPartyService {
      * 用户取消授权，变更授权状态为取消
      * @param authorizerAppid
      */
-    public void changeAuthorizationStatus(String authorizerAppid);
+   void changeAuthorizationStatus(String authorizerAppid);
 }
