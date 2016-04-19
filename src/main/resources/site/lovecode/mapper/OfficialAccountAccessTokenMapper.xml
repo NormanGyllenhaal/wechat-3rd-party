@@ -8,7 +8,7 @@
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="officialAccountId" property="officialAccountId" jdbcType="BIGINT" />
     <result column="appid" property="appid" jdbcType="VARCHAR" />
-    <result column="expiresIn" property="expiresIn" jdbcType="INTEGER" />
+    <result column="expiresIn" property="expiresIn" jdbcType="BIGINT" />
     <result column="accessToken" property="accessToken" jdbcType="VARCHAR" />
     <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>

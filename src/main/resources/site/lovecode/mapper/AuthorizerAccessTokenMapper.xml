@@ -9,7 +9,7 @@
     <result column="officialAccountId" property="officialAccountId" jdbcType="BIGINT" />
     <result column="authorizerAppid" property="authorizerAppid" jdbcType="VARCHAR" />
     <result column="authorizerAccessToken" property="authorizerAccessToken" jdbcType="VARCHAR" />
-    <result column="expiresIn" property="expiresIn" jdbcType="INTEGER" />
+    <result column="expiresIn" property="expiresIn" jdbcType="BIGINT" />
     <result column="authorizerRefreshToken" property="authorizerRefreshToken" jdbcType="VARCHAR" />
     <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd   
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd ">
+
+	<!-- RedisCache 配置 -->
+	<bean id="redisTemplate" class="site.lovecode.jedis.RedisCache">
+		<property name="redis" ref="redisProxyCommands" />
+	</bean>
+
+	<!-- 连接池配置 -->
+	<bean name="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+		<property name="maxTotal" value="1000" />
+		<property name="testOnBorrow" value="true" />
+		<property name="testWhileIdle" value="true" />
+		<property name="minIdle" value="10" />
+		<property name="maxIdle" value="50" />
+		<property name="maxWaitMillis" value="5000" />
+	</bean>
+	<bean name="shardedJedisPool" class="redis.clients.jedis.ShardedJedisPool">
+		<constructor-arg index="0" ref="jedisPoolConfig" />
+		<constructor-arg index="1" type="java.util.List">
+			<list>
+				<bean class="redis.clients.jedis.JedisShardInfo">
+					<constructor-arg type="java.lang.String" value="127.0.0.1" />
+					<constructor-arg type="int" value="6379" />
+					<constructor-arg type="int" value="10000" />
+				</bean>
+			</list>
+		</constructor-arg>
+	</bean>
+	
+	<!-- 类中需要注入的 -->
+	<bean name="redisProxyCommands" class="site.lovecode.jedis.RedisProxyFactory">
+		<constructor-arg index="0" ref="shardedJedisPool" />
+	</bean>
+</beans>

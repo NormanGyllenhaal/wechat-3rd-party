@@ -30,9 +30,6 @@ public class WechatClientImpl extends WxMpServiceImpl {
     @Resource
     private AuthorizerAccessTokenMapper authorizerAccessTokenMapper;
 
-    public  static Map<Long,WechatConfig> wechatConfigMap;
-
-
 
     @Override
     public String getAccessToken(boolean forceRefresh) throws WxErrorException {

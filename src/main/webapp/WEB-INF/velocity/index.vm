@@ -112,7 +112,7 @@
           <!-- end Weather --><!-- Bar Graph -->
           <div class="col-md-4">
             <div class="widget-container small">
-                <a href="">公众号授权绑定</a>
+                <a href="$url">公众号授权绑定</a>
                 <br>
                 <a href="binding.html">公众号手动绑定</a>
             </div>

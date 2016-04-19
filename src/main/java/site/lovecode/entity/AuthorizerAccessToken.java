@@ -9,7 +9,7 @@ import site.lovecode.common.mybatis.Identity;
 public class AuthorizerAccessToken implements Identity, Serializable {
 
 
-    public AuthorizerAccessToken(Long officialAccountId, String authorizerAppid, String authorizerAccessToken, Integer expiresIn, String authorizerRefreshToken, Date createTime) {
+    public AuthorizerAccessToken(Long officialAccountId, String authorizerAppid, String authorizerAccessToken, Long expiresIn, String authorizerRefreshToken, Date createTime) {
         this.officialAccountId = officialAccountId;
         this.authorizerAppid = authorizerAppid;
         this.authorizerAccessToken = authorizerAccessToken;
@@ -46,7 +46,7 @@ public class AuthorizerAccessToken implements Identity, Serializable {
     /**
      * 有效期
      */
-    private Integer expiresIn;
+    private Long expiresIn;
 
     /**
      * 接口调用凭据刷新令牌
@@ -137,7 +137,7 @@ public class AuthorizerAccessToken implements Identity, Serializable {
      *
      * @return expiresIn - 有效期
      */
-    public Integer getExpiresIn() {
+    public Long getExpiresIn() {
         return expiresIn;
     }
 
@@ -146,7 +146,7 @@ public class AuthorizerAccessToken implements Identity, Serializable {
      *
      * @param expiresIn 有效期
      */
-    public void setExpiresIn(Integer expiresIn) {
+    public void setExpiresIn(Long expiresIn) {
         this.expiresIn = expiresIn;
     }
 

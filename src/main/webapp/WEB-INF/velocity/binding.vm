@@ -4,6 +4,53 @@
 <body>
 <!-- Navigation -->
     #include("navbar.vm")
-
+<div class="widget-content padded">
+    <form action="toBinding.html" id="validate-form" method="post">
+        <fieldset>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="firstname">公众号appid</label><input class="form-control" name="appid" type="text">
+                    </div>
+                    <div class="form-group">
+                        <label for="username">appsecret</label><input class="form-control"  name="appSecret" type="text">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">公众号类型</label>
+                        <select class="form-control" name="serviceTypeInfo"><option value="0">订阅号</option><option value="1">老账号升级后的订阅号</option><option value="2">服务号</option></select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="lastname">是否已经认证</label> <select class="form-control" name="verifyTypeInfo"><option value="-1">未认证</option><option value="0">微信认证</option>
+                    </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">公众号名称</label><input class="form-control"  name="nickName"  type="text">
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm_password">公众号原始id</label><input class="form-control"  name="userName"  type="text">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="firstname">公众号token</label><input class="form-control" name="token" type="text">
+                    </div>
+                    <div class="form-group">
+                        <label for="username">encodingAesKey</label><input class="form-control"  name="encodingAesKey" type="text">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">绑定的微信号</label><input class="form-control" name="wechatId" type="text">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">消息接收url</label><input class="form-control" name="messageUrl" type="text">
+                    </div>
+                </div>
+            </div>
+            <input class="btn btn-primary" type="submit" value="提交">
+        </fieldset>
+    </form>
+</div>
+<a href="http://weixin.gycode.com/index.php?g=Home&m=Index&a=help">绑定教程</a>
 </body>
 </html>

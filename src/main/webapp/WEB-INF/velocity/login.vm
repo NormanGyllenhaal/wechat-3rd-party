@@ -6,7 +6,7 @@
 <div class="login-wrapper">
     <div class="login-container">
         <a href="qoofan-aliapp-com.html">微信第三方平台</a>
-        <form action="check.html">
+        <form action="check.html" method="post">
             <div class="form-group">
                 <input class="form-control" placeholder="用户名/邮箱地址" type="text" name="username">
             </div>
@@ -20,8 +20,8 @@
                 </div>
             </div>
         </form>
-        #if($msg)
-            <span style="color:red">$msg</span>
+        #if($request.getParameter("msg"))
+            <span style="color:red">$request.getParameter("msg")</span>
         #end
 
         <div class="social-login clearfix">

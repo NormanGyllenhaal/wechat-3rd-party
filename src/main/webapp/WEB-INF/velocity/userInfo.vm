@@ -1,8 +1,9 @@
+<!DOCTYPE html>
 <html>
-<head>
-    <title>用户信息</title>
-</head>
+    #include("head.vm")
 <body>
+<!-- Navigation -->
+    #include("navbar.vm")
 微信测试
 用户信息
 $user.nickname

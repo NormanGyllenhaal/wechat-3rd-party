@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import site.lovecode.entity.SystemUser;
 import site.lovecode.service.SystemUserService;
 import site.lovecode.service.WechatThridPartyService;
@@ -29,17 +30,17 @@ public class SystemUserController {
     }
 
     @RequestMapping("/check.html")
-    public ModelAndView checkPassword(String username,String password,Model model){
+    public String checkPassword(String username,String password,Model model,RedirectAttributes attr){
         if(systemUserService.checkUsernameAndPassword(username,password)){
             try {
                 model.addAttribute("url", wechatThridPartyService.getCompoentLoginUrl());
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return new ModelAndView("index");
+            return "index";
         }else{
-            model.addAttribute("msg","用户名或密码错误");
-            return new ModelAndView("login");
+            attr.addAttribute("msg","用户名或密码错误");
+            return "redirect:/login.html";
         }
     }
 }

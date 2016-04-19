@@ -158,7 +158,7 @@ public class WechatThirdPartyServiceImpl implements InitializingBean, WechatThri
         });
 
         //保存公众号的access_token信息
-        authorizerAccessTokenMapper.replace(new AuthorizerAccessToken(finalOfficialAccount.getId(), queryAuthBean.getAuthOrizationInfo().getAuthorizerAppid(), queryAuthBean.getAuthOrizationInfo().getAuthorizerAccessToken(), queryAuthBean.getAuthOrizationInfo().getExpriesIn(), queryAuthBean.getAuthOrizationInfo().getAuthorizerRefreshToken(), new Timestamp(System.currentTimeMillis())));
+        authorizerAccessTokenMapper.replace(new AuthorizerAccessToken(finalOfficialAccount.getId(), queryAuthBean.getAuthOrizationInfo().getAuthorizerAppid(), queryAuthBean.getAuthOrizationInfo().getAuthorizerAccessToken(), (queryAuthBean.getAuthOrizationInfo().getExpriesIn()*1000)*System.currentTimeMillis(), queryAuthBean.getAuthOrizationInfo().getAuthorizerRefreshToken(), new Timestamp(System.currentTimeMillis())));
 
 
         //保存公众号的权限信息

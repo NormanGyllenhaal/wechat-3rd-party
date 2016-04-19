@@ -23,7 +23,7 @@ public class OfficialAccountAccessToken implements Identity, Serializable {
     /**
      * 有效期
      */
-    private Integer expiresIn;
+    private Long expiresIn;
 
     /**
      * 微信公众号的accessToken
@@ -92,7 +92,7 @@ public class OfficialAccountAccessToken implements Identity, Serializable {
      *
      * @return expiresIn - 有效期
      */
-    public Integer getExpiresIn() {
+    public Long getExpiresIn() {
         return expiresIn;
     }
 
@@ -101,7 +101,7 @@ public class OfficialAccountAccessToken implements Identity, Serializable {
      *
      * @param expiresIn 有效期
      */
-    public void setExpiresIn(Integer expiresIn) {
+    public void setExpiresIn(Long expiresIn) {
         this.expiresIn = expiresIn;
     }
 

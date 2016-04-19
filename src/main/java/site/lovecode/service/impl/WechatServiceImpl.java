@@ -6,50 +6,70 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Service;
-import site.lovecode.client.impl.WechatClientImpl;
-import site.lovecode.entity.AuthorizerAccessToken;
+import site.lovecode.entity.OfficialAccount;
+import site.lovecode.entity.SystemUser;
+import site.lovecode.jedis.RedisCache;
 import site.lovecode.mapper.AuthorizerAccessTokenMapper;
+import site.lovecode.mapper.OfficialAccountMapper;
 import site.lovecode.service.WechatService;
 import site.lovecode.support.bean.config.WechatConfig;
+import site.lovecode.support.bean.enums.OfficialAccountTypeEnum;
 
 import javax.annotation.Resource;
-import java.util.List;
+import java.io.Serializable;
+import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Created by Administrator on 2016/4/13.
  */
 @Service
-public class WechatServiceImpl implements InitializingBean,WechatService{
+public class WechatServiceImpl implements InitializingBean, WechatService,Serializable {
 
     private Logger logger = LoggerFactory.getLogger(WechatServiceImpl.class);
 
 
     @Resource
-    private AuthorizerAccessTokenMapper authorizerAccessTokenMapper;
+    private RedisCache redisTemplate;
 
     @Resource
     private WxMpService wxMpService;
 
+    @Resource
+    private OfficialAccountMapper officialAccountMapper;
+
     @Override
     public void afterPropertiesSet() throws Exception {
-       logger.info("加载所有公众号配置信息");
-        List<AuthorizerAccessToken> authorizerAccessTokenList = authorizerAccessTokenMapper.selectAll();
-        WechatClientImpl.wechatConfigMap = authorizerAccessTokenList.stream().collect(Collectors.toMap(AuthorizerAccessToken::getOfficialAccountId,authorizerAccessToken -> new WechatConfig(){
-            {
-                setAppId(authorizerAccessToken.getAuthorizerAppid());
-                setRefreshToken(authorizerAccessToken.getAuthorizerRefreshToken());
-                setAccessToken(authorizerAccessToken.getAuthorizerAccessToken());
-                setExpiresTime(authorizerAccessToken.getCreateTime().getTime()+(authorizerAccessToken.getExpiresIn()*1000));
-            }
-        }));
-        logger.info(WechatClientImpl.wechatConfigMap.toString());
+        logger.info("加载所有公众号配置信息");
+        Map<Long, WechatConfig> wechatConfigMap =Stream.of(officialAccountMapper.selectJoinAuthorizerInfo(),officialAccountMapper.selectJoinInfoAndAccessToken()).flatMap(officialAccountVo -> officialAccountVo.stream()).collect(Collectors.toList()).stream().collect(Collectors.toMap(OfficialAccount::getId,vo -> new WechatConfig(){
+             {
+                 setAppId(vo.getAppid());
+                 setAccountType(vo.getAccountType());
+                 setOfficialAccountId(vo.getId());
+                 if(vo.getAccountType().equals(OfficialAccountTypeEnum.AUTHORIZATION.key())){
+                     setRefreshToken(vo.getAuthorizerAccessToken().getAuthorizerRefreshToken());
+                     setAccessToken(vo.getAuthorizerAccessToken().getAuthorizerAccessToken());
+                     setExpiresTime(vo.getAuthorizerAccessToken().getExpiresIn());
+                 }else if(vo.getAccountType().equals(OfficialAccountTypeEnum.UNAUTHORIZATION.key())){
+                     setSecret(vo.getOfficialAccountInfo().getAppSecret());
+                     setRefreshToken(vo.getOfficialAccountInfo().getToken());
+                     setAesKey(vo.getOfficialAccountInfo().getEncodingAesKey());
+                     if(vo.getOfficialAccountAccessToken()!=null){
+                         setAccessToken(vo.getOfficialAccountAccessToken().getAccessToken());
+                         setExpiresTime(vo.getOfficialAccountAccessToken().getExpiresIn());
+                     }
+                 }
+             }
+         }));
+
+        logger.info(wechatConfigMap.toString());
+
     }
 
 
-    public void getAccessToken(){
+    public void getAccessToken() {
         try {
-            wxMpService.setWxMpConfigStorage(WechatClientImpl.wechatConfigMap.get(414012288513605632L));
             wxMpService.getAccessToken();
         } catch (WxErrorException e) {
             e.printStackTrace();
