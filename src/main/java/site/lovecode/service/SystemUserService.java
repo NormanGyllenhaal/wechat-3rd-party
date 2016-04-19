@@ -5,5 +5,7 @@ package site.lovecode.service;
  */
 public interface SystemUserService {
 
-    public boolean checkUsernameAndPassword(String username,String password);
+    boolean checkUsernameAndPassword(String username,String password);
+
+
 }
