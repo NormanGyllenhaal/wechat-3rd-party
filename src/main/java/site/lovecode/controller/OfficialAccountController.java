@@ -3,6 +3,7 @@ package site.lovecode.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import site.lovecode.mapper.OfficialAccountMapper;
@@ -33,4 +34,12 @@ public class OfficialAccountController {
         officialAccountService.saveOfficialAccount(officialAccountReq);
         return "userinfo";
     }
+
+
+    @RequestMapping("/accountList.html")
+    public String getOfficialAccountList(Model model){
+        model.addAttribute("accountList",officialAccountService.getAllOfficialAccount());
+        return "accountList";
+    }
+
 }

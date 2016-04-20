@@ -9,6 +9,8 @@ import org.springframework.beans.factory.FactoryBean;
 
 import redis.clients.util.Pool;
 
+import javax.annotation.Resource;
+
 /**
  * 代理类,获取操作对象
  * <p>

@@ -14,10 +14,11 @@
 
 
     <!-- Spring监听 -->
-    <!--<listener>
+   <!--<listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>
--->
+    </listener>-->
+
+
     <!-- Spring MVC DispatcherServlet -->
     <servlet>
         <servlet-name>weixin-tool</servlet-name>
@@ -32,6 +33,7 @@
         <servlet-name>weixin-tool</servlet-name>
         <url-pattern>*.html</url-pattern>
     </servlet-mapping>
+
 
     <!-- 设置request和response的编码为utf-8 -->
     <filter>
@@ -50,6 +52,11 @@
         <filter-name>encodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+
+    <listener>
+        <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+    </listener>
+
 
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>

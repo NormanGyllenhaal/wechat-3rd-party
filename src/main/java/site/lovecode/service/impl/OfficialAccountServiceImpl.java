@@ -10,6 +10,7 @@ import site.lovecode.support.bean.enums.OfficialAccountTypeEnum;
 import site.lovecode.support.bean.request.OfficialAccountReq;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/4/18.
@@ -48,5 +49,10 @@ public class OfficialAccountServiceImpl implements OfficialAccountService {
                 setMessageUrl(officialAccountReq.getMessageUrl());
             }
         });
+    }
+
+
+    public List<OfficialAccount> getAllOfficialAccount(){
+        return officialAccountMapper.selectAll();
     }
 }

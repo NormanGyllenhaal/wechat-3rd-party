@@ -8,7 +8,7 @@
 
 
     <!-- 自动扫描所有注解该路径 -->
-    <context:component-scan base-package="site.lovecode" />
+    <context:component-scan base-package="site.lovecode"  />
 
     <mvc:annotation-driven />
 

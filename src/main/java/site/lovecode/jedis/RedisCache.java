@@ -4,9 +4,9 @@
 
 package site.lovecode.jedis;
 
+import com.alibaba.fastjson.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import redis.clients.jedis.BinaryJedisCommands;
 import site.lovecode.util.SerializeUtil;
 
 import java.io.Serializable;
@@ -24,7 +24,7 @@ public class RedisCache {
 
 	private static final Logger logger = LoggerFactory.getLogger(RedisCache.class);
 
-	private BinaryJedisCommands redis;
+	private RedisCommands redis;
 
 
 
@@ -41,6 +41,32 @@ public class RedisCache {
 	}
 
 
+	/**
+	 *
+	 * @param key
+	 * @param value
+     * @return
+     */
+	public String set(final String key,final String value){
+		return redis.set(key,value);
+	}
+
+	/**
+	 *
+	 * @param key
+	 * @param object
+     * @return
+     */
+	public String set(final Long key,final Object object){
+		return set(key.toString(), JSON.toJSONString(object));
+	}
+
+
+
+
+	public String  get(final Long key){
+		return redis.get(key.toString());
+	}
 
 
 
@@ -137,14 +163,15 @@ public class RedisCache {
 	}
 
 
-	public BinaryJedisCommands getRedis() {
+	public static Logger getLogger() {
+		return logger;
+	}
+
+	public RedisCommands getRedis() {
 		return redis;
 	}
 
-
-	public void setRedis( BinaryJedisCommands redis ) {
+	public void setRedis(RedisCommands redis) {
 		this.redis = redis;
 	}
-
-
 }

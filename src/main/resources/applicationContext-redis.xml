@@ -9,7 +9,7 @@
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd ">
 
 	<!-- RedisCache 配置 -->
-	<bean id="redisTemplate" class="site.lovecode.jedis.RedisCache">
+	<bean id="redisCache" class="site.lovecode.jedis.RedisCache">
 		<property name="redis" ref="redisProxyCommands" />
 	</bean>
 

@@ -68,7 +68,7 @@
 
 
   <select id="selectJoinInfoAndAccessToken" resultMap="JoinInfoAndAccessTokenResultMap">
-     select * from wx_official_account a left join wx_official_account_info b on a.id = b.officialAccountId inner JOIN wx_official_account_access_token c on a.id = c.officialAccountId where a.accountType = 2
+     select * from wx_official_account a left join wx_official_account_info b on a.id = b.officialAccountId left JOIN wx_official_account_access_token c on a.id = c.officialAccountId where a.accountType = 2
   </select>
 
 </mapper>

@@ -5,7 +5,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import site.lovecode.entity.SystemUser;
 import site.lovecode.service.SystemUserService;
 import site.lovecode.service.WechatThridPartyService;
 
@@ -16,13 +15,14 @@ import java.io.IOException;
  * Created by Administrator on 2016/4/15.
  */
 @Controller
-public class SystemUserController {
+public class SystemUserController  {
 
     @Resource
     private SystemUserService systemUserService;
 
     @Resource
     private WechatThridPartyService wechatThridPartyService;
+
 
     @RequestMapping("/login.html")
     public ModelAndView login(Model model){
@@ -43,4 +43,7 @@ public class SystemUserController {
             return "redirect:/login.html";
         }
     }
+
+
+
 }

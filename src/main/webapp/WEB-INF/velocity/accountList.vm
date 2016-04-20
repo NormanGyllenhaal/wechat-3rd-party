@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    #include("head.vm")
+<body>
+<!-- Navigation -->
+    #include("navbar.vm")
+
+<div class="col-md-4">
+    <div class="widget-container fluid-height">
+        <div class="heading">
+            <i class="icon-list-ul"></i>我的公众号列表
+        </div>
+        <div class="widget-content padded">
+            <ul>
+                #foreach($account in $accountList)
+                    <li>
+                    公众号id：  $account.id
+                    <a href="createMenu.html?oaid=$account.id">创建菜单</a>
+                    公众号appid: $account.appid
+                    <br/>
+                    公众号名称：$account.nickName
+                    公众号类型：
+                    #if($account.accountType==1)
+                        授权绑定
+                    #elseif($account.accountType==2)
+                        手动绑定
+                    </li>
+                    #end
+                #end
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

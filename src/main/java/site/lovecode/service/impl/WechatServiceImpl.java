@@ -7,9 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Service;
 import site.lovecode.entity.OfficialAccount;
-import site.lovecode.entity.SystemUser;
 import site.lovecode.jedis.RedisCache;
-import site.lovecode.mapper.AuthorizerAccessTokenMapper;
 import site.lovecode.mapper.OfficialAccountMapper;
 import site.lovecode.service.WechatService;
 import site.lovecode.support.bean.config.WechatConfig;
@@ -29,12 +27,11 @@ public class WechatServiceImpl implements InitializingBean, WechatService,Serial
 
     private Logger logger = LoggerFactory.getLogger(WechatServiceImpl.class);
 
+    @Resource
+    private RedisCache redisCache;
 
     @Resource
-    private RedisCache redisTemplate;
-
-    @Resource
-    private WxMpService wxMpService;
+    private WxMpService wechatAuthorizationClient;
 
     @Resource
     private OfficialAccountMapper officialAccountMapper;
@@ -56,21 +53,25 @@ public class WechatServiceImpl implements InitializingBean, WechatService,Serial
                      setRefreshToken(vo.getOfficialAccountInfo().getToken());
                      setAesKey(vo.getOfficialAccountInfo().getEncodingAesKey());
                      if(vo.getOfficialAccountAccessToken()!=null){
-                         setAccessToken(vo.getOfficialAccountAccessToken().getAccessToken());
-                         setExpiresTime(vo.getOfficialAccountAccessToken().getExpiresIn());
+                         if(vo.getOfficialAccountAccessToken().getAccessToken()!=null){
+                             setAccessToken(vo.getOfficialAccountAccessToken().getAccessToken());
+                         }
+                         if(vo.getOfficialAccountAccessToken().getExpiresIn()!=null){
+                             setExpiresTime(vo.getOfficialAccountAccessToken().getExpiresIn());
+                         }
                      }
                  }
              }
          }));
-
+        logger.info(""+wechatConfigMap.size());
+        wechatConfigMap.forEach((aLong, wechatConfig) -> redisCache.set(aLong,wechatConfig));
         logger.info(wechatConfigMap.toString());
-
     }
 
 
     public void getAccessToken() {
         try {
-            wxMpService.getAccessToken();
+            wechatAuthorizationClient.getAccessToken();
         } catch (WxErrorException e) {
             e.printStackTrace();
         }
