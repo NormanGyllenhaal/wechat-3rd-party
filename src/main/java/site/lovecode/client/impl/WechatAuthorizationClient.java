@@ -30,6 +30,8 @@ public class WechatAuthorizationClient extends WxMpServiceImpl {
     private AuthorizerAccessTokenMapper authorizerAccessTokenMapper;
 
 
+
+
     @Override
     public String getAccessToken(boolean forceRefresh) throws WxErrorException {
         if (forceRefresh) {
