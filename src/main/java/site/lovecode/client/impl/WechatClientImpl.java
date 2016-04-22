@@ -49,6 +49,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.helpers.MessageFormatter;
 import site.lovecode.client.WechatClient;
+import site.lovecode.support.bean.json.AutoReplyInfoBean;
 import site.lovecode.support.bean.json.UserInfoListResp;
 import site.lovecode.support.bean.json.UserInfoResp;
 import site.lovecode.support.bean.json.UserListReq;
@@ -999,6 +1000,11 @@ public class WechatClientImpl implements WechatClient {
         }else{
               return sendGetUserList(openidList);
         }
+    }
+
+    @Override
+    public AutoReplyInfoBean getCurrentAutoreplyInfo() throws WxErrorException {
+        return JSONObject.parseObject(get("https://api.weixin.qq.com/cgi-bin/get_current_autoreply_info",null),AutoReplyInfoBean.class);
     }
 
 

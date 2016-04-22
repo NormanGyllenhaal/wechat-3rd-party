@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 @Service
 public class PersonalUserServiceImpl implements PersonalUserService {
 
-    private Logger logger  = LoggerFactory.getLogger(this.getClass());
+    private Logger logger  = LoggerFactory.getLogger(PersonalUserServiceImpl.class);
 
     @Resource
     private WechatFactory wechatFactory;
@@ -44,6 +44,7 @@ public class PersonalUserServiceImpl implements PersonalUserService {
         List<UserInfoResp> userList = wechatClient.getUserList(wxMpUserList.getOpenIds());
         List<PersonalUser> personalUserList =userList.stream().map(userInfoResp -> new PersonalUser(){
             {
+                setId(IdWorker.getId());
                 setOfficialAccountId(oaid);
                 setOpenid(userInfoResp.getOpenid());
                 setSubscribe(userInfoResp.getSubscribe());
@@ -61,7 +62,8 @@ public class PersonalUserServiceImpl implements PersonalUserService {
             }
         }).collect(Collectors.toList());
         personalUserMapper.deleteByOfficialAccountIdAndSubscribe(oaid);
-        //personalUserMapper.batchInsert(personalUserList);
-        return personalUserList;
+        personalUserMapper.batchInsert(personalUserList);
+        logger.info(wechatClient.getCurrentAutoreplyInfo().toString());
+             return personalUserList;
     }
 }

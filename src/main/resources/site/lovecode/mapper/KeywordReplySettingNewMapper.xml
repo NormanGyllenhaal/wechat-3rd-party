@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="site.lovecode.mapper.KeywordReplySettingNewMapper">
+  <resultMap id="BaseResultMap" type="site.lovecode.entity.KeywordReplySettingNew">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="keywordReplySettingReplyId" jdbcType="BIGINT" property="keywordReplySettingReplyId" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="author" jdbcType="VARCHAR" property="author" />
+    <result column="digest" jdbcType="VARCHAR" property="digest" />
+    <result column="showCover" jdbcType="TINYINT" property="showCover" />
+    <result column="coverUrl" jdbcType="VARCHAR" property="coverUrl" />
+    <result column="contentUrl" jdbcType="VARCHAR" property="contentUrl" />
+    <result column="sourceUrl" jdbcType="VARCHAR" property="sourceUrl" />
+  </resultMap>
+</mapper>

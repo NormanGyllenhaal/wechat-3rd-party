@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="site.lovecode.mapper.ReplySettingMapper">
+  <resultMap id="BaseResultMap" type="site.lovecode.entity.ReplySetting">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="officialAccountId" jdbcType="BIGINT" property="officialAccountId" />
+    <result column="replyOpen" jdbcType="TINYINT" property="replyOpen" />
+    <result column="replyType" jdbcType="TINYINT" property="replyType" />
+    <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+</mapper>

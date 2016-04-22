@@ -2,6 +2,7 @@ package site.lovecode.client;
 
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
+import site.lovecode.support.bean.json.AutoReplyInfoBean;
 import site.lovecode.support.bean.json.UserInfoListResp;
 import site.lovecode.support.bean.json.UserInfoResp;
 
@@ -13,4 +14,8 @@ import java.util.List;
 public interface WechatClient extends WxMpService {
 
     List<UserInfoResp> getUserList(List<String> openidList) throws WxErrorException;
+
+    AutoReplyInfoBean getCurrentAutoreplyInfo() throws WxErrorException;
+
+
 }
