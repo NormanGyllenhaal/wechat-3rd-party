@@ -1,7 +1,13 @@
 package site.lovecode.controller;
 
 import com.thoughtworks.xstream.XStream;
+import me.chanjar.weixin.common.api.WxConsts;
+import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.mp.api.WxMpInMemoryConfigStorage;
+import me.chanjar.weixin.mp.api.WxMpMessageHandler;
+import me.chanjar.weixin.mp.api.WxMpMessageRouter;
+import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.WxMpXmlOutMessage;
 import org.slf4j.Logger;
@@ -11,9 +17,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import site.lovecode.client.WechatClient;
+import site.lovecode.client.WechatFactory;
 import site.lovecode.client.impl.WechatThirdPartyClientImpl;
-import site.lovecode.entity.UserInfo;
-import site.lovecode.mapper.UserInfoMapper;
 import site.lovecode.service.WechatThridPartyService;
 import site.lovecode.support.bean.*;
 import site.lovecode.support.bean.enums.AuthorizationInfoTypeEnum;
@@ -24,6 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2016/3/25.
@@ -39,7 +46,7 @@ public class WechatThirdPartyController {
 
 
     @Resource
-    private UserInfoMapper userInfoMapper;
+    private WechatFactory wechatFactory;
 
 
     /**
@@ -112,7 +119,7 @@ public class WechatThirdPartyController {
      * @return
      */
     @RequestMapping(value = "/getAuthorization.html")
-    public ModelAndView getAuthorization(Model model) {
+    public ModelAndView getAuthorization(Model model) throws WxErrorException {
         try {
             model.addAttribute("url", wechatThridPartyService.getCompoentLoginUrl());
         } catch (IOException e) {
@@ -132,20 +139,23 @@ public class WechatThirdPartyController {
         try {
             WxMpXmlMessage msg = WxMpXmlMessage.fromEncryptedXml(request.getInputStream(), config, request.getParameter("timestamp"), request.getParameter("nonce"), request.getParameter("msg_signature"));
             logger.info(msg.toString());
-            userInfoMapper.insert(new UserInfo() {
-                {
-                    setOpenid(msg.getFromUserName());
-                }
-            });
-            WxMpXmlOutMessage reMsg = WxMpXmlOutMessage.TEXT()
-                    .content("回复：服务器收到你的消息:" + msg.getContent())
-                    .fromUser(msg.getToUserName())
-                    .toUser(msg.getFromUserName())
-                    .build();
+            WechatClient wechatClient = wechatFactory.getWechatClient(msg.getToUserName());
+            WxMpMessageRouter router = new WxMpMessageRouter(wechatClient);
+            router.rule().async(false).msgType(WxConsts.XML_MSG_TEXT).handler((wxMessage, context, wxMpService, sessionManager) -> WxMpXmlOutMessage.TEXT()
+                    .content(wxMessage.getContent())
+                    .fromUser(wxMessage.getToUserName())
+                    .toUser(wxMessage.getFromUserName())
+                    .build()).end().rule().handler((wxMessage, context, wxMpService, sessionManager) -> WxMpXmlOutMessage.TEXT()
+                    .content("回复：服务器收到你的消息:" +wxMessage.getContent())
+                    .fromUser(wxMessage.getToUserName())
+                    .toUser(wxMessage.getFromUserName())
+                    .build()).end();
+            WxMpXmlOutMessage reMsg = router.route(msg);
             response.getWriter().write(reMsg.toEncryptedXml(config));
         } catch (Exception e) {
             e.printStackTrace();
         }
+        
 //        try {
 //            WxMpXmlMessage msg = WxMpXmlMessage.fromXml(request.getInputStream());
 //
@@ -174,12 +184,12 @@ public class WechatThirdPartyController {
     }
 
 
-    @RequestMapping(value = "/getUser.html")
+   /* @RequestMapping(value = "/getUser.html")
     public ModelAndView getUser(Model model) {
         logger.info("获取用户列表");
         List<UserInfo> userInfoList = userInfoMapper.selectAll();
         model.addAttribute("userList", userInfoList);
         return new ModelAndView("user");
-    }
+    }*/
 
 }

@@ -1,5 +1,6 @@
 package site.lovecode.service;
 
+import me.chanjar.weixin.common.exception.WxErrorException;
 import site.lovecode.support.bean.AuthorizerInfoBean;
 import site.lovecode.support.bean.XmlDecryptingBean;
 
@@ -15,7 +16,7 @@ public interface WechatThridPartyService {
      *
      * @param xmlDecryptingBean
      */
-   void saveComponentVerifyTicket(XmlDecryptingBean xmlDecryptingBean);
+   void saveComponentVerifyTicket(XmlDecryptingBean xmlDecryptingBean) throws WxErrorException;
 
 
     /**
@@ -33,7 +34,7 @@ public interface WechatThridPartyService {
      * @return
      * @throws IOException
      */
-    String  getCompoentLoginUrl() throws IOException;
+    String  getCompoentLoginUrl() throws IOException, WxErrorException;
 
 
     /**

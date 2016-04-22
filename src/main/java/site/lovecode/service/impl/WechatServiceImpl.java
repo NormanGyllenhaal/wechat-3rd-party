@@ -23,7 +23,7 @@ import java.util.stream.Stream;
  * Created by Administrator on 2016/4/13.
  */
 @Service
-public class WechatServiceImpl implements InitializingBean, WechatService,Serializable {
+public class WechatServiceImpl implements InitializingBean, WechatService, Serializable {
 
     private Logger logger = LoggerFactory.getLogger(WechatServiceImpl.class);
 
@@ -39,32 +39,37 @@ public class WechatServiceImpl implements InitializingBean, WechatService,Serial
     @Override
     public void afterPropertiesSet() throws Exception {
         logger.info("加载所有公众号配置信息");
-        Map<Long, WechatConfig> wechatConfigMap =Stream.of(officialAccountMapper.selectJoinAuthorizerInfo(),officialAccountMapper.selectJoinInfoAndAccessToken()).flatMap(officialAccountVo -> officialAccountVo.stream()).collect(Collectors.toList()).stream().collect(Collectors.toMap(OfficialAccount::getId,vo -> new WechatConfig(){
-             {
-                 setAppId(vo.getAppid());
-                 setAccountType(vo.getAccountType());
-                 setOfficialAccountId(vo.getId());
-                 if(vo.getAccountType().equals(OfficialAccountTypeEnum.AUTHORIZATION.key())){
-                     setRefreshToken(vo.getAuthorizerAccessToken().getAuthorizerRefreshToken());
-                     setAccessToken(vo.getAuthorizerAccessToken().getAuthorizerAccessToken());
-                     setExpiresTime(vo.getAuthorizerAccessToken().getExpiresIn());
-                 }else if(vo.getAccountType().equals(OfficialAccountTypeEnum.UNAUTHORIZATION.key())){
-                     setSecret(vo.getOfficialAccountInfo().getAppSecret());
-                     setRefreshToken(vo.getOfficialAccountInfo().getToken());
-                     setAesKey(vo.getOfficialAccountInfo().getEncodingAesKey());
-                     if(vo.getOfficialAccountAccessToken()!=null){
-                         if(vo.getOfficialAccountAccessToken().getAccessToken()!=null){
-                             setAccessToken(vo.getOfficialAccountAccessToken().getAccessToken());
-                         }
-                         if(vo.getOfficialAccountAccessToken().getExpiresIn()!=null){
-                             setExpiresTime(vo.getOfficialAccountAccessToken().getExpiresIn());
-                         }
-                     }
-                 }
-             }
-         }));
-        logger.info(""+wechatConfigMap.size());
-        wechatConfigMap.forEach((aLong, wechatConfig) -> redisCache.set(aLong,wechatConfig));
+        Map<Long, WechatConfig> wechatConfigMap = Stream.of(officialAccountMapper.selectJoinAuthorizerInfo(), officialAccountMapper.selectJoinInfoAndAccessToken()).flatMap(officialAccountVo -> officialAccountVo.stream()).collect(Collectors.toList()).stream().collect(Collectors.toMap(OfficialAccount::getId, vo -> new WechatConfig() {
+            {
+                setAppId(vo.getAppid());
+                setAccountType(vo.getAccountType());
+                setOfficialAccountId(vo.getId());
+                setUserName(vo.getUserName());
+                if (vo.getAccountType().equals(OfficialAccountTypeEnum.AUTHORIZATION.key())) {
+                    setRefreshToken(vo.getAuthorizerAccessToken().getAuthorizerRefreshToken());
+                    setAccessToken(vo.getAuthorizerAccessToken().getAuthorizerAccessToken());
+                    setExpiresTime(vo.getAuthorizerAccessToken().getExpiresIn());
+                } else if (vo.getAccountType().equals(OfficialAccountTypeEnum.UNAUTHORIZATION.key())) {
+                    setSecret(vo.getOfficialAccountInfo().getAppSecret());
+                    setRefreshToken(vo.getOfficialAccountInfo().getToken());
+                    setAesKey(vo.getOfficialAccountInfo().getEncodingAesKey());
+                    if (vo.getOfficialAccountAccessToken() != null) {
+                        if (vo.getOfficialAccountAccessToken().getAccessToken() != null) {
+                            setAccessToken(vo.getOfficialAccountAccessToken().getAccessToken());
+                        }
+                        if (vo.getOfficialAccountAccessToken().getExpiresIn() != null) {
+                            setExpiresTime(vo.getOfficialAccountAccessToken().getExpiresIn());
+                        }
+                    }
+                }
+            }
+        }));
+        logger.info("" + wechatConfigMap.size());
+        wechatConfigMap.forEach((aLong, wechatConfig) -> {
+                    redisCache.set(aLong, wechatConfig);
+                    redisCache.set(wechatConfig.getUserName(),aLong.toString());
+                }
+        );
         logger.info(wechatConfigMap.toString());
     }
 

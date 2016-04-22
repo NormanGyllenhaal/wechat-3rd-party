@@ -14,8 +14,8 @@
             <ul>
                 #foreach($account in $accountList)
                     <li>
+                    获取用户列表：<a href="refreshUserList.html?oaid=$account.id">获取用户列表</a>
                     公众号id：  $account.id
-                    <a href="createMenu.html?oaid=$account.id">创建菜单</a>
                     公众号appid: $account.appid
                     <br/>
                     公众号名称：$account.nickName

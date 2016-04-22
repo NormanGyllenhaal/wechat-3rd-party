@@ -45,11 +45,15 @@
 
 
 
-        <table tableName="WX_AUTHORIZER_ACCESS_TOKEN" domainObjectName="AuthorizerAccessToken">
+
+        <table tableName="WX_ERROR_CODE" domainObjectName="ErrorCode">
             <property name="useActualColumnNames" value="true"/>
         </table>
-
-       <!-- <table tableName="WX_ARTICLE_SHARE_DAY" domainObjectName="ArticleShareDay">
+       <!--
+         <table tableName="WX_AUTHORIZER_ACCESS_TOKEN" domainObjectName="AuthorizerAccessToken">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+       <table tableName="WX_ARTICLE_SHARE_DAY" domainObjectName="ArticleShareDay">
             <property name="useActualColumnNames" value="true"/>
         </table>
         <table tableName="WX_ARTICLE_DAY" domainObjectName="ArticleDay">

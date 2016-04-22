@@ -18,12 +18,8 @@ public class MenuController {
 
 
     @RequestMapping("/createMenu.html")
-    public String createMenu(){
-        try {
-            menuService.createMenu();
-        } catch (WxErrorException e) {
-            e.printStackTrace();
-        }
+    public String createMenu() throws WxErrorException {
+        menuService.createMenu();
         return "menu";
     }
 }

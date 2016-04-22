@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>
+        404页面 - Se7en - 最好的Bootstrap后台主题框架
+    </title>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Bootstrap后台主题框架,ios7风格后台框架,响应式后台框架"/>
+    <meta name="description"
+          content="Se7en是一个基于基于Bootstrap3的，仿ios7风格的，完全响应式的后台框架，她内置了5套简单的皮肤模板，她还加入了近20个国外优秀的开源项目，并可简单组合与拆卸。"/>
+    <link href="http://fonts.googleapis.com/css?family=Lato:100%2C300%2C400%2C700" media="all" rel="stylesheet"
+          type="text/css"/>
+    <link href="stylesheets/bootstrap.min.css" media="all" rel="stylesheet" type="text/css"/>
+    <link href="stylesheets/font-awesome.css" media="all" rel="stylesheet" type="text/css"/>
+    <link href="stylesheets/se7en-font.css" media="all" rel="stylesheet" type="text/css"/>
+    <link href="stylesheets/style.css" media="all" rel="stylesheet" type="text/css"/>
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js" type="text/javascript"></script>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js" type="text/javascript"></script>
+    <script src="javascripts/bootstrap.min.js" type="text/javascript"></script>
+    <script src="javascripts/modernizr.custom.js" type="text/javascript"></script>
+    <script src="javascripts/main.js" type="text/javascript"></script>
+    <script src="javascripts/application.js" type="text/javascript"></script>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+</head>
+<body class="fourofour">
+<!-- Login Screen -->
+<div class="fourofour-container">
+    <h1>
+       500
+    </h1>
+    <h2>
+        #if($ex.message)
+        $ex.message
+        #elseif($msg)
+            $msg
+        #end
+    </h2>
+    <a class="btn btn-lg btn-default-outline" href="index.html"><i class="icon-home"></i>返回首页</a>
+</div>
+</body>
+</html>

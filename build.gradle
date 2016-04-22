@@ -54,6 +54,7 @@ dependencies {
     compile files('lib/aes-jre1.6.jar')
     compile 'redis.clients:jedis:2.8.0'
     compile 'de.ruedigermoeller:fst:1.58'
+    compile 'org.testng:testng:6.9.10'
 
 
 

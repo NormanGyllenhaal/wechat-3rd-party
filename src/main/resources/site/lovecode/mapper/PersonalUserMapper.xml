@@ -22,4 +22,8 @@
     <result column="groupid" property="groupid" jdbcType="VARCHAR" />
     <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
+
+  <delete id="deleteByOfficialAccountIdAndSubscribe">
+    delete from wx_personal_user where officialAccountId = #{officialAccountId} and subscribe != 0
+  </delete>
 </mapper>

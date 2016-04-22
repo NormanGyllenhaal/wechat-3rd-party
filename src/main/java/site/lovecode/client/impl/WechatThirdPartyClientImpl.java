@@ -2,6 +2,7 @@ package site.lovecode.client.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import me.chanjar.weixin.common.exception.WxErrorException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -43,7 +44,7 @@ public class WechatThirdPartyClientImpl implements WechatThirdPartyClient {
      * @return
      * @throws IOException
      */
-    public String getComponentAccessToken() throws IOException {
+    public String getComponentAccessToken() throws IOException, WxErrorException {
         if (!Optional.ofNullable(deadline).isPresent()||deadline < System.currentTimeMillis()) {
             logger.info("component_access_token过期，刷新component_assess_token");
             return refreshComponentAccessToken().getComponentAccessToken();
@@ -58,7 +59,7 @@ public class WechatThirdPartyClientImpl implements WechatThirdPartyClient {
      *
      * @return
      */
-    public ComponentAccessTokenBean refreshComponentAccessToken() {
+    public ComponentAccessTokenBean refreshComponentAccessToken() throws WxErrorException {
         ComponentAccessTokenBean componentAccessTokenBean = JSON.parseObject(HttpUtil.doPostSSL(WechatUrlConstant.API_COMPONENT_TOKEN, new JSONObject() {
             {
                 put(WechatParameterConstant.COMPONENT_APPID, wechatThirdPartyConfig.getComponentAppid());
@@ -77,7 +78,7 @@ public class WechatThirdPartyClientImpl implements WechatThirdPartyClient {
      * @return
      * @throws IOException
      */
-    public PreAuthCodeBean getPreAuthCode() throws IOException {
+    public PreAuthCodeBean getPreAuthCode() throws WxErrorException, IOException {
         return JSON.parseObject(HttpUtil.doPostSSL(new StringBuffer(WechatUrlConstant.API_CREATE_PREAUTHCODE).append(getComponentAccessToken()).toString(), new JSONObject() {
             {
                 put(WechatParameterConstant.COMPONENT_APPID, wechatThirdPartyConfig.getComponentAppid());
@@ -105,7 +106,7 @@ public class WechatThirdPartyClientImpl implements WechatThirdPartyClient {
      * @return
      * @throws IOException
      */
-    public QueryAuthBean queryAuth(String authorizationCode) throws IOException {
+    public QueryAuthBean queryAuth(String authorizationCode) throws IOException, WxErrorException {
         return JSON.parseObject(HttpUtil.doPostSSL(new StringBuffer(WechatUrlConstant.API_QUERY_AUTH).append(getComponentAccessToken()).toString(), new JSONObject() {
             {
                 put(WechatParameterConstant.COMPONENT_APPID, wechatThirdPartyConfig.getComponentAppid());
@@ -121,7 +122,7 @@ public class WechatThirdPartyClientImpl implements WechatThirdPartyClient {
      * @param authorizerAppid
      * @return
      */
-    public AuthorizerInfoBean getAuthorizerInfo(String authorizerAppid) throws IOException {
+    public AuthorizerInfoBean getAuthorizerInfo(String authorizerAppid) throws IOException, WxErrorException {
         return JSON.parseObject(HttpUtil.doPostSSL(new StringBuilder(WechatUrlConstant.API_GET_AUTHORIZER_INFO).append(getComponentAccessToken()).toString(), new JSONObject() {
             {
                 put(WechatParameterConstant.COMPONENT_APPID, wechatThirdPartyConfig.getComponentAppid());
@@ -137,7 +138,7 @@ public class WechatThirdPartyClientImpl implements WechatThirdPartyClient {
      * @return
      */
     @Override
-    public AuthorizerTokenBean refreshAuthorizerToken(String authorizerAppid, String authorizerRefreshToken) {
+    public AuthorizerTokenBean refreshAuthorizerToken(String authorizerAppid, String authorizerRefreshToken) throws WxErrorException {
         return JSON.parseObject(HttpUtil.doPostSSL(Stream.of(WechatUrlConstant.API_AUTHORIZER_TOKEN,wechatThirdPartyConfig.getComponentAccessToken()).reduce("",String::concat),new JSONObject(){
             {
                 put(WechatParameterConstant.COMPONENT_APPID,wechatThirdPartyConfig.getComponentAppid());
@@ -155,7 +156,7 @@ public class WechatThirdPartyClientImpl implements WechatThirdPartyClient {
      * @return
      */
     @Override
-    public GetAuthorizerOptionBean getAuthorizerOption(String authorizerAppid, String optionName) {
+    public GetAuthorizerOptionBean getAuthorizerOption(String authorizerAppid, String optionName) throws WxErrorException {
         return JSON.parseObject(HttpUtil.doPostSSL(Stream.of(WechatUrlConstant.API_GET_AUTHORIZER_OPTION,wechatThirdPartyConfig.getComponentAccessToken()).reduce("",String::concat),new JSONObject(){
             {
                 put(WechatParameterConstant.COMPONENT_APPID,wechatThirdPartyConfig.getComponentAppid());
@@ -173,15 +174,21 @@ public class WechatThirdPartyClientImpl implements WechatThirdPartyClient {
      * @param maps
      */
     @Override
-    public void setAuthorizerOption(String authorizerAppid, Map<String, String> maps) {
-       maps.forEach((key,value) -> HttpUtil.doPostSSL(Stream.of(WechatUrlConstant.API_SET_AUTHORIZER_OPTION,wechatThirdPartyConfig.getComponentAccessToken()).reduce("",String::concat),new JSONObject(){
-           {
-               put(WechatParameterConstant.COMPONENT_APPID,wechatThirdPartyConfig.getComponentAppid());
-               put(WechatParameterConstant.AUTHORIZER_APPID,authorizerAppid);
-               put(WechatParameterConstant.OPTION_NAME,key);
-               put(WechatParameterConstant.OPTION_VALUE,value);
+    public void setAuthorizerOption(String authorizerAppid, Map<String, String> maps)  {
+       maps.forEach((key, value) -> {
+           try {
+               HttpUtil.doPostSSL(Stream.of(WechatUrlConstant.API_SET_AUTHORIZER_OPTION, wechatThirdPartyConfig.getComponentAccessToken()).reduce("", String::concat), new JSONObject() {
+                   {
+                       put(WechatParameterConstant.COMPONENT_APPID, wechatThirdPartyConfig.getComponentAppid());
+                       put(WechatParameterConstant.AUTHORIZER_APPID, authorizerAppid);
+                       put(WechatParameterConstant.OPTION_NAME, key);
+                       put(WechatParameterConstant.OPTION_VALUE, value);
+                   }
+               }.toJSONString());
+           } catch (WxErrorException e) {
+               e.printStackTrace();
            }
-       }.toJSONString()));
+       });
     }
 
 

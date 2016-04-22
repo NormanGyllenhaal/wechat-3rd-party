@@ -6,9 +6,11 @@ import com.thoughtworks.xstream.XStream;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.bean.WxMenu;
 import me.chanjar.weixin.common.exception.WxErrorException;
-import me.chanjar.weixin.mp.api.WxMpInMemoryConfigStorage;
-import me.chanjar.weixin.mp.api.WxMpService;
-import me.chanjar.weixin.mp.api.WxMpServiceImpl;
+import me.chanjar.weixin.common.session.WxSessionManager;
+import me.chanjar.weixin.mp.api.*;
+import me.chanjar.weixin.mp.bean.WxMpXmlMessage;
+import me.chanjar.weixin.mp.bean.WxMpXmlOutMessage;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -25,6 +27,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Map;
 
 
 /**
@@ -149,6 +152,28 @@ public class WeiXinTest {
                 setFuncName(1);
             }
         });
+    }
+
+
+    @Test
+    public void testHandle(){
+        WxMpXmlMessage message3 = new WxMpXmlMessage();
+        message3.setContent("123");
+        WxMpService wxMpService = new WxMpServiceImpl();
+        WxMpMessageRouter router = new WxMpMessageRouter(wxMpService);
+        router.rule().content("123").handler(new WxMpMessageHandler(){
+
+            @Override
+            public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage, Map<String, Object> context, WxMpService wxMpService, WxSessionManager sessionManager) throws WxErrorException {
+                return WxMpXmlOutMessage.TEXT()
+                        .content("content")
+                        .fromUser("from")
+                        .toUser("to")
+                        .build();
+            }
+        }).end();
+        WxMpXmlOutMessage out = router.route(message3);
+        logger.info(out.toString());
     }
 
 

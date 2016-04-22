@@ -26,6 +26,12 @@ public class WechatConfig extends WxMpInMemoryConfigStorage implements Serializa
     private Long officialAccountId;
 
 
+    /**
+     * 微信号原始id
+     */
+    private String userName;
+
+
 
     public String getRefreshToken() {
         return refreshToken;
@@ -52,7 +58,11 @@ public class WechatConfig extends WxMpInMemoryConfigStorage implements Serializa
     }
 
 
+    public String getUserName() {
+        return userName;
+    }
 
-
-
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 }

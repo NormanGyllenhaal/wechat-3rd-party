@@ -106,7 +106,7 @@
                 <li class="dropdown user hidden-xs"><a data-toggle="dropdown" class="dropdown-toggle" href="#">
                     <img width="34" height="34" src="images/avatar-male.jpg"/>管理员<b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">
+                        <li><a href="accountList.html">
                             <i class="icon-user"></i>我的账户</a>
                         </li>
                         <li><a href="#">
@@ -274,3 +274,4 @@
         </div>
     </div>
 </div>
+

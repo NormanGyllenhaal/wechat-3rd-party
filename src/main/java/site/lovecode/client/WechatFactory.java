@@ -2,6 +2,8 @@ package site.lovecode.client;
 
 import com.alibaba.fastjson.JSON;
 import me.chanjar.weixin.mp.api.WxMpService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -19,35 +21,44 @@ import javax.servlet.http.HttpServletRequest;
 
 
 @Service
-public class WechatFactory  {
+public class WechatFactory {
 
+
+    private Logger logger  = LoggerFactory.getLogger(WechatFactory.class);
 
     @Resource
-    private WxMpService wechatAuthorizationClient;
+    private WechatClient wechatAuthorizationClient;
 
     @Resource
-    private WxMpService wechatBindClient;
+    private WechatClient wechatBindClient;
 
     @Resource
     private RedisCache redisCache;
 
 
-    public WxMpService getWxMpService() {
-        if(RequestContextHolder.getRequestAttributes()!=null){
+    public WechatClient getWechatClient() {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-            Long officialAccountId = Long.parseLong(request.getParameter("oaid"));
-            WechatConfig wechatConfig = JSON.parseObject(redisCache.get(officialAccountId), WechatConfig.class);
-            if (wechatConfig.getAccountType().equals(OfficialAccountTypeEnum.AUTHORIZATION.key())) {
-                wechatAuthorizationClient.setWxMpConfigStorage(wechatConfig);
-                return wechatAuthorizationClient;
-            } else {
-                wechatBindClient.setWxMpConfigStorage(wechatConfig);
-                return wechatBindClient;
-            }
-        }else{
-            return null;
-        }
+        Long officialAccountId = Long.parseLong(request.getParameter("oaid"));
+        return getInstance(officialAccountId);
+    }
 
+
+    public WechatClient getWechatClient(String userName) {
+        logger.info(redisCache.get(userName));
+        Long officialAccountId = Long.parseLong(redisCache.get(userName));
+        return getInstance(officialAccountId);
+    }
+
+
+    private WechatClient getInstance(Long officialAccountId) {
+        WechatConfig wechatConfig = JSON.parseObject(redisCache.get(officialAccountId), WechatConfig.class);
+        if (wechatConfig.getAccountType().equals(OfficialAccountTypeEnum.AUTHORIZATION.key())) {
+            wechatAuthorizationClient.setWxMpConfigStorage(wechatConfig);
+            return wechatAuthorizationClient;
+        } else {
+            wechatBindClient.setWxMpConfigStorage(wechatConfig);
+            return wechatBindClient;
+        }
     }
 
 }

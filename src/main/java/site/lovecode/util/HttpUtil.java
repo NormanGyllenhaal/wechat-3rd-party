@@ -1,5 +1,6 @@
 package site.lovecode.util;
 
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import me.chanjar.weixin.common.bean.result.WxError;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import org.apache.commons.io.IOUtils;
@@ -260,7 +261,7 @@ public class HttpUtil {
      * @param json JSON对象
      * @return
      */
-    public static String doPostSSL(String apiUrl, Object json) {
+    public static String doPostSSL(String apiUrl, Object json) throws WxErrorException {
         CloseableHttpClient httpClient = HttpClients.custom().setSSLSocketFactory(createSSLConnSocketFactory()).setConnectionManager(connMgr).setDefaultRequestConfig(requestConfig).build();
         HttpPost httpPost = new HttpPost(apiUrl);
         CloseableHttpResponse response = null;
@@ -282,8 +283,11 @@ public class HttpUtil {
                 return null;
             }
             httpStr = EntityUtils.toString(entity, "utf-8");
-            throwWxException(httpStr);
-        } catch (Exception e) {
+            WxError error = WxError.fromJson(httpStr);
+            if (error.getErrorCode() != 0) {
+                throw new WxErrorException(error);
+            }
+        } catch (IOException e) {
             e.printStackTrace();
         } finally {
             if (response != null) {
@@ -337,12 +341,6 @@ public class HttpUtil {
     }
 
 
-    private static void throwWxException(String httpStr) throws WxErrorException {
-        WxError error = WxError.fromJson(httpStr);
-        if (error.getErrorCode() != 0) {
-            throw new WxErrorException(error);
-        }
-    }
 
     /**
      * 测试方法

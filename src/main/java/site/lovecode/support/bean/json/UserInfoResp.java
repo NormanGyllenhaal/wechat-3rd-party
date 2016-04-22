@@ -1,21 +1,17 @@
-package site.lovecode.entity;
+package site.lovecode.support.bean.json;
+
+import com.alibaba.fastjson.annotation.JSONField;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import site.lovecode.common.mybatis.Identity;
 
-@Table(name = "wx_user_info")
-public class UserInfo implements Identity, Serializable {
-    @Id
-    private Long id;
 
-    private String compoentAppid;
+public class UserInfoResp implements Serializable {
 
     private String appid;
 
     private String openid;
 
-    private String subscribe;
+    private Integer subscribe;
 
     private String nickname;
 
@@ -27,9 +23,12 @@ public class UserInfo implements Identity, Serializable {
 
     private String province;
 
+    private String country;
+
     private String headimgurl;
 
-    private String subscribeTime;
+    @JSONField(name = "subscribe_time")
+    private Long subscribeTime;
 
     private String unionid;
 
@@ -39,33 +38,6 @@ public class UserInfo implements Identity, Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     * @return id
-     */
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * @param id
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    /**
-     * @return compoentAppid
-     */
-    public String getCompoentAppid() {
-        return compoentAppid;
-    }
-
-    /**
-     * @param compoentAppid
-     */
-    public void setCompoentAppid(String compoentAppid) {
-        this.compoentAppid = compoentAppid;
-    }
 
     /**
      * @return appid
@@ -95,17 +67,12 @@ public class UserInfo implements Identity, Serializable {
         this.openid = openid;
     }
 
-    /**
-     * @return subscribe
-     */
-    public String getSubscribe() {
+
+    public Integer getSubscribe() {
         return subscribe;
     }
 
-    /**
-     * @param subscribe
-     */
-    public void setSubscribe(String subscribe) {
+    public void setSubscribe(Integer subscribe) {
         this.subscribe = subscribe;
     }
 
@@ -193,17 +160,11 @@ public class UserInfo implements Identity, Serializable {
         this.headimgurl = headimgurl;
     }
 
-    /**
-     * @return subscribeTime
-     */
-    public String getSubscribeTime() {
+    public Long getSubscribeTime() {
         return subscribeTime;
     }
 
-    /**
-     * @param subscribeTime
-     */
-    public void setSubscribeTime(String subscribeTime) {
+    public void setSubscribeTime(Long subscribeTime) {
         this.subscribeTime = subscribeTime;
     }
 
@@ -249,29 +210,32 @@ public class UserInfo implements Identity, Serializable {
         this.grounpid = grounpid;
     }
 
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", compoentAppid=").append(compoentAppid);
-        sb.append(", appid=").append(appid);
-        sb.append(", openid=").append(openid);
-        sb.append(", subscribe=").append(subscribe);
-        sb.append(", nickname=").append(nickname);
-        sb.append(", sex=").append(sex);
-        sb.append(", language=").append(language);
-        sb.append(", city=").append(city);
-        sb.append(", province=").append(province);
-        sb.append(", headimgurl=").append(headimgurl);
-        sb.append(", subscribeTime=").append(subscribeTime);
-        sb.append(", unionid=").append(unionid);
-        sb.append(", remark=").append(remark);
-        sb.append(", grounpid=").append(grounpid);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+        return "UserInfoResp{" +
+                "appid='" + appid + '\'' +
+                ", openid='" + openid + '\'' +
+                ", subscribe=" + subscribe +
+                ", nickname='" + nickname + '\'' +
+                ", sex=" + sex +
+                ", language='" + language + '\'' +
+                ", city='" + city + '\'' +
+                ", province='" + province + '\'' +
+                ", country='" + country + '\'' +
+                ", headimgurl='" + headimgurl + '\'' +
+                ", subscribeTime='" + subscribeTime + '\'' +
+                ", unionid='" + unionid + '\'' +
+                ", remark='" + remark + '\'' +
+                ", grounpid='" + grounpid + '\'' +
+                '}';
     }
 }

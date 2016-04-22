@@ -1,5 +1,6 @@
 package site.lovecode.service.impl;
 
+import me.chanjar.weixin.common.exception.WxErrorException;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -88,7 +89,7 @@ public class WechatThirdPartyServiceImpl implements InitializingBean, WechatThri
      * @param xmlDecryptingBean
      */
     @Override
-    public void saveComponentVerifyTicket(XmlDecryptingBean xmlDecryptingBean) {
+    public void saveComponentVerifyTicket(XmlDecryptingBean xmlDecryptingBean) throws WxErrorException {
         //更新内存中的componentVerfiyTicket
         WechatThirdPartyClientImpl.wechatThirdPartyConfig.setComponentVerifyTicket(xmlDecryptingBean.getComponentVerifyTicket());
         //检查componentAccessToken是否为空
@@ -196,7 +197,7 @@ public class WechatThirdPartyServiceImpl implements InitializingBean, WechatThri
      * @return
      * @throws IOException
      */
-    public String getCompoentLoginUrl() throws IOException {
+    public String getCompoentLoginUrl() throws IOException, WxErrorException {
         return wechatThirdPartyClient.getAuthOrizationUrl(wechatThirdPartyClient.getPreAuthCode().getPreAuthCode());
     }
 

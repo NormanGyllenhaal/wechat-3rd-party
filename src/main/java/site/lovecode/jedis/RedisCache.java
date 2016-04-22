@@ -36,9 +36,9 @@ public class RedisCache {
 	 *            缓存关键字
 
 	 */
-	public boolean set( final String key, final Serializable value ) {
+	/*public boolean set( final String key, final Serializable value ) {
 		return set(key, 0, value);
-	}
+	}*/
 
 
 	/**
@@ -62,10 +62,14 @@ public class RedisCache {
 	}
 
 
-
-
-	public String  get(final Long key){
+	public String get(final Long key){
 		return redis.get(key.toString());
+	}
+
+
+
+	public String get(final String key){
+		return redis.get(key);
 	}
 
 
@@ -82,7 +86,7 @@ public class RedisCache {
 	 * @param value
 	 *            缓存值
 	 */
-	public boolean set( final String key, final int seconds, final Serializable value ) {
+	/*public boolean set( final String key, final int seconds, final Serializable value ) {
 		boolean rlt = false;
 		try {
 			byte[] key_ = key.getBytes();
@@ -100,7 +104,7 @@ public class RedisCache {
 			logger.error(e.getMessage(), e);
 		}
 		return rlt;
-	}
+	}*/
 
 
 	/**
@@ -112,7 +116,7 @@ public class RedisCache {
 	 *            缓存关键字
 	 * @return Serializable
 	 */
-	public Object get( final String key ) {
+	/*public Object get( final String key ) {
 		Object t = null;
 		try {
 			byte[] keyBytes = key.getBytes();
@@ -122,7 +126,7 @@ public class RedisCache {
 			logger.error(e.getMessage(), e);
 		}
 		return t;
-	}
+	}*/
 
 
 	/**

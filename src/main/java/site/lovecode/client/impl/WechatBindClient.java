@@ -7,5 +7,5 @@ import org.springframework.stereotype.Service;
  * Created by Administrator on 2016/4/19.
  */
 @Service("wechatBindClient")
-public class WechatBindClient extends WxMpServiceImpl {
+public class WechatBindClient extends WechatClientImpl {
 }

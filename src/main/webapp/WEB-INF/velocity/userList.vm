@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    #include("head.vm")
+<body>
+<!-- Navigation -->
+    #include("navbar.vm")
+<div class="row">
+    <div class="col-lg-12">
+        <div class="widget-container fluid-height clearfix">
+            <div class="heading">
+                <i class="icon-table"></i>用户列表
+            </div>
+            <div class="widget-content padded clearfix">
+                <table class="table table-bordered table-striped" id="dataTable1">
+                    <thead>
+                    <th class="check-header hidden-xs">
+                        <label><input id="checkAll" name="checkAll" type="checkbox"><span></span></label>
+                    </th>
+                    <th>
+                        用户昵称
+                    </th>
+                    <th>
+                        性别
+                    </th>
+                    <th class="hidden-xs">
+                        地区
+                    </th>
+                    <th class="hidden-xs">
+                        关注时间
+                    </th>
+                    <th class="hidden-xs">
+                        用户是否订阅
+                    </th>
+                    <th></th>
+                    </thead>
+                    <tbody>
+                    #foreach($user in $list)
+                    <tr>
+                        <td class="check hidden-xs">
+                            <label><input name="optionsRadios1" type="checkbox" value="option1"><span></span></label>
+                        </td>
+                        <td>
+                          <img src="$user.headimgurl">  $user.nickName
+                        </td>
+                        <td>
+                            $user.sex
+                        </td>
+                        <td class="hidden-xs">
+                            $user.country $user.province $user.language
+                        </td>
+                        <td class="hidden-xs">
+                            $user.subscribeTime
+                        </td>
+                        <td class="hidden-xs">
+                            <span class="label label-success">$user.subscribe</span>
+                        </td>
+                        <td class="actions">
+                            <div class="action-buttons">
+                                <a class="table-actions" href="#"><i class="icon-eye-open"></i></a><a class="table-actions" href="#"><i class="icon-pencil"></i></a><a class="table-actions" href="#"><i class="icon-trash"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                    #end
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,5 +1,6 @@
 package site.lovecode.client;
 
+import me.chanjar.weixin.common.exception.WxErrorException;
 import site.lovecode.support.bean.*;
 
 import java.io.IOException;
@@ -15,8 +16,7 @@ public interface WechatThirdPartyClient {
      *
      * @return
      */
-    public ComponentAccessTokenBean refreshComponentAccessToken();
-
+    ComponentAccessTokenBean refreshComponentAccessToken() throws WxErrorException;
 
 
     /**
@@ -25,8 +25,7 @@ public interface WechatThirdPartyClient {
      * @return
      * @throws IOException
      */
-    public PreAuthCodeBean getPreAuthCode() throws IOException;
-
+    PreAuthCodeBean getPreAuthCode() throws IOException, WxErrorException;
 
 
     /**
@@ -35,8 +34,7 @@ public interface WechatThirdPartyClient {
      * @param perAuthCode
      * @return
      */
-    public String getAuthOrizationUrl( String perAuthCode);
-
+    String getAuthOrizationUrl(String perAuthCode);
 
 
     /**
@@ -46,43 +44,45 @@ public interface WechatThirdPartyClient {
      * @return
      * @throws IOException
      */
-    public QueryAuthBean queryAuth(String authorizationCode) throws IOException;
-
+    QueryAuthBean queryAuth(String authorizationCode) throws IOException, WxErrorException;
 
 
     /**
      * 获取授权方公账号信息
+     *
      * @param authorizerAppid
      * @return
      */
-    public AuthorizerInfoBean getAuthorizerInfo(String authorizerAppid) throws IOException;
+    AuthorizerInfoBean getAuthorizerInfo(String authorizerAppid) throws IOException, WxErrorException;
 
 
     /**
      * 获取（刷新）授权公众号的接口调用凭据（令牌）
+     *
      * @param authorizerAppid
      * @param authorizerRefreshToken
      * @return
      */
-    public AuthorizerTokenBean refreshAuthorizerToken(String authorizerAppid,String authorizerRefreshToken);
+    AuthorizerTokenBean refreshAuthorizerToken(String authorizerAppid, String authorizerRefreshToken) throws WxErrorException;
 
 
     /**
      * 获取授权方的选项设置信息
+     *
      * @param authorizerAppid
      * @param optionName
      * @return
      */
-    public GetAuthorizerOptionBean getAuthorizerOption(String authorizerAppid,String optionName);
+    GetAuthorizerOptionBean getAuthorizerOption(String authorizerAppid, String optionName) throws WxErrorException;
 
 
     /**
      * 设置授权方选项信息
+     *
      * @param authorizerAppid
      * @param maps
      */
-     public void setAuthorizerOption(String authorizerAppid,Map<String,String> maps);
-
+    void setAuthorizerOption(String authorizerAppid, Map<String, String> maps) throws WxErrorException;
 
 
 }
