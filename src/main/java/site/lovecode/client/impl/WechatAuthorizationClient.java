@@ -19,7 +19,7 @@ import java.sql.Timestamp;
  * Created by Administrator on 2016/3/30.
  */
 @Service("wechatAuthorizationClient")
-public class WechatAuthorizationClient extends WxMpServiceImpl {
+public class WechatAuthorizationClient extends WechatClientImpl {
 
     private Logger logger = LoggerFactory.getLogger(WechatAuthorizationClient.class);
 
