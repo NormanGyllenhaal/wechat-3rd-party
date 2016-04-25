@@ -5,5 +5,5 @@ package site.lovecode.service;
  */
 public interface WechatService {
 
-   void getAccessToken();
+
 }

@@ -160,7 +160,7 @@ public class AutoReplyInfoBean {
             @JSONField(name = "rule_name")
             private String ruleName;
             @JSONField(name = "create_time")
-            private int createTime;
+            private Long createTime;
             @JSONField(name = "reply_mode")
             private String replyMode;
             /**
@@ -187,11 +187,11 @@ public class AutoReplyInfoBean {
                 this.ruleName = ruleName;
             }
 
-            public int getCreateTime() {
+            public Long getCreateTime() {
                 return createTime;
             }
 
-            public void setCreateTime(int createTime) {
+            public void setCreateTime(Long createTime) {
                 this.createTime = createTime;
             }
 
@@ -258,6 +258,8 @@ public class AutoReplyInfoBean {
                 @JSONField(name = "news_info")
                 private NewsInfoBean newsInfo;
 
+                private String content;
+
                 public String getType() {
                     return type;
                 }
@@ -272,6 +274,14 @@ public class AutoReplyInfoBean {
 
                 public void setNewsInfo(NewsInfoBean newsInfo) {
                     this.newsInfo = newsInfo;
+                }
+
+                public String getContent() {
+                    return content;
+                }
+
+                public void setContent(String content) {
+                    this.content = content;
                 }
 
                 public static class NewsInfoBean {

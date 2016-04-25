@@ -15,6 +15,7 @@
                 #foreach($account in $accountList)
                     <li>
                     获取用户列表：<a href="refreshUserList.html?oaid=$account.id">获取用户列表</a>
+                    <a href="saveReplySetting.html?oaid=$account.id">获取自动回复配置</a>
                     公众号id：  $account.id
                     公众号appid: $account.appid
                     <br/>
@@ -24,6 +25,7 @@
                         授权绑定
                     #elseif($account.accountType==2)
                         手动绑定
+
                     </li>
                     #end
                 #end

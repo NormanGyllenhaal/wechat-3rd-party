@@ -39,6 +39,11 @@ public class ReplySetting implements Identity, Serializable {
     private String content;
 
     /**
+     * 设置平台方，1,代表在微信后台设置，2代表在我方后台设置
+     */
+    private Integer plat;
+
+    /**
      * 创建时间
      */
     private Date createTime;
@@ -154,6 +159,24 @@ public class ReplySetting implements Identity, Serializable {
     }
 
     /**
+     * 获取设置平台方，1,代表在微信后台设置，2代表在我方后台设置
+     *
+     * @return plat - 设置平台方，1,代表在微信后台设置，2代表在我方后台设置
+     */
+    public Integer getPlat() {
+        return plat;
+    }
+
+    /**
+     * 设置设置平台方，1,代表在微信后台设置，2代表在我方后台设置
+     *
+     * @param plat 设置平台方，1,代表在微信后台设置，2代表在我方后台设置
+     */
+    public void setPlat(Integer plat) {
+        this.plat = plat;
+    }
+
+    /**
      * 获取创建时间
      *
      * @return createTime - 创建时间
@@ -183,6 +206,7 @@ public class ReplySetting implements Identity, Serializable {
         sb.append(", replyType=").append(replyType);
         sb.append(", type=").append(type);
         sb.append(", content=").append(content);
+        sb.append(", plat=").append(plat);
         sb.append(", createTime=").append(createTime);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");

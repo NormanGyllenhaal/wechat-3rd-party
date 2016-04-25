@@ -51,12 +51,6 @@ public class WechatController {
         return null;
     }
 
-    @RequestMapping(value="/getAccessToken.html")
-    @ResponseBody
-    public String getAccessToken(Model model){
-        wechatService.getAccessToken();
-        return "success";
-    }
 
 
 

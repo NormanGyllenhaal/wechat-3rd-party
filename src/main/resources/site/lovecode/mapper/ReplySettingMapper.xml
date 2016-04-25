@@ -11,6 +11,7 @@
     <result column="replyType" jdbcType="TINYINT" property="replyType" />
     <result column="type" jdbcType="TINYINT" property="type" />
     <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="plat" jdbcType="TINYINT" property="plat" />
     <result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
 </mapper>

@@ -51,6 +51,8 @@
         <table tableName="WX_KEYWORD_REPLY_SETTING" domainObjectName="KeywordReplySetting">
             <property name="useActualColumnNames" value="true"/>
         </table>
+
+       <!--
         <table tableName="WX_KEYWORD_REPLY_SETTING_KEYWORD" domainObjectName="KeywordReplySettingKeyword">
             <property name="useActualColumnNames" value="true"/>
         </table>
@@ -60,7 +62,6 @@
         <table tableName="WX_KEYWORD_REPLY_SETTING_REPLY" domainObjectName="KeywordReplySettingReply">
             <property name="useActualColumnNames" value="true"/>
         </table>
-       <!--
         <table tableName="WX_ERROR_CODE" domainObjectName="ErrorCode">
             <property name="useActualColumnNames" value="true"/>
         </table>

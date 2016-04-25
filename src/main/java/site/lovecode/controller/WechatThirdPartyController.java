@@ -10,6 +10,7 @@ import me.chanjar.weixin.mp.api.WxMpMessageRouter;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.WxMpXmlOutMessage;
+import me.chanjar.weixin.mp.bean.WxMpXmlOutTextMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -20,9 +21,11 @@ import org.springframework.web.servlet.ModelAndView;
 import site.lovecode.client.WechatClient;
 import site.lovecode.client.WechatFactory;
 import site.lovecode.client.impl.WechatThirdPartyClientImpl;
+import site.lovecode.entity.WechatThirdPartyConfig;
 import site.lovecode.service.WechatThridPartyService;
 import site.lovecode.support.bean.*;
 import site.lovecode.support.bean.enums.AuthorizationInfoTypeEnum;
+import site.lovecode.util.WechatCryptUtil;
 import site.lovecode.util.WechatMsgCryptUtil;
 
 import javax.annotation.Resource;
@@ -43,6 +46,8 @@ public class WechatThirdPartyController {
     private WechatThridPartyService wechatThridPartyService;
 
     private Logger logger = LoggerFactory.getLogger(WechatThirdPartyController.class);
+
+
 
 
     @Resource
@@ -101,14 +106,14 @@ public class WechatThirdPartyController {
      * 授权后的回调url，微信第三方授权跳转页面，可以获取到授权码
      */
     @RequestMapping(value = "/getAuthCode.html")
-    public ModelAndView getAuthCode(HttpServletRequest request, Model model) {
-        try {
-            AuthorizerInfoBean authorizerInfo = wechatThridPartyService.saveAuthorizerInfo(request.getParameter("auth_code"));
-            model.addAttribute("info", authorizerInfo);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return new ModelAndView("authCode");
+        public ModelAndView getAuthCode(HttpServletRequest request, Model model) {
+            try {
+                AuthorizerInfoBean authorizerInfo = wechatThridPartyService.saveAuthorizerInfo(request.getParameter("auth_code"));
+                model.addAttribute("info", authorizerInfo);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return new ModelAndView("authCode");
     }
 
 
@@ -129,41 +134,30 @@ public class WechatThirdPartyController {
     }
 
 
+
+
     @RequestMapping(value = "/{appid}/getAllMessage.html")
-    public void getAllMessage(HttpServletRequest request, HttpServletResponse response) {
+    public void getAllMessage(HttpServletRequest request, HttpServletResponse response) throws IOException {
         logger.info("收到你的消息了呦");
-        WxMpInMemoryConfigStorage config = new WxMpInMemoryConfigStorage();
-        config.setAppId(WechatThirdPartyClientImpl.wechatThirdPartyConfig.getComponentAppid());
-        config.setToken(WechatThirdPartyClientImpl.wechatThirdPartyConfig.getToken());
-        config.setAesKey(WechatThirdPartyClientImpl.wechatThirdPartyConfig.getEncodeingAesKey());
-        try {
-            WxMpXmlMessage msg = WxMpXmlMessage.fromEncryptedXml(request.getInputStream(), config, request.getParameter("timestamp"), request.getParameter("nonce"), request.getParameter("msg_signature"));
+            WxMpXmlMessage msg = WechatXmlMessage.fromEncryptedXml(request.getInputStream(), WechatThirdPartyClientImpl.wechatThirdPartyConfig, request.getParameter("timestamp"), request.getParameter("nonce"), request.getParameter("msg_signature"));
             logger.info(msg.toString());
             WechatClient wechatClient = wechatFactory.getWechatClient(msg.getToUserName());
             WxMpMessageRouter router = new WxMpMessageRouter(wechatClient);
-            router.rule().async(false).msgType(WxConsts.XML_MSG_TEXT).handler((wxMessage, context, wxMpService, sessionManager) -> WxMpXmlOutMessage.TEXT()
+            router.rule().async(false).msgType(WxConsts.XML_MSG_TEXT).content("bbb").content("aaa").handler((wxMessage, context, wxMpService, sessionManager) -> WxMpXmlOutMessage.TEXT()
                     .content(wxMessage.getContent())
-                    .fromUser(wxMessage.getToUserName())
-                    .toUser(wxMessage.getFromUserName())
-                    .build()).end().rule().handler((wxMessage, context, wxMpService, sessionManager) -> WxMpXmlOutMessage.TEXT()
-                    .content("回复：服务器收到你的消息:" +wxMessage.getContent())
                     .fromUser(wxMessage.getToUserName())
                     .toUser(wxMessage.getFromUserName())
                     .build()).end();
             WxMpXmlOutMessage reMsg = router.route(msg);
-            response.getWriter().write(reMsg.toEncryptedXml(config));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        
-//        try {
-//            WxMpXmlMessage msg = WxMpXmlMessage.fromXml(request.getInputStream());
-//
-//            response.getWriter().write(reMsg.toXml());
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+            if(reMsg!=null){
+                response.getWriter().write(WechatCryptUtil.toEncryptedXml(WechatThirdPartyClientImpl.wechatThirdPartyConfig,reMsg));
+            }else{
+                response.getWriter().write("success");
+            }
+
     }
+
+
 
     @RequestMapping(value = "/receiveMessage.html")
     public void receiveMessage(HttpServletRequest request, HttpServletResponse response) {
@@ -184,12 +178,5 @@ public class WechatThirdPartyController {
     }
 
 
-   /* @RequestMapping(value = "/getUser.html")
-    public ModelAndView getUser(Model model) {
-        logger.info("获取用户列表");
-        List<UserInfo> userInfoList = userInfoMapper.selectAll();
-        model.addAttribute("userList", userInfoList);
-        return new ModelAndView("user");
-    }*/
 
 }

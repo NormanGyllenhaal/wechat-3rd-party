@@ -32,7 +32,7 @@ import java.util.stream.Stream;
  * Created by Administrator on 2016/4/8.
  */
 @Service
-public class WechatThirdPartyServiceImpl implements InitializingBean, WechatThridPartyService {
+public class WechatThirdPartyServiceImpl implements  WechatThridPartyService {
 
 
     private Logger logger = LoggerFactory.getLogger(WechatThirdPartyServiceImpl.class);
@@ -64,23 +64,6 @@ public class WechatThirdPartyServiceImpl implements InitializingBean, WechatThri
     private AuthorizerAccessTokenMapper authorizerAccessTokenMapper;
 
 
-    /**
-     * 初始化加载公众号配置信息
-     *
-     * @throws Exception
-     */
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        logger.info("----加载公众号第三方配置----");
-        WechatThirdPartyClientImpl.wechatThirdPartyConfig = wechatThirdPartyConfigMapper.selectByPrimaryKey(1L);
-        //获取已经存储的ticket
-        ComponentVerifyTicket componentVerifyTicket = componentVerifyTicketMapper.selectOrderByCreateTime(WechatThirdPartyClientImpl.wechatThirdPartyConfig.getComponentAppid());
-        if (Optional.ofNullable(componentVerifyTicket).isPresent() && componentVerifyTicket.getDeadline().getTime() > System.currentTimeMillis()) {
-            WechatThirdPartyClientImpl.wechatThirdPartyConfig.setComponentVerifyTicket(componentVerifyTicket.getComponentVerifyTicket());
-            WechatThirdPartyClientImpl.wechatThirdPartyConfig.setComponentAccessToken(wechatThirdPartyClient.refreshComponentAccessToken().getComponentAccessToken());
-        }
-        logger.info(WechatThirdPartyClientImpl.wechatThirdPartyConfig.toString());
-    }
 
 
     /**

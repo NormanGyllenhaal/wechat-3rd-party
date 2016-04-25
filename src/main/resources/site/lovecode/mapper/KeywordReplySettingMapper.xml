@@ -7,8 +7,9 @@
     -->
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="officialAccountId" jdbcType="BIGINT" property="officialAccountId" />
+    <result column="ruleName" jdbcType="VARCHAR" property="ruleName" />
     <result column="replyMod" jdbcType="TINYINT" property="replyMod" />
+    <result column="plat" jdbcType="TINYINT" property="plat" />
     <result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="ruleName" jdbcType="VARBINARY" property="ruleName" />
   </resultMap>
 </mapper>

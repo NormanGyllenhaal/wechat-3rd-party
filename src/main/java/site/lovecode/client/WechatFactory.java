@@ -50,7 +50,7 @@ public class WechatFactory {
     }
 
 
-    private WechatClient getInstance(Long officialAccountId) {
+    public WechatClient getInstance(Long officialAccountId) {
         WechatConfig wechatConfig = JSON.parseObject(redisCache.get(officialAccountId), WechatConfig.class);
         if (wechatConfig.getAccountType().equals(OfficialAccountTypeEnum.AUTHORIZATION.key())) {
             wechatAuthorizationClient.setWxMpConfigStorage(wechatConfig);
