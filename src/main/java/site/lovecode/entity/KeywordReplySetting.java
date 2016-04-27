@@ -29,6 +29,11 @@ public class KeywordReplySetting implements Identity, Serializable {
     private Integer replyMod;
 
     /**
+     * 我方的规则开启状态，0为关闭，1位开启
+     */
+    private Integer replyOpen;
+
+    /**
      * 设置平台方，1,代表在微信后台设置，2代表在我方后台设置
      */
     private Integer plat;
@@ -113,6 +118,24 @@ public class KeywordReplySetting implements Identity, Serializable {
     }
 
     /**
+     * 获取我方的规则开启状态，0为关闭，1位开启
+     *
+     * @return replyOpen - 我方的规则开启状态，0为关闭，1位开启
+     */
+    public Integer getReplyOpen() {
+        return replyOpen;
+    }
+
+    /**
+     * 设置我方的规则开启状态，0为关闭，1位开启
+     *
+     * @param replyOpen 我方的规则开启状态，0为关闭，1位开启
+     */
+    public void setReplyOpen(Integer replyOpen) {
+        this.replyOpen = replyOpen;
+    }
+
+    /**
      * 获取设置平台方，1,代表在微信后台设置，2代表在我方后台设置
      *
      * @return plat - 设置平台方，1,代表在微信后台设置，2代表在我方后台设置
@@ -158,6 +181,7 @@ public class KeywordReplySetting implements Identity, Serializable {
         sb.append(", officialAccountId=").append(officialAccountId);
         sb.append(", ruleName=").append(ruleName);
         sb.append(", replyMod=").append(replyMod);
+        sb.append(", replyOpen=").append(replyOpen);
         sb.append(", plat=").append(plat);
         sb.append(", createTime=").append(createTime);
         sb.append(", serialVersionUID=").append(serialVersionUID);

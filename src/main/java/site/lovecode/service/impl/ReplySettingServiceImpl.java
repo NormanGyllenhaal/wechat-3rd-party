@@ -59,6 +59,15 @@ public class ReplySettingServiceImpl implements ReplySettingService{
                     setPlat(PlatEnum.weixin.key());
                 }
             });
+        }else{
+            replySettingMapper.insert(new ReplySetting(){
+                {
+                    setOfficialAccountId(oaid);
+                    setReplyOpen(autoReplyInfoBean.getIsAddFriendReplyOpen());
+                    setReplyType(ReplyTypeEnum.ADDFRIENDREPLYOPEN.key());
+                    setPlat(PlatEnum.weixin.key());
+                }
+            });
         }
 
         if(autoReplyInfoBean.getMessageDefaultAutoreplyInfo()!=null){
@@ -69,6 +78,15 @@ public class ReplySettingServiceImpl implements ReplySettingService{
                     setReplyType(ReplyTypeEnum.AUTOREPLYOPEN.key());
                     setType(MessageTypeEnum.getValue(autoReplyInfoBean.getMessageDefaultAutoreplyInfo().getType()));
                     setContent(autoReplyInfoBean.getMessageDefaultAutoreplyInfo().getContent());
+                    setPlat(PlatEnum.weixin.key());
+                }
+            });
+        }else{
+            replySettingMapper.insert(new ReplySetting(){
+                {
+                    setOfficialAccountId(oaid);
+                    setReplyOpen(autoReplyInfoBean.getIsAutoreplyOpen());
+                    setReplyType(ReplyTypeEnum.AUTOREPLYOPEN.key());
                     setPlat(PlatEnum.weixin.key());
                 }
             });
@@ -84,6 +102,7 @@ public class ReplySettingServiceImpl implements ReplySettingService{
                         setReplyMod(ReplyModeEnum.valueOf(listBean.getReplyMode()).key());
                         setCreateTime(new Timestamp((listBean.getCreateTime() * 1000)));
                         setPlat(PlatEnum.weixin.key());
+                        setReplyOpen(autoReplyInfoBean.getIsAutoreplyOpen());
                     }
                 };
                 keywordReplySettingMapper.insert(keywordReplySetting);

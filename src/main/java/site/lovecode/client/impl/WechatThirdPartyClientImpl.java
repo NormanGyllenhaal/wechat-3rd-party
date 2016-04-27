@@ -35,7 +35,7 @@ public class WechatThirdPartyClientImpl implements WechatThirdPartyClient {
     /**
      * 过期时间点
      */
-    private static Long deadline;
+    private static Long deadline = 0L;
 
 
     /**

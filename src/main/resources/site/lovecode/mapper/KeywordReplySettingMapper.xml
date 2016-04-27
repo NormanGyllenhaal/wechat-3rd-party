@@ -1,15 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="site.lovecode.mapper.KeywordReplySettingMapper">
-  <resultMap id="BaseResultMap" type="site.lovecode.entity.KeywordReplySetting">
-    <!--
-      WARNING - @mbggenerated
-    -->
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="officialAccountId" jdbcType="BIGINT" property="officialAccountId" />
-    <result column="ruleName" jdbcType="VARCHAR" property="ruleName" />
-    <result column="replyMod" jdbcType="TINYINT" property="replyMod" />
-    <result column="plat" jdbcType="TINYINT" property="plat" />
-    <result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
-  </resultMap>
+    <resultMap id="BaseResultMap" type="site.lovecode.entity.KeywordReplySetting">
+        <!--
+          WARNING - @mbggenerated
+        -->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="officialAccountId" jdbcType="BIGINT" property="officialAccountId"/>
+        <result column="ruleName" jdbcType="VARCHAR" property="ruleName"/>
+        <result column="replyMod" jdbcType="TINYINT" property="replyMod"/>
+        <result column="replyOpen" jdbcType="TINYINT" property="replyOpen"/>
+        <result column="plat" jdbcType="TINYINT" property="plat"/>
+        <result column="createTime" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+
+    <resultMap id="JoinResultMap" type="site.lovecode.support.bean.vo.KeywordReplySettingVo">
+        <id column="a_id" jdbcType="BIGINT" property="id"/>
+        <result column="a_officialAccountId" jdbcType="BIGINT" property="officialAccountId"/>
+        <result column="ruleName" jdbcType="VARCHAR" property="ruleName"/>
+        <result column="replyMod" jdbcType="TINYINT" property="replyMod"/>
+        <result column="replyOpen" jdbcType="TINYINT" property="replyOpen"/>
+        <result column="plat" jdbcType="TINYINT" property="plat"/>
+        <result column="createTime" jdbcType="TIMESTAMP" property="createTime"/>
+        <collection property="keywordReplySettingKeywordList" column="keywordReplySettingId" ofType="site.lovecode.entity.KeywordReplySettingKeyword">
+            <id column="b_id" property="id" jdbcType="BIGINT" />
+            <result column="b_keywordReplySettingId" property="keywordReplySettingId" jdbcType="BIGINT" />
+            <result column="type" property="type" jdbcType="TINYINT" />
+            <result column="matchMode" property="matchMode" jdbcType="TINYINT" />
+            <result column="content" property="content" jdbcType="VARCHAR" />
+        </collection>
+        <collection property="keywordReplySettingReplyVoList" column="keywordReplySettingId" ofType="site.lovecode.support.bean.vo.KeywordReplySettingReplyVo">
+            <id column="c_id" jdbcType="BIGINT" property="id" />
+            <result column="c_keywordReplySettingId" jdbcType="BIGINT" property="keywordReplySettingId" />
+            <result column="c_type" jdbcType="TINYINT" property="type" />
+            <result column="c_content" jdbcType="VARCHAR" property="content" />
+            <collection property="keywordReplySettingNewList" column="keywordReplySettingReplyId" ofType="site.lovecode.entity.KeywordReplySettingNew">
+                <id column="d_id" jdbcType="BIGINT" property="id" />
+                <result column="keywordReplySettingReplyId" jdbcType="BIGINT" property="keywordReplySettingReplyId" />
+                <result column="title" jdbcType="VARCHAR" property="title" />
+                <result column="author" jdbcType="VARCHAR" property="author" />
+                <result column="digest" jdbcType="VARCHAR" property="digest" />
+                <result column="showCover" jdbcType="TINYINT" property="showCover" />
+                <result column="coverUrl" jdbcType="VARCHAR" property="coverUrl" />
+                <result column="contentUrl" jdbcType="VARCHAR" property="contentUrl" />
+                <result column="sourceUrl" jdbcType="VARCHAR" property="sourceUrl" />
+            </collection>
+        </collection>
+    </resultMap>
+
+    
+    <select id="selectJoin" resultMap="JoinResultMap">
+    select a.id as a_id,a.officialAccountId as a_officialAccountId,a.ruleName,a.replyMod,a.replyOpen,a.plat,b.id as b_id,b.keywordReplySettingId as b_keywordReplySettingId,b.type,b.matchMode,b.content,e.* from wx_keyword_reply_setting as a inner join wx_keyword_reply_setting_keyword as b on a.id = b.keywordReplySettingId inner join (select c.id as c_id,c.keywordReplySettingId as c_keywordReplySettingId,c.type as c_type,c.content as c_content,d.id as d_id,d.keywordReplySettingReplyId,d.title,d.author,d.digest,d.showCover,d.coverUrl,d.contentUrl,d.sourceUrl from wx_keyword_reply_setting_reply as c left join wx_keyword_reply_setting_news as d on c.id = d.keywordReplySettingReplyId) as e on a.id = c_keywordReplySettingId where a.officialAccountId = #{officialAccountId} and a.replyOpen = #{replyOpen} and a.plat = #{plat};
+  </select>
 </mapper>

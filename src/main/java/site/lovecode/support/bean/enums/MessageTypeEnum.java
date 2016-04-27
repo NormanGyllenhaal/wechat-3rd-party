@@ -36,8 +36,24 @@ public enum MessageTypeEnum {
     MessageTypeEnum(final int key, final String desc) {
         this.key = key;
         this.desc = desc;
+    }
 
 
+    public static  MessageTypeEnum valueOf(int value){
+        switch (value){
+            case 1:
+                return text;
+            case 2:
+                return img;
+            case 3:
+                return voice;
+            case 4:
+                return video;
+            case 5:
+                return news;
+            default:
+                return null;
+        }
     }
 
     public int getKey() {

@@ -1,8 +1,14 @@
 package site.lovecode.service.impl;
 
+import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpMessageRouter;
 import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.bean.WxMpXmlMessage;
+import me.chanjar.weixin.mp.bean.WxMpXmlOutMessage;
+import me.chanjar.weixin.mp.bean.WxMpXmlOutNewsMessage;
+import me.chanjar.weixin.mp.bean.outxmlbuilder.NewsBuilder;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -11,13 +17,15 @@ import site.lovecode.client.WechatClient;
 import site.lovecode.client.WechatFactory;
 import site.lovecode.client.WechatThirdPartyClient;
 import site.lovecode.client.impl.WechatThirdPartyClientImpl;
-import site.lovecode.entity.ComponentVerifyTicket;
-import site.lovecode.entity.OfficialAccount;
+import site.lovecode.entity.*;
 import site.lovecode.jedis.RedisCache;
 import site.lovecode.mapper.*;
 import site.lovecode.service.WechatService;
 import site.lovecode.support.bean.config.WechatConfig;
-import site.lovecode.support.bean.enums.OfficialAccountTypeEnum;
+import site.lovecode.support.bean.enums.*;
+import site.lovecode.support.bean.singleton.MessageRouterSingleton;
+import site.lovecode.support.bean.vo.KeywordReplySettingReplyVo;
+import site.lovecode.support.bean.vo.KeywordReplySettingVo;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
@@ -52,35 +60,29 @@ public class WechatServiceImpl implements InitializingBean, WechatService {
     private WechatThirdPartyClient wechatThirdPartyClient;
 
 
-
     @Resource
     private ReplySettingMapper replySettingMapper;
 
     @Resource
     private KeywordReplySettingMapper keywordReplySettingMapper;
 
-    @Resource
-    private KeywordReplySettingKeywordMapper keywordReplySettingKeywordMapper;
-
-    @Resource
-    private KeywordReplySettingReplyMapper keywordReplySettingReplyMapper;
-
-    @Resource
-    private KeywordReplySettingNewMapper keywordReplySettingNewMapper;
 
     @Resource
     private WechatFactory wechatFactory;
 
     @Override
     public void afterPropertiesSet() throws Exception {
+        logger.info("----加载公众号第三方配置----");
         loadWechatThirdPartyConfig();
+        logger.info("加载所有公众号配置信息");
         loadWechatConfig();
+        logger.info("加载公众号消息处理器");
+        loadReplySetting();
 
     }
 
 
     public void loadWechatThirdPartyConfig() throws WxErrorException {
-        logger.info("----加载公众号第三方配置----");
         WechatThirdPartyClientImpl.wechatThirdPartyConfig = wechatThirdPartyConfigMapper.selectByPrimaryKey(1L);
         //获取已经存储的ticket
         ComponentVerifyTicket componentVerifyTicket = componentVerifyTicketMapper.selectOrderByCreateTime(WechatThirdPartyClientImpl.wechatThirdPartyConfig.getComponentAppid());
@@ -93,8 +95,7 @@ public class WechatServiceImpl implements InitializingBean, WechatService {
 
 
 
-    public void loadWechatConfig(){
-        logger.info("加载所有公众号配置信息");
+    public void loadWechatConfig() {
         Map<Long, WechatConfig> wechatConfigMap = Stream.of(officialAccountMapper.selectJoinAuthorizerInfo(), officialAccountMapper.selectJoinInfoAndAccessToken()).flatMap(officialAccountVo -> officialAccountVo.stream()).collect(Collectors.toList()).stream().collect(Collectors.toMap(OfficialAccount::getId, vo -> new WechatConfig() {
             {
                 setAppId(vo.getAppid());
@@ -123,24 +124,145 @@ public class WechatServiceImpl implements InitializingBean, WechatService {
         logger.info("" + wechatConfigMap.size());
         wechatConfigMap.forEach((aLong, wechatConfig) -> {
                     redisCache.set(aLong, wechatConfig);
-                    redisCache.set(wechatConfig.getUserName(),aLong.toString());
+                    redisCache.set(wechatConfig.getUserName(), aLong.toString());
                 }
         );
         logger.info(wechatConfigMap.toString());
     }
 
 
-
-    private void loadReplySetting(){
+    private void loadReplySetting() {
         List<OfficialAccount> officialAccountList = officialAccountMapper.selectAll();
-        officialAccountList.forEach(officialAccount -> {
-            WechatClient wechatClient = wechatFactory.getInstance(officialAccount.getId());
-            WxMpMessageRouter wxMpMessageRouter = new WxMpMessageRouter(wechatClient);
-
-        });
+        officialAccountList.forEach(officialAccount -> generateMessageRouter(officialAccount.getId(),officialAccount.getUserName()));
     }
 
 
+    /**
+     * 更新或生成消息处理器
+     * @param oaid
+     * @param userName
+     */
+    private void  generateMessageRouter(Long oaid,String userName){
+        WechatClient wechatClient = wechatFactory.getInstance(oaid);
+        WxMpMessageRouter wxMpMessageRouter = new WxMpMessageRouter(wechatClient);
+        //1.加载添加自动回复规则
+        //如果被添加自动回复规则为空或者没有被启用，且存在在我第三方设置的自动回复规则时，那么在我第三方开启设置的被添加自动回复规则生效
+        //如果被添加自动回复规则启用且存在规则，那么我方设置的规则不启用
+        List<ReplySetting> replySettingList = replySettingMapper.select(new ReplySetting() {
+            {
+                setOfficialAccountId(oaid);
+                setReplyType(ReplyTypeEnum.ADDFRIENDREPLYOPEN.key());
+            }
+        });
+        if (isOpenMySetting(replySettingList)) {
+            ReplySetting replySetting = replySettingList.stream().filter(rs -> rs.getPlat().equals(PlatEnum.my.key())).collect(Collectors.toList()).get(0);
+            wxMpMessageRouter.rule().async(false).event(WxConsts.EVT_SUBSCRIBE).handler((wxMessage, context, wxMpService, sessionManager) -> getWxMpXmlOutMessage(wxMessage, replySetting.getType(), replySetting.getContent(), null)
+            ).end();
+        }
+        //2.加载关键词自动回复,只加载我方配置的关键词规则
+        //如果自动回复规则开启,那么如果存在微信端设置的关键词自动回复规则，那么不启用微信端设置的关键词自动回复规则，启用在我方开启设置的关键词自动回复规则
+        //如果自动回复规则关闭，那么如果存在关键词自动回复规则，我方设置的关键词回复规则将启用
+        List<KeywordReplySettingVo> keywordReplySettingVoList = keywordReplySettingMapper.selectJoin(oaid, ReplyOpenEnum.open.key(), PlatEnum.my.key());
+        if(keywordReplySettingVoList!=null&&keywordReplySettingVoList.size()>0){
+            keywordReplySettingVoList.forEach(keywordReplySettingVo -> {
+                if (Optional.ofNullable(keywordReplySettingVo).isPresent() && Optional.ofNullable(keywordReplySettingVo.getKeywordReplySettingKeywordList()).isPresent() && keywordReplySettingVo.getKeywordReplySettingKeywordList().size() > 0) {
+                    keywordReplySettingVo.getKeywordReplySettingKeywordList().forEach(keywordReplySettingKeyword -> {
+                        KeywordReplySettingReplyVo keywordReplySettingReplyVo = keywordReplySettingVo.getKeywordReplySettingReplyVoList().get(0);
+                        addRule(keywordReplySettingReplyVo,wxMpMessageRouter,keywordReplySettingKeyword);
+                    });
+                }
+            });
+        }
+        //3.加载自动回复规则
+        //如果自动回复规则微信端已经开启，并且自动回复规则存在，那么使用微信端设置的自动回复规则,，我方不加载。
+        //如果自动回复规则关闭，在我方存在自动回复规则并且开启的情况下，使用我方的自动回复规则
+        List<ReplySetting> replySettings = replySettingMapper.select(new ReplySetting() {
+            {
+                setOfficialAccountId(oaid);
+                setReplyType(ReplyTypeEnum.AUTOREPLYOPEN.key());
+            }
+        });
+        if(isOpenMySetting(replySettings)){
+            ReplySetting replySetting = replySettings.stream().filter(rs -> rs.getPlat().equals(PlatEnum.my.key())).collect(Collectors.toList()).get(0);
+            wxMpMessageRouter.rule().async(false).handler((wxMessage, context, wxMpService, sessionManager) -> getWxMpXmlOutMessage(wxMessage, replySetting.getType(), replySetting.getContent(), null)).end();
+        }
+        MessageRouterSingleton.getInstance().putWxMpMessageRouter(userName, wxMpMessageRouter);
+    }
+
+
+    /**
+     * 添加规则
+     * @param keywordReplySettingReplyVo
+     * @param wxMpMessageRouter
+     * @param keywordReplySettingKeyword
+     */
+    private void addRule(KeywordReplySettingReplyVo keywordReplySettingReplyVo,WxMpMessageRouter wxMpMessageRouter,KeywordReplySettingKeyword keywordReplySettingKeyword){
+        if(keywordReplySettingKeyword.getMatchMode().equals(MatchModeEnum.contain.key())){
+            wxMpMessageRouter.rule().async(false).msgType(MessageTypeEnum.valueOf(keywordReplySettingKeyword.getType()).name()).matcher(message -> message.getContent().contains(keywordReplySettingKeyword.getContent())).handler((wxMessage, context, wxMpService, sessionManager) -> getWxMpXmlOutMessage(wxMessage, keywordReplySettingReplyVo.getType(), keywordReplySettingReplyVo.getContent(), keywordReplySettingReplyVo.getKeywordReplySettingNewList())).end();
+        }else if(keywordReplySettingKeyword.getMatchMode().equals(MatchModeEnum.equal.key())){
+            wxMpMessageRouter.rule().async(false).msgType(MessageTypeEnum.valueOf(keywordReplySettingKeyword.getType()).name()).content(keywordReplySettingKeyword.getContent()).handler((wxMessage, context, wxMpService, sessionManager) -> getWxMpXmlOutMessage(wxMessage, keywordReplySettingReplyVo.getType(), keywordReplySettingReplyVo.getContent(), keywordReplySettingReplyVo.getKeywordReplySettingNewList())).end();
+        }
+    }
+
+    /**
+     * 判断是否打开我方回复配置
+     * @param replySettingList
+     * @return
+     */
+    private Boolean isOpenMySetting(List<ReplySetting> replySettingList) {
+        Boolean result = false;
+        if (replySettingList != null && replySettingList.size() > 0) {
+            List<ReplySetting> replySettingsWeixin = replySettingList.stream().filter(rs -> rs.getPlat().equals(PlatEnum.weixin.key())).collect(Collectors.toList());
+            if (replySettingsWeixin != null && replySettingsWeixin.size() > 0) {
+                ReplySetting replySetting = replySettingsWeixin.get(0);
+                if (replySetting == null || replySetting.getReplyOpen().equals(ReplyOpenEnum.close.key()) || StringUtils.isEmpty(replySetting.getContent())) {
+                    List<ReplySetting> collect = replySettingList.stream().filter(rs -> rs.getPlat().equals(PlatEnum.my.key())).collect(Collectors.toList());
+                    if (collect != null && collect.size() > 0) {
+                        if (collect.get(0).getReplyOpen().equals(ReplyOpenEnum.open.key())) {
+                            result = true;
+                        }
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+
+    /**
+     * 生成回复消息
+     * @param wxMpXmlMessage
+     * @param type
+     * @param content
+     * @param keywordReplySettingNewList
+     * @return
+     */
+    private WxMpXmlOutMessage getWxMpXmlOutMessage(WxMpXmlMessage wxMpXmlMessage, Integer type, String content, List<KeywordReplySettingNew> keywordReplySettingNewList) {
+        MessageTypeEnum messageTypeEnum = MessageTypeEnum.valueOf(type);
+        switch (messageTypeEnum) {
+            case text:
+                return WxMpXmlOutMessage.TEXT().content(content).fromUser(wxMpXmlMessage.getToUserName()).toUser(wxMpXmlMessage.getFromUserName()).build();
+            case img:
+                return WxMpXmlOutMessage.IMAGE().mediaId(content).fromUser(wxMpXmlMessage.getToUserName()).toUser(wxMpXmlMessage.getFromUserName()).build();
+            case video:
+                return WxMpXmlOutMessage.VIDEO().mediaId(content).fromUser(wxMpXmlMessage.getToUserName()).toUser(wxMpXmlMessage.getFromUserName()).build();
+            case voice:
+                return WxMpXmlOutMessage.VOICE().mediaId(content).fromUser(wxMpXmlMessage.getToUserName()).toUser(wxMpXmlMessage.getFromUserName()).build();
+            case news:
+                NewsBuilder newsBuilder = WxMpXmlOutMessage.NEWS();
+                keywordReplySettingNewList.forEach(keywordReplySettingNew -> newsBuilder.addArticle(new WxMpXmlOutNewsMessage.Item() {
+                    {
+                        setDescription(keywordReplySettingNew.getDigest());
+                        setPicUrl(keywordReplySettingNew.getCoverUrl());
+                        setUrl(keywordReplySettingNew.getContentUrl());
+                        setTitle(keywordReplySettingNew.getTitle());
+                    }
+                }));
+                return newsBuilder.fromUser(wxMpXmlMessage.getToUserName()).toUser(wxMpXmlMessage.getFromUserName()).build();
+            default:
+                return null;
+        }
+    }
 
 
 }
