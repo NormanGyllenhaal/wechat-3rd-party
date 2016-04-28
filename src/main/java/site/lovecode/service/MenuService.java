@@ -8,4 +8,7 @@ import me.chanjar.weixin.common.exception.WxErrorException;
 public interface MenuService {
 
     void createMenu() throws WxErrorException;
+
+
+    void getMeun() throws WxErrorException;
 }

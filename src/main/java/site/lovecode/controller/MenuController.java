@@ -22,4 +22,10 @@ public class MenuController {
         menuService.createMenu();
         return "menu";
     }
+
+    @RequestMapping("/getMenu.html")
+    public String getMenu() throws WxErrorException {
+        menuService.getMeun();
+        return "menu";
+    }
 }

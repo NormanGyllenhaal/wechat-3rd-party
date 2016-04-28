@@ -1,5 +1,6 @@
 package site.lovecode.support.bean;
 
+import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
 import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
@@ -93,6 +94,14 @@ public class XmlDecryptingBean {
 
     public void setAuthorizationCodeExpiredTime(String authorizationCodeExpiredTime) {
         this.authorizationCodeExpiredTime = authorizationCodeExpiredTime;
+    }
+
+    public static XmlDecryptingBean getBean(String result){
+       return  (XmlDecryptingBean) new XStream() {
+            {
+                processAnnotations(XmlDecryptingBean.class);
+            }
+        }.fromXML(result);
     }
 
     @Override

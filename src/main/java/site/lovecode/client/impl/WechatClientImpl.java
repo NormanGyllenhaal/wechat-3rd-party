@@ -49,10 +49,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.helpers.MessageFormatter;
 import site.lovecode.client.WechatClient;
-import site.lovecode.support.bean.json.AutoReplyInfoBean;
-import site.lovecode.support.bean.json.UserInfoListResp;
-import site.lovecode.support.bean.json.UserInfoResp;
-import site.lovecode.support.bean.json.UserListReq;
+import site.lovecode.support.bean.json.*;
+import site.lovecode.util.HttpUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -1008,6 +1006,27 @@ public class WechatClientImpl implements WechatClient {
     }
 
 
+    /**
+     * 创建菜单
+     * @param menuBean
+     * @throws WxErrorException
+     */
+    public void createMeun(MenuBean menuBean) throws WxErrorException {
+       post("https://api.weixin.qq.com/cgi-bin/menu/create",JSON.toJSONString(menuBean));
+    }
+
+    /**
+     * 获取用户微信后台的自定义菜单配置
+     * @return
+     * @throws WxErrorException
+     */
+    @Override
+    public SelfMenuInfoBean getSelfMenu() throws WxErrorException {
+        String str = get("https://api.weixin.qq.com/cgi-bin/get_current_selfmenu_info",null);
+        return JSONObject.parseObject(str,SelfMenuInfoBean.class);
+    }
+
+
     private List<UserInfoResp> sendGetUserList(List<String> openidList) throws WxErrorException {
        String str =  post("https://api.weixin.qq.com/cgi-bin/user/info/batchget", JSON.toJSONString(new UserListReq(){
             {
@@ -1016,6 +1035,8 @@ public class WechatClientImpl implements WechatClient {
         }));
         return JSON.parseObject(str,UserInfoListResp.class).getList();
     }
+
+
 
 
 }
