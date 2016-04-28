@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2016/4/15 16:40:00                           */
+/* Created on:     2016/4/26 13:32:12                           */
 /*==============================================================*/
 
 
@@ -30,6 +30,8 @@ drop table if exists WX_COMPONENT_VERIFY_TICKET;
 
 drop table if exists WX_CUSTOM_SERVICE;
 
+drop table if exists WX_ERROR_CODE;
+
 drop table if exists WX_EVENT;
 
 drop table if exists WX_FUNC_INFO;
@@ -37,6 +39,14 @@ drop table if exists WX_FUNC_INFO;
 drop table if exists WX_INTERFACE_SUMMARY;
 
 drop table if exists WX_INTERFACE_SUMMARY_HOUR;
+
+drop table if exists WX_KEYWORD_REPLY_SETTING;
+
+drop table if exists WX_KEYWORD_REPLY_SETTING_KEYWORD;
+
+drop table if exists WX_KEYWORD_REPLY_SETTING_NEWS;
+
+drop table if exists WX_KEYWORD_REPLY_SETTING_REPLY;
 
 drop table if exists WX_MASS_MESSAGE;
 
@@ -60,6 +70,8 @@ drop table if exists WX_PERSONAL_USER;
 
 drop table if exists WX_PRE_AUTH_CODE;
 
+drop table if exists WX_REPLY_SETTING;
+
 drop table if exists WX_SYSTEM_USER;
 
 drop table if exists WX_USER_DATA;
@@ -75,49 +87,49 @@ drop table if exists WX_WECHAT_THIRD_PARTY_CONFIG;
 /*==============================================================*/
 create table WX_ARTICLE_DAY
 (
-   id                   bigint not null comment 'Ö÷¼ü',
-   officialAccountId    bigint not null default 0 comment 'Î¢ĞÅ¹«ÖÚÕËºÅ»ù±¾ĞÅÏ¢id',
-   refDate              date not null default '0000-00-00' comment 'Êı¾İµÄÈÕÆÚ',
-   msgid                varchar(20) not null default '' comment 'ÕâÀïµÄmsgidÊµ¼ÊÉÏÊÇÓÉmsgid£¨Í¼ÎÄÏûÏ¢id£¬ÕâÒ²¾ÍÊÇÈº·¢½Ó¿Úµ÷ÓÃºó·µ»ØµÄmsg_data_id£©ºÍindex£¨ÏûÏ¢´ÎĞòË÷Òı£©×é³É£¬ ÀıÈç12003_3£¬ ÆäÖĞ12003ÊÇmsgid£¬¼´Ò»´ÎÈº·¢µÄÏûÏ¢µÄid£» 3Îªindex£¬¼ÙÉè¸Ã´ÎÈº·¢µÄÍ¼ÎÄÏûÏ¢¹²5¸öÎÄÕÂ£¨ÒòÎª¿ÉÄÜÎª¶àÍ¼ÎÄ£©£¬3±íÊ¾5¸öÖĞµÄµÚ3¸ö',
-   title                varchar(50) not null default '' comment 'Í¼ÎÄÏûÏ¢µÄ±êÌâ',
-   intPageReadUser      int not null default 0 comment 'Í¼ÎÄÒ³£¨µã»÷Èº·¢Í¼ÎÄ¿¨Æ¬½øÈëµÄÒ³Ãæ£©µÄÔÄ¶ÁÈËÊı',
-   intPageReadCount     int not null default 0 comment 'Í¼ÎÄÒ³µÄÔÄ¶Á´ÎÊı',
-   oriPageReadUser      int not null default 0 comment 'Ô­ÎÄÒ³£¨µã»÷Í¼ÎÄÒ³¡°ÔÄ¶ÁÔ­ÎÄ¡±½øÈëµÄÒ³Ãæ£©µÄÔÄ¶ÁÈËÊı£¬ÎŞÔ­ÎÄÒ³Ê±´Ë´¦Êı¾İÎª0',
-   oriPageReadCount     int not null default 0 comment 'Ô­ÎÄÒ³µÄÔÄ¶Á´ÎÊı',
-   shareUser            int not null default 0 comment '·ÖÏíµÄÈËÊı',
-   shareCount           int not null default 0 comment '·ÖÏíµÄ´ÎÊı
+   id                   bigint not null comment 'ä¸»é”®',
+   officialAccountId    bigint not null default 0 comment 'å¾®ä¿¡å…¬ä¼—è´¦å·åŸºæœ¬ä¿¡æ¯id',
+   refDate              date not null default '0000-00-00' comment 'æ•°æ®çš„æ—¥æœŸ',
+   msgid                varchar(20) not null default '' comment 'è¿™é‡Œçš„msgidå®é™…ä¸Šæ˜¯ç”±msgidï¼ˆå›¾æ–‡æ¶ˆæ¯idï¼Œè¿™ä¹Ÿå°±æ˜¯ç¾¤å‘æ¥å£è°ƒç”¨åè¿”å›çš„msg_data_idï¼‰å’Œindexï¼ˆæ¶ˆæ¯æ¬¡åºç´¢å¼•ï¼‰ç»„æˆï¼Œ ä¾‹å¦‚12003_3ï¼Œ å…¶ä¸­12003æ˜¯msgidï¼Œå³ä¸€æ¬¡ç¾¤å‘çš„æ¶ˆæ¯çš„idï¼› 3ä¸ºindexï¼Œå‡è®¾è¯¥æ¬¡ç¾¤å‘çš„å›¾æ–‡æ¶ˆæ¯å…±5ä¸ªæ–‡ç« ï¼ˆå› ä¸ºå¯èƒ½ä¸ºå¤šå›¾æ–‡ï¼‰ï¼Œ3è¡¨ç¤º5ä¸ªä¸­çš„ç¬¬3ä¸ª',
+   title                varchar(50) not null default '' comment 'å›¾æ–‡æ¶ˆæ¯çš„æ ‡é¢˜',
+   intPageReadUser      int not null default 0 comment 'å›¾æ–‡é¡µï¼ˆç‚¹å‡»ç¾¤å‘å›¾æ–‡å¡ç‰‡è¿›å…¥çš„é¡µé¢ï¼‰çš„é˜…è¯»äººæ•°',
+   intPageReadCount     int not null default 0 comment 'å›¾æ–‡é¡µçš„é˜…è¯»æ¬¡æ•°',
+   oriPageReadUser      int not null default 0 comment 'åŸæ–‡é¡µï¼ˆç‚¹å‡»å›¾æ–‡é¡µâ€œé˜…è¯»åŸæ–‡â€è¿›å…¥çš„é¡µé¢ï¼‰çš„é˜…è¯»äººæ•°ï¼Œæ— åŸæ–‡é¡µæ—¶æ­¤å¤„æ•°æ®ä¸º0',
+   oriPageReadCount     int not null default 0 comment 'åŸæ–‡é¡µçš„é˜…è¯»æ¬¡æ•°',
+   shareUser            int not null default 0 comment 'åˆ†äº«çš„äººæ•°',
+   shareCount           int not null default 0 comment 'åˆ†äº«çš„æ¬¡æ•°
             ',
-   addToFavUser         int not null default 0 comment 'ÊÕ²ØµÄÈËÊı',
-   addToFavCount        int not null default 0 comment 'ÊÕ²ØµÄ´ÎÊı',
+   addToFavUser         int not null default 0 comment 'æ”¶è—çš„äººæ•°',
+   addToFavCount        int not null default 0 comment 'æ”¶è—çš„æ¬¡æ•°',
    primary key (id)
 );
 
-alter table WX_ARTICLE_DAY comment '´æ´¢Î¢ĞÅÎÄÕÂµÄÍ³¼ÆÊı¾İ';
+alter table WX_ARTICLE_DAY comment 'å­˜å‚¨å¾®ä¿¡æ–‡ç« çš„ç»Ÿè®¡æ•°æ®';
 
 /*==============================================================*/
 /* Table: WX_ARTICLE_HOUR                                       */
 /*==============================================================*/
 create table WX_ARTICLE_HOUR
 (
-   id                   bigint not null comment 'Ö÷¼ü',
-   officialAccountId    bigint not null default 0 comment 'Î¢ĞÅ¹«ÖÚÕËºÅ»ù±¾ĞÅÏ¢id',
-   refDate              date not null default '0000-00-00' comment 'Êı¾İµÄÈÕÆÚ',
-   refHour              int not null default 0 comment 'Êı¾İµÄĞ¡Ê±£¬°üÀ¨´Ó000µ½2300£¬·Ö±ğ´ú±íµÄÊÇ[000,100)µ½[2300,2400)£¬¼´Ã¿ÈÕµÄµÚ1Ğ¡Ê±ºÍ×îºó1Ğ¡Ê±',
-   msgid                varchar(20) not null default '' comment 'ÕâÀïµÄmsgidÊµ¼ÊÉÏÊÇÓÉmsgid£¨Í¼ÎÄÏûÏ¢id£¬ÕâÒ²¾ÍÊÇÈº·¢½Ó¿Úµ÷ÓÃºó·µ»ØµÄmsg_data_id£©ºÍindex£¨ÏûÏ¢´ÎĞòË÷Òı£©×é³É£¬ ÀıÈç12003_3£¬ ÆäÖĞ12003ÊÇmsgid£¬¼´Ò»´ÎÈº·¢µÄÏûÏ¢µÄid£» 3Îªindex£¬¼ÙÉè¸Ã´ÎÈº·¢µÄÍ¼ÎÄÏûÏ¢¹²5¸öÎÄÕÂ£¨ÒòÎª¿ÉÄÜÎª¶àÍ¼ÎÄ£©£¬3±íÊ¾5¸öÖĞµÄµÚ3¸ö',
-   title                varchar(50) not null default '' comment 'Í¼ÎÄÏûÏ¢µÄ±êÌâ',
-   intPageReadUser      int not null default 0 comment 'Í¼ÎÄÒ³£¨µã»÷Èº·¢Í¼ÎÄ¿¨Æ¬½øÈëµÄÒ³Ãæ£©µÄÔÄ¶ÁÈËÊı',
-   intPageReadCount     int not null default 0 comment 'Í¼ÎÄÒ³µÄÔÄ¶Á´ÎÊı',
-   oriPageReadUser      int not null default 0 comment 'Ô­ÎÄÒ³£¨µã»÷Í¼ÎÄÒ³¡°ÔÄ¶ÁÔ­ÎÄ¡±½øÈëµÄÒ³Ãæ£©µÄÔÄ¶ÁÈËÊı£¬ÎŞÔ­ÎÄÒ³Ê±´Ë´¦Êı¾İÎª0',
-   oriPageReadCount     int not null default 0 comment 'Ô­ÎÄÒ³µÄÔÄ¶Á´ÎÊı',
-   shareUser            int not null default 0 comment '·ÖÏíµÄÈËÊı',
-   shareCount           int not null default 0 comment '·ÖÏíµÄ´ÎÊı
+   id                   bigint not null comment 'ä¸»é”®',
+   officialAccountId    bigint not null default 0 comment 'å¾®ä¿¡å…¬ä¼—è´¦å·åŸºæœ¬ä¿¡æ¯id',
+   refDate              date not null default '0000-00-00' comment 'æ•°æ®çš„æ—¥æœŸ',
+   refHour              int not null default 0 comment 'æ•°æ®çš„å°æ—¶ï¼ŒåŒ…æ‹¬ä»000åˆ°2300ï¼Œåˆ†åˆ«ä»£è¡¨çš„æ˜¯[000,100)åˆ°[2300,2400)ï¼Œå³æ¯æ—¥çš„ç¬¬1å°æ—¶å’Œæœ€å1å°æ—¶',
+   msgid                varchar(20) not null default '' comment 'è¿™é‡Œçš„msgidå®é™…ä¸Šæ˜¯ç”±msgidï¼ˆå›¾æ–‡æ¶ˆæ¯idï¼Œè¿™ä¹Ÿå°±æ˜¯ç¾¤å‘æ¥å£è°ƒç”¨åè¿”å›çš„msg_data_idï¼‰å’Œindexï¼ˆæ¶ˆæ¯æ¬¡åºç´¢å¼•ï¼‰ç»„æˆï¼Œ ä¾‹å¦‚12003_3ï¼Œ å…¶ä¸­12003æ˜¯msgidï¼Œå³ä¸€æ¬¡ç¾¤å‘çš„æ¶ˆæ¯çš„idï¼› 3ä¸ºindexï¼Œå‡è®¾è¯¥æ¬¡ç¾¤å‘çš„å›¾æ–‡æ¶ˆæ¯å…±5ä¸ªæ–‡ç« ï¼ˆå› ä¸ºå¯èƒ½ä¸ºå¤šå›¾æ–‡ï¼‰ï¼Œ3è¡¨ç¤º5ä¸ªä¸­çš„ç¬¬3ä¸ª',
+   title                varchar(50) not null default '' comment 'å›¾æ–‡æ¶ˆæ¯çš„æ ‡é¢˜',
+   intPageReadUser      int not null default 0 comment 'å›¾æ–‡é¡µï¼ˆç‚¹å‡»ç¾¤å‘å›¾æ–‡å¡ç‰‡è¿›å…¥çš„é¡µé¢ï¼‰çš„é˜…è¯»äººæ•°',
+   intPageReadCount     int not null default 0 comment 'å›¾æ–‡é¡µçš„é˜…è¯»æ¬¡æ•°',
+   oriPageReadUser      int not null default 0 comment 'åŸæ–‡é¡µï¼ˆç‚¹å‡»å›¾æ–‡é¡µâ€œé˜…è¯»åŸæ–‡â€è¿›å…¥çš„é¡µé¢ï¼‰çš„é˜…è¯»äººæ•°ï¼Œæ— åŸæ–‡é¡µæ—¶æ­¤å¤„æ•°æ®ä¸º0',
+   oriPageReadCount     int not null default 0 comment 'åŸæ–‡é¡µçš„é˜…è¯»æ¬¡æ•°',
+   shareUser            int not null default 0 comment 'åˆ†äº«çš„äººæ•°',
+   shareCount           int not null default 0 comment 'åˆ†äº«çš„æ¬¡æ•°
             ',
-   addToFavUser         int not null default 0 comment 'ÊÕ²ØµÄÈËÊı',
-   addToFavCount        int not null default 0 comment 'ÊÕ²ØµÄ´ÎÊı',
+   addToFavUser         int not null default 0 comment 'æ”¶è—çš„äººæ•°',
+   addToFavCount        int not null default 0 comment 'æ”¶è—çš„æ¬¡æ•°',
    primary key (id)
 );
 
-alter table WX_ARTICLE_HOUR comment '´æ´¢Î¢ĞÅÎÄÕÂµÄ·ÖÊ±Í³¼ÆÊı¾İ';
+alter table WX_ARTICLE_HOUR comment 'å­˜å‚¨å¾®ä¿¡æ–‡ç« çš„åˆ†æ—¶ç»Ÿè®¡æ•°æ®';
 
 /*==============================================================*/
 /* Table: WX_ARTICLE_SHARE_DAY                                  */
@@ -125,16 +137,16 @@ alter table WX_ARTICLE_HOUR comment '´æ´¢Î¢ĞÅÎÄÕÂµÄ·ÖÊ±Í³¼ÆÊı¾İ';
 create table WX_ARTICLE_SHARE_DAY
 (
    id                   bigint not null,
-   officialAccountId    bigint not null default 0 comment 'Î¢ĞÅ¹«ÖÚºÅ»ù±¾ĞÅÏ¢id',
-   refDate              date not null default '0000-00-00' comment 'Êı¾İµÄÈÕÆÚ',
-   shareScene           tinyint(4) not null default 0 comment '·ÖÏíµÄ³¡¾°
-            1´ú±íºÃÓÑ×ª·¢ 2´ú±íÅóÓÑÈ¦ 3´ú±íÌÚÑ¶Î¢²© 255´ú±íÆäËû',
-   shareCount           int not null default 0 comment '·ÖÏíµÄ´ÎÊı',
-   shareUser            int not null default 0 comment '·ÖÏíµÄÈËÊı',
+   officialAccountId    bigint not null default 0 comment 'å¾®ä¿¡å…¬ä¼—å·åŸºæœ¬ä¿¡æ¯id',
+   refDate              date not null default '0000-00-00' comment 'æ•°æ®çš„æ—¥æœŸ',
+   shareScene           tinyint(4) not null default 0 comment 'åˆ†äº«çš„åœºæ™¯
+            1ä»£è¡¨å¥½å‹è½¬å‘ 2ä»£è¡¨æœ‹å‹åœˆ 3ä»£è¡¨è…¾è®¯å¾®åš 255ä»£è¡¨å…¶ä»–',
+   shareCount           int not null default 0 comment 'åˆ†äº«çš„æ¬¡æ•°',
+   shareUser            int not null default 0 comment 'åˆ†äº«çš„äººæ•°',
    primary key (id)
 );
 
-alter table WX_ARTICLE_SHARE_DAY comment '´å³éÎ¢ĞÅÍ¼ÎÄ·ÖÏíÃ¿ÈÕÍ³¼ÆÊı¾İ';
+alter table WX_ARTICLE_SHARE_DAY comment 'æ‘æŠ½å¾®ä¿¡å›¾æ–‡åˆ†äº«æ¯æ—¥ç»Ÿè®¡æ•°æ®';
 
 /*==============================================================*/
 /* Table: WX_ARTICLE_SHARE_HOUR                                 */
@@ -142,17 +154,17 @@ alter table WX_ARTICLE_SHARE_DAY comment '´å³éÎ¢ĞÅÍ¼ÎÄ·ÖÏíÃ¿ÈÕÍ³¼ÆÊı¾İ';
 create table WX_ARTICLE_SHARE_HOUR
 (
    id                   bigint not null,
-   officialAccountId    bigint not null default 0 comment 'Î¢ĞÅ¹«ÖÚºÅ»ù±¾ĞÅÏ¢id',
-   refDate              date not null default '0000-00-00' comment 'Êı¾İµÄÈÕÆÚ',
-   refHour              int not null default 0 comment 'Êı¾İµÄĞ¡Ê±£¬°üÀ¨´Ó000µ½2300£¬·Ö±ğ´ú±íµÄÊÇ[000,100)µ½[2300,2400)£¬¼´Ã¿ÈÕµÄµÚ1Ğ¡Ê±ºÍ×îºó1Ğ¡Ê±',
-   shareScene           tinyint(4) not null default 0 comment '·ÖÏíµÄ³¡¾°
-            1´ú±íºÃÓÑ×ª·¢ 2´ú±íÅóÓÑÈ¦ 3´ú±íÌÚÑ¶Î¢²© 255´ú±íÆäËû',
-   shareCount           int not null default 0 comment '·ÖÏíµÄ´ÎÊı',
-   shareUser            int not null default 0 comment '·ÖÏíµÄÈËÊı',
+   officialAccountId    bigint not null default 0 comment 'å¾®ä¿¡å…¬ä¼—å·åŸºæœ¬ä¿¡æ¯id',
+   refDate              date not null default '0000-00-00' comment 'æ•°æ®çš„æ—¥æœŸ',
+   refHour              int not null default 0 comment 'æ•°æ®çš„å°æ—¶ï¼ŒåŒ…æ‹¬ä»000åˆ°2300ï¼Œåˆ†åˆ«ä»£è¡¨çš„æ˜¯[000,100)åˆ°[2300,2400)ï¼Œå³æ¯æ—¥çš„ç¬¬1å°æ—¶å’Œæœ€å1å°æ—¶',
+   shareScene           tinyint(4) not null default 0 comment 'åˆ†äº«çš„åœºæ™¯
+            1ä»£è¡¨å¥½å‹è½¬å‘ 2ä»£è¡¨æœ‹å‹åœˆ 3ä»£è¡¨è…¾è®¯å¾®åš 255ä»£è¡¨å…¶ä»–',
+   shareCount           int not null default 0 comment 'åˆ†äº«çš„æ¬¡æ•°',
+   shareUser            int not null default 0 comment 'åˆ†äº«çš„äººæ•°',
    primary key (id)
 );
 
-alter table WX_ARTICLE_SHARE_HOUR comment '´å³éÎ¢ĞÅÍ¼ÎÄ·ÖÏíÃ¿ÈÕ·ÖÊ±Í³¼ÆÊı¾İ';
+alter table WX_ARTICLE_SHARE_HOUR comment 'æ‘æŠ½å¾®ä¿¡å›¾æ–‡åˆ†äº«æ¯æ—¥åˆ†æ—¶ç»Ÿè®¡æ•°æ®';
 
 /*==============================================================*/
 /* Table: WX_AUTHENTICATION_MESSAGE                             */
@@ -160,37 +172,37 @@ alter table WX_ARTICLE_SHARE_HOUR comment '´å³éÎ¢ĞÅÍ¼ÎÄ·ÖÏíÃ¿ÈÕ·ÖÊ±Í³¼ÆÊı¾İ';
 create table WX_AUTHENTICATION_MESSAGE
 (
    id                   bigint not null,
-   officialAccountId    bigint not null default 0 comment 'Î¢ĞÅ¹«ÖÚºÅ»ù±¾ĞÅÏ¢id',
-   toUserName           varchar(50) not null default '' comment '¿ª·¢ÕßÎ¢ĞÅºÅ',
-   fromUserName         varchar(50) not null default '' comment 'ÏµÍ³ÕËºÅ',
-   createTime           timestamp not null default CURRENT_TIMESTAMP comment 'ÏûÏ¢´´½¨Ê±¼ä',
-   msgType              tinyint(4) not null default 0 comment 'ÏûÏ¢ÀàĞÍ',
-   event                tinyint(4) not null default 0 comment 'ÊÂ¼şÀàĞÍ ',
-   expiredTime          timestamp default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment 'ÈÏÖ¤¹ıÆÚÊ±¼ä',
-   failTime             timestamp default CURRENT_TIMESTAMP comment 'Ê§°Ü·¢ÉúÊ±¼ä ',
-   failReason           varchar(200) default '' comment 'ÈÏÖ¤Ê§°ÜµÄÔ­Òò',
-   advised              tinyint(4) not null default 0 comment 'ÏûÏ¢ÊÇ·ñÒÑ¾­Í¨Öª',
+   officialAccountId    bigint not null default 0 comment 'å¾®ä¿¡å…¬ä¼—å·åŸºæœ¬ä¿¡æ¯id',
+   toUserName           varchar(50) not null default '' comment 'å¼€å‘è€…å¾®ä¿¡å·',
+   fromUserName         varchar(50) not null default '' comment 'ç³»ç»Ÿè´¦å·',
+   createTime           timestamp not null default CURRENT_TIMESTAMP comment 'æ¶ˆæ¯åˆ›å»ºæ—¶é—´',
+   msgType              tinyint(4) not null default 0 comment 'æ¶ˆæ¯ç±»å‹',
+   event                tinyint(4) not null default 0 comment 'äº‹ä»¶ç±»å‹ ',
+   expiredTime          timestamp default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment 'è®¤è¯è¿‡æœŸæ—¶é—´',
+   failTime             timestamp default CURRENT_TIMESTAMP comment 'å¤±è´¥å‘ç”Ÿæ—¶é—´ ',
+   failReason           varchar(200) default '' comment 'è®¤è¯å¤±è´¥çš„åŸå› ',
+   advised              tinyint(4) not null default 0 comment 'æ¶ˆæ¯æ˜¯å¦å·²ç»é€šçŸ¥',
    primary key (id)
 );
 
-alter table WX_AUTHENTICATION_MESSAGE comment '¼ÇÂ¼Î¢ĞÅ¹«ÖÚºÅµÄÈÏÖ¤ÏûÏ¢';
+alter table WX_AUTHENTICATION_MESSAGE comment 'è®°å½•å¾®ä¿¡å…¬ä¼—å·çš„è®¤è¯æ¶ˆæ¯';
 
 /*==============================================================*/
 /* Table: WX_AUTHORIZER_ACCESS_TOKEN                            */
 /*==============================================================*/
 create table WX_AUTHORIZER_ACCESS_TOKEN
 (
-   id                   bigint not null comment 'Ö÷¼ü',
-   officialAccountId    bigint not null default 0 comment 'Î¢ĞÅ¹«ÖÚÕËºÅ»ù±¾ĞÅÏ¢±íid£¬¹ØÁªÎ¢ĞÅ¹«ÖÚºÅ»ù±¾ĞÅÏ¢±í',
-   authorizerAppid      varchar(50) not null default '' comment 'ÊÚÈ¨·½appid',
-   authorizerAccessToken varchar(200) not null default '' comment 'ÊÚÈ¨·½ÁîÅÆ',
-   expiresIn            int not null default 0 comment 'ÓĞĞ§ÆÚ',
-   authorizerRefreshToken varchar(200) not null default '' comment '½Ó¿Úµ÷ÓÃÆ¾¾İË¢ĞÂÁîÅÆ',
-   createTime           timestamp not null default CURRENT_TIMESTAMP comment '´´½¨Ê±¼ä',
+   id                   bigint not null comment 'ä¸»é”®',
+   officialAccountId    bigint not null default 0 comment 'å¾®ä¿¡å…¬ä¼—è´¦å·åŸºæœ¬ä¿¡æ¯è¡¨idï¼Œå…³è”å¾®ä¿¡å…¬ä¼—å·åŸºæœ¬ä¿¡æ¯è¡¨',
+   authorizerAppid      varchar(50) not null default '' comment 'æˆæƒæ–¹appid',
+   authorizerAccessToken varchar(200) not null default '' comment 'æˆæƒæ–¹ä»¤ç‰Œ',
+   expiresIn            bigint not null default 0 comment 'æˆªæ­¢æ—¶é—´',
+   authorizerRefreshToken varchar(200) not null default '' comment 'æ¥å£è°ƒç”¨å‡­æ®åˆ·æ–°ä»¤ç‰Œ',
+   createTime           timestamp not null default CURRENT_TIMESTAMP comment 'åˆ›å»ºæ—¶é—´',
    primary key (id)
 );
 
-alter table WX_AUTHORIZER_ACCESS_TOKEN comment '´æ´¢Î¢ĞÅÊÚÈ¨·½µÄaccess_tokenºÍrefresh_token';
+alter table WX_AUTHORIZER_ACCESS_TOKEN comment 'å­˜å‚¨å¾®ä¿¡æˆæƒæ–¹çš„access_tokenå’Œrefresh_token';
 
 /*==============================================================*/
 /* Index: officialAccountId_index                               */
@@ -205,18 +217,18 @@ create unique index officialAccountId_index on WX_AUTHORIZER_ACCESS_TOKEN
 /*==============================================================*/
 create table WX_AUTHORIZER_INFO
 (
-   id                   bigint not null comment 'Ö÷¼ü',
-   officialAccountId    bigint not null default 0 comment 'Î¢ĞÅ¹«ÖÚÕËºÅ»ù±¾ĞÅÏ¢±íid£¬¹ØÁªÎ¢ĞÅ¹«ÖÚºÅ»ù±¾ĞÅÏ¢±í',
-   authorizerAppid      varchar(50) not null default '' comment 'ÊÚÈ¨·½appid',
-   headImg              varchar(200) not null default '' comment 'ÊÚÈ¨·½Í·Ïñ',
-   alias                varchar(50) not null default '' comment 'ÊÚÈ¨·½¹«ÖÚºÅËùÉèÖÃµÄÎ¢ĞÅºÅ£¬¿ÉÄÜÎª¿Õ',
-   qrcodeUrl            varchar(200) not null default '' comment '¶şÎ¬ÂëÍ¼Æ¬µÄURL£¬¿ª·¢Õß×îºÃ×ÔĞĞÒ²½øĞĞ±£´æ',
-   createTime           timestamp not null default CURRENT_TIMESTAMP comment '´´½¨Ê±¼ä',
-   authorizationStatus  tinyint(4) not null default 0 comment 'ÊÚÈ¨×´Ì¬,0ÎªÒÑÊÚÈ¨,1ÎªÒÑÈ¡ÏûÊÚÈ¨',
+   id                   bigint not null comment 'ä¸»é”®',
+   officialAccountId    bigint not null default 0 comment 'å¾®ä¿¡å…¬ä¼—è´¦å·åŸºæœ¬ä¿¡æ¯è¡¨idï¼Œå…³è”å¾®ä¿¡å…¬ä¼—å·åŸºæœ¬ä¿¡æ¯è¡¨',
+   authorizerAppid      varchar(50) not null default '' comment 'æˆæƒæ–¹appid',
+   headImg              varchar(200) default '' comment 'æˆæƒæ–¹å¤´åƒ',
+   alias                varchar(50) not null default '' comment 'æˆæƒæ–¹å…¬ä¼—å·æ‰€è®¾ç½®çš„å¾®ä¿¡å·ï¼Œå¯èƒ½ä¸ºç©º',
+   qrcodeUrl            varchar(200) not null default '' comment 'äºŒç»´ç å›¾ç‰‡çš„URLï¼Œå¼€å‘è€…æœ€å¥½è‡ªè¡Œä¹Ÿè¿›è¡Œä¿å­˜',
+   createTime           timestamp not null default CURRENT_TIMESTAMP comment 'åˆ›å»ºæ—¶é—´',
+   authorizationStatus  tinyint(4) not null default 0 comment 'æˆæƒçŠ¶æ€,0ä¸ºå·²æˆæƒ,1ä¸ºå·²å–æ¶ˆæˆæƒ',
    primary key (id)
 );
 
-alter table WX_AUTHORIZER_INFO comment '´æ´¢Î¢ĞÅ¹«ÖÚÕËºÅµÄ»ù±¾ĞÅÏ¢';
+alter table WX_AUTHORIZER_INFO comment 'å­˜å‚¨å¾®ä¿¡å…¬ä¼—è´¦å·çš„åŸºæœ¬ä¿¡æ¯';
 
 /*==============================================================*/
 /* Index: officialAccountId_index                               */
@@ -231,45 +243,45 @@ create unique index officialAccountId_index on WX_AUTHORIZER_INFO
 /*==============================================================*/
 create table WX_BUSINESS_INFO
 (
-   id                   bigint not null comment 'Ö÷¼ü',
-   officialAccountId    bigint not null default 0 comment 'Î¢ĞÅ¹«ÖÚÕËºÅ»ù±¾ĞÅÏ¢±íid£¬¹ØÁªÎ¢ĞÅ¹«ÖÚºÅ»ù±¾ĞÅÏ¢±í',
-   businessInfoName     tinyint(4) not null default 0 comment 'ÉÌÒµ¹¦ÄÜÃû³Æ',
-   businessInfoStatus   tinyint(4) not null default 0 comment 'ÉÌÒµ¹¦ÄÜ¿ªÍ¨×´Ì¬',
+   id                   bigint not null comment 'ä¸»é”®',
+   officialAccountId    bigint not null default 0 comment 'å¾®ä¿¡å…¬ä¼—è´¦å·åŸºæœ¬ä¿¡æ¯è¡¨idï¼Œå…³è”å¾®ä¿¡å…¬ä¼—å·åŸºæœ¬ä¿¡æ¯è¡¨',
+   businessInfoName     tinyint(4) not null default 0 comment 'å•†ä¸šåŠŸèƒ½åç§°',
+   businessInfoStatus   tinyint(4) not null default 0 comment 'å•†ä¸šåŠŸèƒ½å¼€é€šçŠ¶æ€',
    primary key (id)
 );
 
-alter table WX_BUSINESS_INFO comment '´æ´¢Î¢ĞÅµÄÉÌÒµ¹¦ÄÜ¿ªÍ¨Çé¿ö';
+alter table WX_BUSINESS_INFO comment 'å­˜å‚¨å¾®ä¿¡çš„å•†ä¸šåŠŸèƒ½å¼€é€šæƒ…å†µ';
 
 /*==============================================================*/
 /* Table: WX_COMPONENT_ACCESS_TOKEN                             */
 /*==============================================================*/
 create table WX_COMPONENT_ACCESS_TOKEN
 (
-   id                   bigint not null comment 'Ö÷¼ü',
+   id                   bigint not null comment 'ä¸»é”®',
    componentAppid       varchar(50) not null default '' comment 'componentAppid',
-   componentAccessToken varchar(200) not null default '' comment 'Î¢ĞÅµÚÈı·½component_access_token',
-   expiresIn            int not null default 0 comment 'ÓĞĞ§Ê±¼ä',
-   createTime           timestamp not null default CURRENT_TIMESTAMP comment '´´½¨Ê±¼ä',
-   failureTime          timestamp not null default CURRENT_TIMESTAMP comment 'Ê§Ğ§Ê±¼ä',
+   componentAccessToken varchar(200) not null default '' comment 'å¾®ä¿¡ç¬¬ä¸‰æ–¹component_access_token',
+   expiresIn            int not null default 0 comment 'æœ‰æ•ˆæ—¶é—´',
+   createTime           timestamp not null default CURRENT_TIMESTAMP comment 'åˆ›å»ºæ—¶é—´',
+   failureTime          timestamp not null default CURRENT_TIMESTAMP comment 'å¤±æ•ˆæ—¶é—´',
    primary key (id)
 );
 
-alter table WX_COMPONENT_ACCESS_TOKEN comment '´æ´¢µÚÈı·½Æ½Ì¨µÄcomponentAccessToken';
+alter table WX_COMPONENT_ACCESS_TOKEN comment 'å­˜å‚¨ç¬¬ä¸‰æ–¹å¹³å°çš„componentAccessToken';
 
 /*==============================================================*/
 /* Table: WX_COMPONENT_VERIFY_TICKET                            */
 /*==============================================================*/
 create table WX_COMPONENT_VERIFY_TICKET
 (
-   id                   bigint not null comment 'Ö÷¼ü',
-   componentAppid       varchar(50) not null default '' comment 'Î¢ĞÅµÚÈı·½componentAppid',
-   componentVerifyTicket varchar(100) not null default '' comment 'Î¢ĞÅµÚÈı·½component_verify_ticket',
-   createTime           timestamp not null default CURRENT_TIMESTAMP comment '´´½¨Ê±¼ä',
-   deadline             timestamp not null default CURRENT_TIMESTAMP comment 'Ê§Ğ§Ê±¼ä',
+   id                   bigint not null comment 'ä¸»é”®',
+   componentAppid       varchar(50) not null default '' comment 'å¾®ä¿¡ç¬¬ä¸‰æ–¹componentAppid',
+   componentVerifyTicket varchar(100) not null default '' comment 'å¾®ä¿¡ç¬¬ä¸‰æ–¹component_verify_ticket',
+   createTime           timestamp not null default CURRENT_TIMESTAMP comment 'åˆ›å»ºæ—¶é—´',
+   deadline             timestamp not null default CURRENT_TIMESTAMP comment 'å¤±æ•ˆæ—¶é—´',
    primary key (id)
 );
 
-alter table WX_COMPONENT_VERIFY_TICKET comment '´æ´¢Î¢ĞÅµÚÈı·½Æ½Ì¨component_verify_ticketĞÅÏ¢';
+alter table WX_COMPONENT_VERIFY_TICKET comment 'å­˜å‚¨å¾®ä¿¡ç¬¬ä¸‰æ–¹å¹³å°component_verify_ticketä¿¡æ¯';
 
 /*==============================================================*/
 /* Table: WX_CUSTOM_SERVICE                                     */
@@ -277,18 +289,31 @@ alter table WX_COMPONENT_VERIFY_TICKET comment '´æ´¢Î¢ĞÅµÚÈı·½Æ½Ì¨component_veri
 create table WX_CUSTOM_SERVICE
 (
    id                   bigint not null,
-   officialAccountId    bigint not null default 0 comment 'Î¢ĞÅ¹«ÖÚºÅ»ù±¾ĞÅÏ¢±íid',
-   kfAccount            varchar(50) not null default '' comment 'ÍêÕû¿Í·şÕËºÅ£¬¸ñÊ½Îª£ºÕËºÅÇ°×º@¹«ÖÚºÅÎ¢ĞÅºÅ',
-   kfNick               varchar(50) not null default '' comment '¿Í·şêÇ³Æ',
-   kfId                 int not null default 0 comment '¿Í·ş¹¤ºÅ',
-   nickname             varchar(20) not null default '' comment '¿Í·şêÇ³Æ£¬×î³¤6¸öºº×Ö»ò12¸öÓ¢ÎÄ×Ö·û',
-   kfHeadimgurl         varchar(200) not null default '' comment '¿Í·şÍ·Ïñ',
-   password             char(10) default '' comment '¿Í·şÕËºÅµÇÂ¼ÃÜÂë£¬¸ñÊ½ÎªÃÜÂëÃ÷ÎÄµÄ32Î»¼ÓÃÜMD5Öµ¡£¸ÃÃÜÂë½öÓÃÓÚÔÚ¹«ÖÚÆ½Ì¨¹ÙÍøµÄ¶à¿Í·ş¹¦ÄÜÖĞÊ¹ÓÃ£¬Èô²»Ê¹ÓÃ¶à¿Í·ş¹¦ÄÜ£¬Ôò²»±ØÉèÖÃÃÜÂë',
-   createTime           timestamp not null default CURRENT_TIMESTAMP comment '´´½¨Ê±¼ä',
+   officialAccountId    bigint not null default 0 comment 'å¾®ä¿¡å…¬ä¼—å·åŸºæœ¬ä¿¡æ¯è¡¨id',
+   kfAccount            varchar(50) not null default '' comment 'å®Œæ•´å®¢æœè´¦å·ï¼Œæ ¼å¼ä¸ºï¼šè´¦å·å‰ç¼€@å…¬ä¼—å·å¾®ä¿¡å·',
+   kfNick               varchar(50) not null default '' comment 'å®¢æœæ˜µç§°',
+   kfId                 int not null default 0 comment 'å®¢æœå·¥å·',
+   nickname             varchar(20) not null default '' comment 'å®¢æœæ˜µç§°ï¼Œæœ€é•¿6ä¸ªæ±‰å­—æˆ–12ä¸ªè‹±æ–‡å­—ç¬¦',
+   kfHeadimgurl         varchar(200) not null default '' comment 'å®¢æœå¤´åƒ',
+   password             char(10) default '' comment 'å®¢æœè´¦å·ç™»å½•å¯†ç ï¼Œæ ¼å¼ä¸ºå¯†ç æ˜æ–‡çš„32ä½åŠ å¯†MD5å€¼ã€‚è¯¥å¯†ç ä»…ç”¨äºåœ¨å…¬ä¼—å¹³å°å®˜ç½‘çš„å¤šå®¢æœåŠŸèƒ½ä¸­ä½¿ç”¨ï¼Œè‹¥ä¸ä½¿ç”¨å¤šå®¢æœåŠŸèƒ½ï¼Œåˆ™ä¸å¿…è®¾ç½®å¯†ç ',
+   createTime           timestamp not null default CURRENT_TIMESTAMP comment 'åˆ›å»ºæ—¶é—´',
    primary key (id)
 );
 
-alter table WX_CUSTOM_SERVICE comment '´æ´¢Î¢ĞÅµÄ¿Í·şĞÅÏ¢';
+alter table WX_CUSTOM_SERVICE comment 'å­˜å‚¨å¾®ä¿¡çš„å®¢æœä¿¡æ¯';
+
+/*==============================================================*/
+/* Table: WX_ERROR_CODE                                         */
+/*==============================================================*/
+create table WX_ERROR_CODE
+(
+   id                   bigint not null,
+   code                 varchar(10) not null default '' comment 'å¾®ä¿¡é”™è¯¯ç ',
+   msg                  varchar(100) not null default '' comment 'å¾®ä¿¡é”™è¯¯æ¶ˆæ¯è¯´æ˜',
+   primary key (id)
+);
+
+alter table WX_ERROR_CODE comment 'å­˜å‚¨å¾®ä¿¡æ¥å£è°ƒç”¨çš„æ‰€æœ‰é”™è¯¯ç ';
 
 /*==============================================================*/
 /* Table: WX_EVENT                                              */
@@ -296,18 +321,18 @@ alter table WX_CUSTOM_SERVICE comment '´æ´¢Î¢ĞÅµÄ¿Í·şĞÅÏ¢';
 create table WX_EVENT
 (
    id                   bigint not null,
-   toUserId             bigint not null default 0 comment 'ÊÕµ½ÏûÏ¢Ò»·½µÄÓÃ»§id£¬¹ØÁªÎ¢ĞÅ¸öÈËÓÃ»§±í»òÎ¢ĞÅ¹«ÖÚÕËºÅ»ù±¾ĞÅÏ¢±í',
-   fromUserId           bigint not null default 0 comment 'ÏûÏ¢·¢ËÍ·½µÄÓÃ»§id',
-   toUserName           varchar(50) not null default '' comment '½ÓÊÕ·½Î¢ĞÅºÅ',
-   fromUserName         varchar(50) not null default '' comment '·¢ËÍ·½Î¢ĞÅºÅopenid',
-   createTime           timestamp not null default CURRENT_TIMESTAMP comment 'ÏûÏ¢´´½¨Ê±¼ä',
-   msgType              tinyint(4) not null default 0 comment 'ÏûÏ¢ÀàĞÍ',
-   ticket               varchar(50) not null default '' comment '¶şÎ¬ÂëµÄticket£¬¿ÉÓÃÀ´»»È¡¶şÎ¬ÂëÍ¼Æ¬',
-   eventKey             varchar(20) default '' comment 'ÊÂ¼şKEYÖµ£¬qrscene_ÎªÇ°×º£¬ºóÃæÎª¶şÎ¬ÂëµÄ²ÎÊıÖµ',
+   toUserId             bigint not null default 0 comment 'æ”¶åˆ°æ¶ˆæ¯ä¸€æ–¹çš„ç”¨æˆ·idï¼Œå…³è”å¾®ä¿¡ä¸ªäººç”¨æˆ·è¡¨æˆ–å¾®ä¿¡å…¬ä¼—è´¦å·åŸºæœ¬ä¿¡æ¯è¡¨',
+   fromUserId           bigint not null default 0 comment 'æ¶ˆæ¯å‘é€æ–¹çš„ç”¨æˆ·id',
+   toUserName           varchar(50) not null default '' comment 'æ¥æ”¶æ–¹å¾®ä¿¡å·',
+   fromUserName         varchar(50) not null default '' comment 'å‘é€æ–¹å¾®ä¿¡å·openid',
+   createTime           timestamp not null default CURRENT_TIMESTAMP comment 'æ¶ˆæ¯åˆ›å»ºæ—¶é—´',
+   msgType              tinyint(4) not null default 0 comment 'æ¶ˆæ¯ç±»å‹',
+   ticket               varchar(50) not null default '' comment 'äºŒç»´ç çš„ticketï¼Œå¯ç”¨æ¥æ¢å–äºŒç»´ç å›¾ç‰‡',
+   eventKey             varchar(20) default '' comment 'äº‹ä»¶KEYå€¼ï¼Œqrscene_ä¸ºå‰ç¼€ï¼Œåé¢ä¸ºäºŒç»´ç çš„å‚æ•°å€¼',
    primary key (id)
 );
 
-alter table WX_EVENT comment '´æ´¢Î¢ĞÅÓÃ»§ÊÂ¼şÏûÏ¢¼ÇÂ¼';
+alter table WX_EVENT comment 'å­˜å‚¨å¾®ä¿¡ç”¨æˆ·äº‹ä»¶æ¶ˆæ¯è®°å½•';
 
 /*==============================================================*/
 /* Table: WX_FUNC_INFO                                          */
@@ -315,12 +340,12 @@ alter table WX_EVENT comment '´æ´¢Î¢ĞÅÓÃ»§ÊÂ¼şÏûÏ¢¼ÇÂ¼';
 create table WX_FUNC_INFO
 (
    id                   bigint not null comment 'zhujian',
-   officialAccountId    bigint not null default 0 comment 'Î¢ĞÅ¹«ÖÚÕËºÅ»ù±¾ĞÅÏ¢±íid£¬¹ØÁªÎ¢ĞÅ¹«ÖÚºÅ»ù±¾ĞÅÏ¢±í',
-   funcName             int not null default 0 comment 'È¨ÏŞµÄÃû³Æid',
+   officialAccountId    bigint not null default 0 comment 'å¾®ä¿¡å…¬ä¼—è´¦å·åŸºæœ¬ä¿¡æ¯è¡¨idï¼Œå…³è”å¾®ä¿¡å…¬ä¼—å·åŸºæœ¬ä¿¡æ¯è¡¨',
+   funcName             int not null default 0 comment 'æƒé™çš„åç§°id',
    primary key (id)
 );
 
-alter table WX_FUNC_INFO comment '´æ´¢Ã¿¸ö¹«ÖÚºÅµÄÈ¨ÏŞĞÅÏ¢';
+alter table WX_FUNC_INFO comment 'å­˜å‚¨æ¯ä¸ªå…¬ä¼—å·çš„æƒé™ä¿¡æ¯';
 
 /*==============================================================*/
 /* Table: WX_INTERFACE_SUMMARY                                  */
@@ -328,16 +353,16 @@ alter table WX_FUNC_INFO comment '´æ´¢Ã¿¸ö¹«ÖÚºÅµÄÈ¨ÏŞĞÅÏ¢';
 create table WX_INTERFACE_SUMMARY
 (
    id                   bigint not null,
-   officialAccountId    bigint not null default 0 comment 'Î¢ĞÅ¹«ÖÚÕËºÅ»ù±¾ĞÅÏ¢id',
-   refDate              date not null default '0000-00-00' comment 'Êı¾İµÄÈÕÆÚ',
-   callbackCount        int not null default 0 comment 'Í¨¹ı·şÎñÆ÷ÅäÖÃµØÖ·»ñµÃÏûÏ¢ºó£¬±»¶¯»Ø¸´ÓÃ»§ÏûÏ¢µÄ´ÎÊı',
-   failCount            int not null comment 'ÉÏÊö¶¯×÷µÄÊ§°Ü´ÎÊı',
-   totalTimeCost        int not null default 0 comment '×ÜºÄÊ±£¬³ıÒÔcallback_count¼´ÎªÆ½¾ùºÄÊ±',
-   maxTimeCost          int not null default 0 comment '×î´óºÄÊ±',
+   officialAccountId    bigint not null default 0 comment 'å¾®ä¿¡å…¬ä¼—è´¦å·åŸºæœ¬ä¿¡æ¯id',
+   refDate              date not null default '0000-00-00' comment 'æ•°æ®çš„æ—¥æœŸ',
+   callbackCount        int not null default 0 comment 'é€šè¿‡æœåŠ¡å™¨é…ç½®åœ°å€è·å¾—æ¶ˆæ¯åï¼Œè¢«åŠ¨å›å¤ç”¨æˆ·æ¶ˆæ¯çš„æ¬¡æ•°',
+   failCount            int not null comment 'ä¸Šè¿°åŠ¨ä½œçš„å¤±è´¥æ¬¡æ•°',
+   totalTimeCost        int not null default 0 comment 'æ€»è€—æ—¶ï¼Œé™¤ä»¥callback_countå³ä¸ºå¹³å‡è€—æ—¶',
+   maxTimeCost          int not null default 0 comment 'æœ€å¤§è€—æ—¶',
    primary key (id)
 );
 
-alter table WX_INTERFACE_SUMMARY comment '´æ´¢Î¢ĞÅµÄ½Ó¿Ú·ÖÎöÊı¾İ';
+alter table WX_INTERFACE_SUMMARY comment 'å­˜å‚¨å¾®ä¿¡çš„æ¥å£åˆ†ææ•°æ®';
 
 /*==============================================================*/
 /* Table: WX_INTERFACE_SUMMARY_HOUR                             */
@@ -345,150 +370,215 @@ alter table WX_INTERFACE_SUMMARY comment '´æ´¢Î¢ĞÅµÄ½Ó¿Ú·ÖÎöÊı¾İ';
 create table WX_INTERFACE_SUMMARY_HOUR
 (
    id                   bigint not null,
-   officialAccountId    bigint not null default 0 comment 'Î¢ĞÅ¹«ÖÚÕËºÅ»ù±¾ĞÅÏ¢id',
-   refDate              date not null default '0000-00-00' comment 'Êı¾İµÄÈÕÆÚ',
-   refHour              int not null default 0 comment 'Êı¾İµÄĞ¡Ê±',
-   callbackCount        int not null default 0 comment 'Í¨¹ı·şÎñÆ÷ÅäÖÃµØÖ·»ñµÃÏûÏ¢ºó£¬±»¶¯»Ø¸´ÓÃ»§ÏûÏ¢µÄ´ÎÊı',
-   failCount            int not null default 0 comment 'ÉÏÊö¶¯×÷µÄÊ§°Ü´ÎÊı',
-   totalTimeCost        int not null default 0 comment '×ÜºÄÊ±£¬³ıÒÔcallback_count¼´ÎªÆ½¾ùºÄÊ±',
-   maxTimeCost          int not null default 0 comment '×î´óºÄÊ±',
+   officialAccountId    bigint not null default 0 comment 'å¾®ä¿¡å…¬ä¼—è´¦å·åŸºæœ¬ä¿¡æ¯id',
+   refDate              date not null default '0000-00-00' comment 'æ•°æ®çš„æ—¥æœŸ',
+   refHour              int not null default 0 comment 'æ•°æ®çš„å°æ—¶',
+   callbackCount        int not null default 0 comment 'é€šè¿‡æœåŠ¡å™¨é…ç½®åœ°å€è·å¾—æ¶ˆæ¯åï¼Œè¢«åŠ¨å›å¤ç”¨æˆ·æ¶ˆæ¯çš„æ¬¡æ•°',
+   failCount            int not null default 0 comment 'ä¸Šè¿°åŠ¨ä½œçš„å¤±è´¥æ¬¡æ•°',
+   totalTimeCost        int not null default 0 comment 'æ€»è€—æ—¶ï¼Œé™¤ä»¥callback_countå³ä¸ºå¹³å‡è€—æ—¶',
+   maxTimeCost          int not null default 0 comment 'æœ€å¤§è€—æ—¶',
    primary key (id)
 );
 
-alter table WX_INTERFACE_SUMMARY_HOUR comment '´æ´¢Î¢ĞÅµÄ½Ó¿Ú·ÖÊ±·ÖÎöÊı¾İ';
+alter table WX_INTERFACE_SUMMARY_HOUR comment 'å­˜å‚¨å¾®ä¿¡çš„æ¥å£åˆ†æ—¶åˆ†ææ•°æ®';
+
+/*==============================================================*/
+/* Table: WX_KEYWORD_REPLY_SETTING                              */
+/*==============================================================*/
+create table WX_KEYWORD_REPLY_SETTING
+(
+   id                   bigint not null comment 'ä¸»é”®',
+   officialAccountId    bigint not null default 0 comment 'å¾®ä¿¡å…¬ä¼—å·åŸºæœ¬ä¿¡æ¯idï¼Œå…³è”å¾®ä¿¡å…¬ä¼—å·åŸºæœ¬ä¿¡æ¯è¡¨',
+   ruleName             varchar(50) not null default '' comment 'è§„åˆ™åç§°',
+   replyMod             tinyint(4) not null default 0 comment 'å›å¤æ¨¡å¼ï¼Œreply_allä»£è¡¨å…¨éƒ¨å›å¤ï¼Œrandom_oneä»£è¡¨éšæœºå›å¤å…¶ä¸­ä¸€æ¡',
+   replyOpen            tinyint(4) not null default 0 comment 'æˆ‘æ–¹çš„è§„åˆ™å¼€å¯çŠ¶æ€ï¼Œ0ä¸ºå…³é—­ï¼Œ1ä½å¼€å¯',
+   plat                 tinyint(4) not null default 0 comment 'è®¾ç½®å¹³å°æ–¹ï¼Œ1,ä»£è¡¨åœ¨å¾®ä¿¡åå°è®¾ç½®ï¼Œ2ä»£è¡¨åœ¨æˆ‘æ–¹åå°è®¾ç½®',
+   createTime           timestamp not null default CURRENT_TIMESTAMP comment 'åˆ›å»ºæ—¶é—´',
+   primary key (id)
+);
+
+alter table WX_KEYWORD_REPLY_SETTING comment 'å­˜å‚¨å¾®ä¿¡å…³é”®è¯è‡ªåŠ¨å›å¤è®¾ç½®';
+
+/*==============================================================*/
+/* Table: WX_KEYWORD_REPLY_SETTING_KEYWORD                      */
+/*==============================================================*/
+create table WX_KEYWORD_REPLY_SETTING_KEYWORD
+(
+   id                   bigint not null comment 'ä¸»é”®',
+   keywordReplySettingId bigint not null default 0 comment 'å¾®ä¿¡å…³é”®è¯è‡ªåŠ¨å›å¤è®¾ç½®id',
+   type                 tinyint(4) not null default 0 comment 'åŒ¹é…æ¶ˆæ¯ç±»å‹ï¼Œæ”¯æŒæ–‡æœ¬ï¼ˆtextï¼‰ã€å›¾ç‰‡ï¼ˆimgï¼‰ã€è¯­éŸ³ï¼ˆvoiceï¼‰ã€è§†é¢‘ï¼ˆvideoï¼Œå›¾æ–‡æ¶ˆæ¯ï¼ˆnewsï¼‰',
+   matchMode            tinyint(4) not null default 0 comment 'åŒ¹é…æ¨¡å¼ï¼Œcontainä»£è¡¨æ¶ˆæ¯ä¸­å«æœ‰è¯¥å…³é”®è¯å³å¯ï¼Œequalè¡¨ç¤ºæ¶ˆæ¯å†…å®¹å¿…é¡»å’Œå…³é”®è¯ä¸¥æ ¼ç›¸åŒ',
+   content              varchar(500) not null default '' comment 'å¯¹äºæ–‡æœ¬ç±»å‹ï¼Œcontentæ˜¯æ–‡æœ¬å†…å®¹ï¼Œå¯¹äºå›¾æ–‡ã€å›¾ç‰‡ã€è¯­éŸ³ã€è§†é¢‘ç±»å‹ï¼Œcontentæ˜¯mediaID',
+   primary key (id)
+);
+
+alter table WX_KEYWORD_REPLY_SETTING_KEYWORD comment 'å­˜å‚¨å…³é”®è¯å›å¤çš„å…³é”®è¯';
+
+/*==============================================================*/
+/* Table: WX_KEYWORD_REPLY_SETTING_NEWS                         */
+/*==============================================================*/
+create table WX_KEYWORD_REPLY_SETTING_NEWS
+(
+   id                   bigint not null,
+   keywordReplySettingReplyId bigint not null default 0 comment 'å¾®ä¿¡å…³é”®è¯è‡ªåŠ¨å›å¤è®¾ç½®å›å¤ä¿¡æ¯id,å…³è”å¾®ä¿¡å…³é”®è¯è‡ªåŠ¨å›å¤è®¾ç½®å›å¤ä¿¡æ¯è¡¨',
+   title                varchar(50) not null default '' comment 'å›¾æ–‡æ¶ˆæ¯çš„æ ‡é¢˜',
+   author               varchar(20) not null default '' comment 'ä½œè€…',
+   digest               varchar(500) not null default '' comment 'æ‘˜è¦',
+   showCover            tinyint(4) not null default 0 comment 'æ˜¯å¦æ˜¾ç¤ºå°é¢ï¼Œ0ä¸ºä¸æ˜¾ç¤ºï¼Œ1ä¸ºæ˜¾ç¤º',
+   coverUrl             varchar(200) not null default '' comment 'å°é¢å›¾ç‰‡çš„URL',
+   contentUrl           varchar(200) not null default '' comment 'æ­£æ–‡çš„URL',
+   sourceUrl            varchar(200) default '' comment 'åŸæ–‡çš„URLï¼Œè‹¥ç½®ç©ºåˆ™æ— æŸ¥çœ‹åŸæ–‡å…¥å£',
+   primary key (id)
+);
+
+alter table WX_KEYWORD_REPLY_SETTING_NEWS comment 'å­˜å‚¨å¾®ä¿¡å…³é”®è¯è‡ªåŠ¨å›å¤è®¾ç½®çš„å›å¤å›¾æ–‡ä¿¡æ¯';
+
+/*==============================================================*/
+/* Table: WX_KEYWORD_REPLY_SETTING_REPLY                        */
+/*==============================================================*/
+create table WX_KEYWORD_REPLY_SETTING_REPLY
+(
+   id                   bigint not null,
+   keywordReplySettingId bigint not null default 0 comment 'å¾®ä¿¡å…³é”®è¯è‡ªåŠ¨å›å¤è®¾ç½®id',
+   type                 tinyint(4) not null default 0 comment 'åŒ¹é…æ¶ˆæ¯ç±»å‹ï¼Œæ”¯æŒæ–‡æœ¬ï¼ˆtextï¼‰ã€å›¾ç‰‡ï¼ˆimgï¼‰ã€è¯­éŸ³ï¼ˆvoiceï¼‰ã€è§†é¢‘ï¼ˆvideoï¼Œå›¾æ–‡æ¶ˆæ¯ï¼ˆnewsï¼‰',
+   content              varchar(500) not null default '',
+   primary key (id)
+);
+
+alter table WX_KEYWORD_REPLY_SETTING_REPLY comment 'å­˜å‚¨å¾®ä¿¡å…³é”®è¯è‡ªåŠ¨å›å¤è®¾ç½®å›å¤ä¿¡æ¯';
 
 /*==============================================================*/
 /* Table: WX_MASS_MESSAGE                                       */
 /*==============================================================*/
 create table WX_MASS_MESSAGE
 (
-   id                   bigint not null comment 'Ö÷¼ü',
-   officialAccountId    bigint not null default 0 comment 'Î¢ĞÅ¹«ÖÚºÅ»ù±¾ĞÅÏ¢id',
-   groupId              varchar(50) not null default '' comment 'Î¢ĞÅÈº×éid',
-   mediaId              varchar(50) not null default '' comment 'ÓÃÓÚÈº·¢µÄÏûÏ¢µÄmedia_id',
-   msgType              tinyint(4) not null default 0 comment 'Èº·¢µÄÏûÏ¢ÀàĞÍ£¬',
-   touser               varchar(10000) not null default '' comment 'ÌîĞ´Í¼ÎÄÏûÏ¢µÄ½ÓÊÕÕß£¬Ò»´®OpenIDÁĞ±í£¬OpenID×îÉÙ2¸ö£¬×î¶à10000¸ö',
-   title                varchar(50) not null default '' comment 'ÏûÏ¢µÄ±êÌâ',
-   description          varchar(500) not null default '' comment 'ÏûÏ¢µÄÃèÊö',
-   thumbMediaId         varchar(50) not null default '' comment 'ÊÓÆµËõÂÔÍ¼µÄÃ½ÌåID',
-   isToAll              tinyint(4) not null default 0 comment 'ÓÃÓÚÉè¶¨ÊÇ·ñÏòÈ«²¿ÓÃ»§·¢ËÍ',
-   msgDataId            varchar(50) default '' comment 'ÏûÏ¢µÄÊı¾İID£¬£¬¸Ã×Ö¶ÎÖ»ÓĞÔÚÈº·¢Í¼ÎÄÏûÏ¢Ê±£¬²Å»á³öÏÖ¡£¿ÉÒÔÓÃÓÚÔÚÍ¼ÎÄ·ÖÎöÊı¾İ½Ó¿ÚÖĞ£¬»ñÈ¡µ½¶ÔÓ¦µÄÍ¼ÎÄÏûÏ¢µÄÊı¾İ£¬ÊÇÍ¼ÎÄ·ÖÎöÊı¾İ½Ó¿ÚÖĞµÄmsgid×Ö¶ÎÖĞµÄÇ°°ë²¿·Ö£¬Ïê¼ûÍ¼ÎÄ·ÖÎöÊı¾İ½Ó¿ÚÖĞµÄmsgid×Ö¶ÎµÄ½éÉÜ¡£',
-   msgId                varchar(50) not null default '' comment 'ÏûÏ¢·¢ËÍÈÎÎñµÄID',
+   id                   bigint not null comment 'ä¸»é”®',
+   officialAccountId    bigint not null default 0 comment 'å¾®ä¿¡å…¬ä¼—å·åŸºæœ¬ä¿¡æ¯id',
+   groupId              varchar(50) not null default '' comment 'å¾®ä¿¡ç¾¤ç»„id',
+   mediaId              varchar(50) not null default '' comment 'ç”¨äºç¾¤å‘çš„æ¶ˆæ¯çš„media_id',
+   msgType              tinyint(4) not null default 0 comment 'ç¾¤å‘çš„æ¶ˆæ¯ç±»å‹ï¼Œ',
+   touser               varchar(10000) not null default '' comment 'å¡«å†™å›¾æ–‡æ¶ˆæ¯çš„æ¥æ”¶è€…ï¼Œä¸€ä¸²OpenIDåˆ—è¡¨ï¼ŒOpenIDæœ€å°‘2ä¸ªï¼Œæœ€å¤š10000ä¸ª',
+   title                varchar(50) not null default '' comment 'æ¶ˆæ¯çš„æ ‡é¢˜',
+   description          varchar(500) not null default '' comment 'æ¶ˆæ¯çš„æè¿°',
+   thumbMediaId         varchar(50) not null default '' comment 'è§†é¢‘ç¼©ç•¥å›¾çš„åª’ä½“ID',
+   isToAll              tinyint(4) not null default 0 comment 'ç”¨äºè®¾å®šæ˜¯å¦å‘å…¨éƒ¨ç”¨æˆ·å‘é€',
+   msgDataId            varchar(50) default '' comment 'æ¶ˆæ¯çš„æ•°æ®IDï¼Œï¼Œè¯¥å­—æ®µåªæœ‰åœ¨ç¾¤å‘å›¾æ–‡æ¶ˆæ¯æ—¶ï¼Œæ‰ä¼šå‡ºç°ã€‚å¯ä»¥ç”¨äºåœ¨å›¾æ–‡åˆ†ææ•°æ®æ¥å£ä¸­ï¼Œè·å–åˆ°å¯¹åº”çš„å›¾æ–‡æ¶ˆæ¯çš„æ•°æ®ï¼Œæ˜¯å›¾æ–‡åˆ†ææ•°æ®æ¥å£ä¸­çš„msgidå­—æ®µä¸­çš„å‰åŠéƒ¨åˆ†ï¼Œè¯¦è§å›¾æ–‡åˆ†ææ•°æ®æ¥å£ä¸­çš„msgidå­—æ®µçš„ä»‹ç»ã€‚',
+   msgId                varchar(50) not null default '' comment 'æ¶ˆæ¯å‘é€ä»»åŠ¡çš„ID',
    content              text not null default '',
-   totalCount           int not null default 0 comment 'group_idÏÂ·ÛË¿Êı£»»òÕßopenid_listÖĞµÄ·ÛË¿Êı',
-   filterCount          int not null default 0 comment '¹ıÂË£¨¹ıÂËÊÇÖ¸ÌØ¶¨µØÇø¡¢ĞÔ±ğµÄ¹ıÂË¡¢ÓÃ»§ÉèÖÃ¾ÜÊÕµÄ¹ıÂË£¬ÓÃ»§½ÓÊÕÒÑ³¬4ÌõµÄ¹ıÂË£©ºó£¬×¼±¸·¢ËÍµÄ·ÛË¿Êı£¬Ô­ÔòÉÏ£¬FilterCount = SentCount + ErrorCount',
-   status               int not null default 0 comment 'Èº·¢ÏûÏ¢µÄ½á¹û',
-   errorCount           int not null default 0 comment '·¢ËÍÊ§°ÜµÄ·ÛË¿Êı',
-   sendCount            int not null default 0 comment '·¢ËÍ³É¹¦µÄ·ÛË¿Êı',
-   createTime           timestamp not null default CURRENT_TIMESTAMP comment 'ÏûÏ¢·¢ËÍÊ±¼ä',
+   totalCount           int not null default 0 comment 'group_idä¸‹ç²‰ä¸æ•°ï¼›æˆ–è€…openid_listä¸­çš„ç²‰ä¸æ•°',
+   filterCount          int not null default 0 comment 'è¿‡æ»¤ï¼ˆè¿‡æ»¤æ˜¯æŒ‡ç‰¹å®šåœ°åŒºã€æ€§åˆ«çš„è¿‡æ»¤ã€ç”¨æˆ·è®¾ç½®æ‹’æ”¶çš„è¿‡æ»¤ï¼Œç”¨æˆ·æ¥æ”¶å·²è¶…4æ¡çš„è¿‡æ»¤ï¼‰åï¼Œå‡†å¤‡å‘é€çš„ç²‰ä¸æ•°ï¼ŒåŸåˆ™ä¸Šï¼ŒFilterCount = SentCount + ErrorCount',
+   status               int not null default 0 comment 'ç¾¤å‘æ¶ˆæ¯çš„ç»“æœ',
+   errorCount           int not null default 0 comment 'å‘é€å¤±è´¥çš„ç²‰ä¸æ•°',
+   sendCount            int not null default 0 comment 'å‘é€æˆåŠŸçš„ç²‰ä¸æ•°',
+   createTime           timestamp not null default CURRENT_TIMESTAMP comment 'æ¶ˆæ¯å‘é€æ—¶é—´',
    primary key (id)
 );
 
-alter table WX_MASS_MESSAGE comment 'Î¢ĞÅÈº·¢ÏûÏ¢¼ÇÂ¼';
+alter table WX_MASS_MESSAGE comment 'å¾®ä¿¡ç¾¤å‘æ¶ˆæ¯è®°å½•';
 
 /*==============================================================*/
 /* Table: WX_MEDIA                                              */
 /*==============================================================*/
 create table WX_MEDIA
 (
-   id                   bigint(0) not null comment 'Ö÷¼ü',
-   officialAccountId    bigint not null default 0 comment 'Î¢ĞÅ¹«ÖÚºÅ»ù±¾ĞÅÏ¢id,¹ØÁªÎ¢ĞÅ¹«ÖÚºÅ»ù±¾ĞÅÏ¢±í',
-   mediaId              varchar(50) not null default '' comment 'Ã½ÌåÎÄ¼şµÄÎ¨Ò»±êÊ¶
+   id                   bigint(0) not null comment 'ä¸»é”®',
+   officialAccountId    bigint not null default 0 comment 'å¾®ä¿¡å…¬ä¼—å·åŸºæœ¬ä¿¡æ¯id,å…³è”å¾®ä¿¡å…¬ä¼—å·åŸºæœ¬ä¿¡æ¯è¡¨',
+   mediaId              varchar(50) not null default '' comment 'åª’ä½“æ–‡ä»¶çš„å”¯ä¸€æ ‡è¯†
             ',
-   type                 tinyint(4) not null default 0 comment 'Ã½ÌåÎÄ¼şµÄÀàĞÍ',
-   createdAt            timestamp default CURRENT_TIMESTAMP comment 'Ã½ÌåÎÄ¼şÉÏ´«Ê±¼ä',
-   path                 varchar(200) not null default '' comment 'ËØ²Ä´æ´¢±¾µØÂ·¾¶',
-   mediaType            tinyint(4) not null default 0 comment 'ËØ²ÄÀàĞÍ,ÓÀ¾Ã»òÁÙÊ±',
-   createTime           timestamp not null default CURRENT_TIMESTAMP comment '´´½¨Ê±¼ä',
+   type                 tinyint(4) not null default 0 comment 'åª’ä½“æ–‡ä»¶çš„ç±»å‹',
+   createdAt            timestamp default CURRENT_TIMESTAMP comment 'åª’ä½“æ–‡ä»¶ä¸Šä¼ æ—¶é—´',
+   path                 varchar(200) not null default '' comment 'ç´ æå­˜å‚¨æœ¬åœ°è·¯å¾„',
+   mediaType            tinyint(4) not null default 0 comment 'ç´ æç±»å‹,æ°¸ä¹…æˆ–ä¸´æ—¶',
+   createTime           timestamp not null default CURRENT_TIMESTAMP comment 'åˆ›å»ºæ—¶é—´',
    primary key (id)
 );
 
-alter table WX_MEDIA comment '´æ´¢Î¢ĞÅµÄËØ²ÄĞÅÏ¢';
+alter table WX_MEDIA comment 'å­˜å‚¨å¾®ä¿¡çš„ç´ æä¿¡æ¯';
 
 /*==============================================================*/
 /* Table: WX_MESSAGE                                            */
 /*==============================================================*/
 create table WX_MESSAGE
 (
-   id                   bigint not null comment 'ÏûÏ¢id',
-   toUserId             bigint not null default 0 comment 'ÊÕµ½ÏûÏ¢Ò»·½µÄÓÃ»§id£¬¹ØÁªÎ¢ĞÅ¸öÈËÓÃ»§±í»òÎ¢ĞÅ¹«ÖÚÕËºÅ»ù±¾ĞÅÏ¢±í',
-   fromUserId           bigint not null default 0 comment 'ÏûÏ¢·¢ËÍ·½µÄÓÃ»§id',
-   toUserName           varchar(50) not null default '' comment '½ÓÊÕ·½Î¢ĞÅºÅ',
-   fromUserName         varchar(50) not null default '' comment '·¢ËÍ·½Î¢ĞÅºÅopenid',
-   createTime           timestamp not null default CURRENT_TIMESTAMP comment 'ÏûÏ¢´´½¨Ê±¼ä',
-   msgType              tinyint(4) not null default 0 comment 'ÏûÏ¢ÀàĞÍ',
-   msgId                bigint not null default 0 comment 'ÏûÏ¢id£¬64Î»ÕûĞÍ',
-   content              varchar(500) default '' comment 'ÏûÏ¢ÄÚÈİ',
-   picUrl               varchar(200) default '' comment 'Í¼Æ¬Á´½Ó',
-   mediaId              varchar(50) default '' comment 'Í¼Æ¬ÏûÏ¢Ã½Ìåid£¬¿ÉÒÔµ÷ÓÃ¶àÃ½ÌåÎÄ¼şÏÂÔØ½Ó¿ÚÀ­È¡Êı¾İ¡£',
-   format               varchar(20) default '' comment 'ÓïÒô¸ñÊ½£¬Èçamr£¬speexµÈ',
-   recongnition         varchar(50) default '' comment 'ÓïÒôÊ¶±ğ½á¹û',
-   thumbMediaId         varchar(50) default '' comment 'ÊÓÆµÏûÏ¢ËõÂÔÍ¼µÄÃ½Ìåid£¬¿ÉÒÔµ÷ÓÃ¶àÃ½ÌåÎÄ¼şÏÂÔØ½Ó¿ÚÀ­È¡Êı¾İ',
-   locationX            varchar(50) default '' comment 'µØÀíÎ»ÖÃÎ¬¶È',
-   locationY            varchar(50) default '' comment 'µØÀíÎ»ÖÃ¾­¶È',
-   scale                int default 0 comment 'µØÍ¼Ëõ·Å´óĞ¡',
-   locationLabel        varchar(50) default '' comment 'µØÀíÎ»ÖÃĞÅÏ¢',
-   title                varchar(50) default '' comment 'ÏûÏ¢±êÌâ',
-   description          varchar(500) default '' comment 'ÏûÏ¢ÃèÊö',
-   url                  varchar(200) default '' comment 'ÏûÏ¢Á´½Ó',
-   ticket               varchar(50) default '' comment '¶şÎ¬ÂëµÄticket£¬¿ÉÓÃÀ´»»È¡¶şÎ¬ÂëÍ¼Æ¬',
-   musicUrl             varchar(200) default '' comment 'ÒôÀÖÁ´½Ó',
-   hqMusicUrl           varchar(200) default '' comment '¸ßÖÊÁ¿ÒôÀÖÁ´½Ó£¬WIFI»·¾³ÓÅÏÈÊ¹ÓÃ¸ÃÁ´½Ó²¥·ÅÒôÀÖ',
-   articleCount         int default 0 comment 'ÎÄÕÂÊıÁ¿',
+   id                   bigint not null comment 'æ¶ˆæ¯id',
+   toUserId             bigint not null default 0 comment 'æ”¶åˆ°æ¶ˆæ¯ä¸€æ–¹çš„ç”¨æˆ·idï¼Œå…³è”å¾®ä¿¡ä¸ªäººç”¨æˆ·è¡¨æˆ–å¾®ä¿¡å…¬ä¼—è´¦å·åŸºæœ¬ä¿¡æ¯è¡¨',
+   fromUserId           bigint not null default 0 comment 'æ¶ˆæ¯å‘é€æ–¹çš„ç”¨æˆ·id',
+   toUserName           varchar(50) not null default '' comment 'æ¥æ”¶æ–¹å¾®ä¿¡å·',
+   fromUserName         varchar(50) not null default '' comment 'å‘é€æ–¹å¾®ä¿¡å·openid',
+   createTime           timestamp not null default CURRENT_TIMESTAMP comment 'æ¶ˆæ¯åˆ›å»ºæ—¶é—´',
+   msgType              tinyint(4) not null default 0 comment 'æ¶ˆæ¯ç±»å‹',
+   msgId                bigint not null default 0 comment 'æ¶ˆæ¯idï¼Œ64ä½æ•´å‹',
+   content              varchar(500) default '' comment 'æ¶ˆæ¯å†…å®¹',
+   picUrl               varchar(200) default '' comment 'å›¾ç‰‡é“¾æ¥',
+   mediaId              varchar(50) default '' comment 'å›¾ç‰‡æ¶ˆæ¯åª’ä½“idï¼Œå¯ä»¥è°ƒç”¨å¤šåª’ä½“æ–‡ä»¶ä¸‹è½½æ¥å£æ‹‰å–æ•°æ®ã€‚',
+   format               varchar(20) default '' comment 'è¯­éŸ³æ ¼å¼ï¼Œå¦‚amrï¼Œspeexç­‰',
+   recongnition         varchar(50) default '' comment 'è¯­éŸ³è¯†åˆ«ç»“æœ',
+   thumbMediaId         varchar(50) default '' comment 'è§†é¢‘æ¶ˆæ¯ç¼©ç•¥å›¾çš„åª’ä½“idï¼Œå¯ä»¥è°ƒç”¨å¤šåª’ä½“æ–‡ä»¶ä¸‹è½½æ¥å£æ‹‰å–æ•°æ®',
+   locationX            varchar(50) default '' comment 'åœ°ç†ä½ç½®ç»´åº¦',
+   locationY            varchar(50) default '' comment 'åœ°ç†ä½ç½®ç»åº¦',
+   scale                int default 0 comment 'åœ°å›¾ç¼©æ”¾å¤§å°',
+   locationLabel        varchar(50) default '' comment 'åœ°ç†ä½ç½®ä¿¡æ¯',
+   title                varchar(50) default '' comment 'æ¶ˆæ¯æ ‡é¢˜',
+   description          varchar(500) default '' comment 'æ¶ˆæ¯æè¿°',
+   url                  varchar(200) default '' comment 'æ¶ˆæ¯é“¾æ¥',
+   ticket               varchar(50) default '' comment 'äºŒç»´ç çš„ticketï¼Œå¯ç”¨æ¥æ¢å–äºŒç»´ç å›¾ç‰‡',
+   musicUrl             varchar(200) default '' comment 'éŸ³ä¹é“¾æ¥',
+   hqMusicUrl           varchar(200) default '' comment 'é«˜è´¨é‡éŸ³ä¹é“¾æ¥ï¼ŒWIFIç¯å¢ƒä¼˜å…ˆä½¿ç”¨è¯¥é“¾æ¥æ’­æ”¾éŸ³ä¹',
+   articleCount         int default 0 comment 'æ–‡ç« æ•°é‡',
    primary key (id)
 );
 
-alter table WX_MESSAGE comment '´æ´¢¹«ÖÚºÅºÍÓÃ»§µÄÏûÏ¢·¢ËÍ¼ÇÂ¼';
+alter table WX_MESSAGE comment 'å­˜å‚¨å…¬ä¼—å·å’Œç”¨æˆ·çš„æ¶ˆæ¯å‘é€è®°å½•';
 
 /*==============================================================*/
 /* Table: WX_MESSAGE_DISTRIBUTION_DAY                           */
 /*==============================================================*/
 create table WX_MESSAGE_DISTRIBUTION_DAY
 (
-   id                   bigint not null comment 'Ö÷¼ü',
-   officialAccountId    bigint not null default 0 comment 'Î¢ĞÅ¹«ÖÚºÅ»ù±¾ĞÅÏ¢id',
-   refDate              date not null default '0000-00-00' comment 'Êı¾İµÄÈÕÆÚ',
-   countInterval        tinyint(4) not null default 0 comment 'µ±ÈÕ·¢ËÍÏûÏ¢Á¿·Ö²¼µÄÇø¼ä£¬0´ú±í ¡°0¡±£¬1´ú±í¡°1-5¡±£¬2´ú±í¡°6-10¡±£¬3´ú±í¡°10´ÎÒÔÉÏ¡±',
-   msgUser              int not null default 0 comment 'ÉÏĞĞ·¢ËÍÁË£¨Ïò¹«ÖÚºÅ·¢ËÍÁË£©ÏûÏ¢µÄÓÃ»§Êı',
+   id                   bigint not null comment 'ä¸»é”®',
+   officialAccountId    bigint not null default 0 comment 'å¾®ä¿¡å…¬ä¼—å·åŸºæœ¬ä¿¡æ¯id',
+   refDate              date not null default '0000-00-00' comment 'æ•°æ®çš„æ—¥æœŸ',
+   countInterval        tinyint(4) not null default 0 comment 'å½“æ—¥å‘é€æ¶ˆæ¯é‡åˆ†å¸ƒçš„åŒºé—´ï¼Œ0ä»£è¡¨ â€œ0â€ï¼Œ1ä»£è¡¨â€œ1-5â€ï¼Œ2ä»£è¡¨â€œ6-10â€ï¼Œ3ä»£è¡¨â€œ10æ¬¡ä»¥ä¸Šâ€',
+   msgUser              int not null default 0 comment 'ä¸Šè¡Œå‘é€äº†ï¼ˆå‘å…¬ä¼—å·å‘é€äº†ï¼‰æ¶ˆæ¯çš„ç”¨æˆ·æ•°',
    primary key (id)
 );
 
-alter table WX_MESSAGE_DISTRIBUTION_DAY comment '´æ´¢Î¢ĞÅÃ¿Ìì·¢ËÍÏûÏ¢Á¿·Ö²¼';
+alter table WX_MESSAGE_DISTRIBUTION_DAY comment 'å­˜å‚¨å¾®ä¿¡æ¯å¤©å‘é€æ¶ˆæ¯é‡åˆ†å¸ƒ';
 
 /*==============================================================*/
 /* Table: WX_MESSAGE_SEND_DAY                                   */
 /*==============================================================*/
 create table WX_MESSAGE_SEND_DAY
 (
-   id                   bigint not null comment 'Ö÷¼ü',
-   refDate              date not null default '0000-00-00' comment 'Êı¾İµÄÈÕÆÚ',
-   msgType              tinyint(4) not null default 0 comment 'ÏûÏ¢ÀàĞÍ£¬´ú±íº¬ÒåÈçÏÂ£º
-            1´ú±íÎÄ×Ö 2´ú±íÍ¼Æ¬ 3´ú±íÓïÒô 4´ú±íÊÓÆµ 6´ú±íµÚÈı·½Ó¦ÓÃÏûÏ¢£¨Á´½ÓÏûÏ¢£©',
-   msgUser              int not null default 0 comment 'ÉÏĞĞ·¢ËÍÁË£¨Ïò¹«ÖÚºÅ·¢ËÍÁË£©ÏûÏ¢µÄÓÃ»§Êı
+   id                   bigint not null comment 'ä¸»é”®',
+   refDate              date not null default '0000-00-00' comment 'æ•°æ®çš„æ—¥æœŸ',
+   msgType              tinyint(4) not null default 0 comment 'æ¶ˆæ¯ç±»å‹ï¼Œä»£è¡¨å«ä¹‰å¦‚ä¸‹ï¼š
+            1ä»£è¡¨æ–‡å­— 2ä»£è¡¨å›¾ç‰‡ 3ä»£è¡¨è¯­éŸ³ 4ä»£è¡¨è§†é¢‘ 6ä»£è¡¨ç¬¬ä¸‰æ–¹åº”ç”¨æ¶ˆæ¯ï¼ˆé“¾æ¥æ¶ˆæ¯ï¼‰',
+   msgUser              int not null default 0 comment 'ä¸Šè¡Œå‘é€äº†ï¼ˆå‘å…¬ä¼—å·å‘é€äº†ï¼‰æ¶ˆæ¯çš„ç”¨æˆ·æ•°
             ',
-   msgCount             int not null default 0 comment 'ÉÏĞĞ·¢ËÍÁËÏûÏ¢µÄÏûÏ¢×ÜÊı',
+   msgCount             int not null default 0 comment 'ä¸Šè¡Œå‘é€äº†æ¶ˆæ¯çš„æ¶ˆæ¯æ€»æ•°',
    primary key (id)
 );
 
-alter table WX_MESSAGE_SEND_DAY comment '´æ´¢Î¢ĞÅÏûÏ¢·¢ËÍ¸Å¿öÊı¾İĞÅÏ¢';
+alter table WX_MESSAGE_SEND_DAY comment 'å­˜å‚¨å¾®ä¿¡æ¶ˆæ¯å‘é€æ¦‚å†µæ•°æ®ä¿¡æ¯';
 
 /*==============================================================*/
 /* Table: WX_MESSAGE_SEND_HOUR                                  */
 /*==============================================================*/
 create table WX_MESSAGE_SEND_HOUR
 (
-   id                   bigint not null comment 'Ö÷¼ü',
-   refDate              date not null default '0000-00-00' comment 'Êı¾İµÄÈÕÆÚ',
-   refHour              int not null default 0 comment 'Êı¾İµÄĞ¡Ê±£¬°üÀ¨´Ó000µ½2300£¬·Ö±ğ´ú±íµÄÊÇ[000,100)µ½[2300,2400)£¬¼´Ã¿ÈÕµÄµÚ1Ğ¡Ê±ºÍ×îºó1Ğ¡Ê±',
-   msgType              tinyint(4) not null default 0 comment 'ÏûÏ¢ÀàĞÍ£¬´ú±íº¬ÒåÈçÏÂ£º
-            1´ú±íÎÄ×Ö 2´ú±íÍ¼Æ¬ 3´ú±íÓïÒô 4´ú±íÊÓÆµ 6´ú±íµÚÈı·½Ó¦ÓÃÏûÏ¢£¨Á´½ÓÏûÏ¢£©',
-   msgUser              int not null default 0 comment 'ÉÏĞĞ·¢ËÍÁË£¨Ïò¹«ÖÚºÅ·¢ËÍÁË£©ÏûÏ¢µÄÓÃ»§Êı
+   id                   bigint not null comment 'ä¸»é”®',
+   refDate              date not null default '0000-00-00' comment 'æ•°æ®çš„æ—¥æœŸ',
+   refHour              int not null default 0 comment 'æ•°æ®çš„å°æ—¶ï¼ŒåŒ…æ‹¬ä»000åˆ°2300ï¼Œåˆ†åˆ«ä»£è¡¨çš„æ˜¯[000,100)åˆ°[2300,2400)ï¼Œå³æ¯æ—¥çš„ç¬¬1å°æ—¶å’Œæœ€å1å°æ—¶',
+   msgType              tinyint(4) not null default 0 comment 'æ¶ˆæ¯ç±»å‹ï¼Œä»£è¡¨å«ä¹‰å¦‚ä¸‹ï¼š
+            1ä»£è¡¨æ–‡å­— 2ä»£è¡¨å›¾ç‰‡ 3ä»£è¡¨è¯­éŸ³ 4ä»£è¡¨è§†é¢‘ 6ä»£è¡¨ç¬¬ä¸‰æ–¹åº”ç”¨æ¶ˆæ¯ï¼ˆé“¾æ¥æ¶ˆæ¯ï¼‰',
+   msgUser              int not null default 0 comment 'ä¸Šè¡Œå‘é€äº†ï¼ˆå‘å…¬ä¼—å·å‘é€äº†ï¼‰æ¶ˆæ¯çš„ç”¨æˆ·æ•°
             ',
-   msgCount             int not null default 0 comment 'ÉÏĞĞ·¢ËÍÁËÏûÏ¢µÄÏûÏ¢×ÜÊı',
+   msgCount             int not null default 0 comment 'ä¸Šè¡Œå‘é€äº†æ¶ˆæ¯çš„æ¶ˆæ¯æ€»æ•°',
    primary key (id)
 );
 
-alter table WX_MESSAGE_SEND_HOUR comment '´æ´¢Î¢ĞÅÏûÏ¢·¢ËÍ·ÖÊ±¸Å¿öÊı¾İĞÅÏ¢';
+alter table WX_MESSAGE_SEND_HOUR comment 'å­˜å‚¨å¾®ä¿¡æ¶ˆæ¯å‘é€åˆ†æ—¶æ¦‚å†µæ•°æ®ä¿¡æ¯';
 
 /*==============================================================*/
 /* Table: WX_OFFICIAL_ACCOUNT                                   */
@@ -496,18 +586,18 @@ alter table WX_MESSAGE_SEND_HOUR comment '´æ´¢Î¢ĞÅÏûÏ¢·¢ËÍ·ÖÊ±¸Å¿öÊı¾İĞÅÏ¢';
 create table WX_OFFICIAL_ACCOUNT
 (
    id                   bigint not null,
-   appid                varchar(100) not null default '' comment 'Î¢ĞÅ¹«ÖÚºÅappid',
-   accountType          tinyint(4) not null default 0 comment '¹«ÖÚÕËºÅµÄ°ó¶¨·½Ê½,1ÎªÊÚÈ¨°ó¶¨,2ÎªÊÖ¶¯°ó¶¨
+   appid                varchar(100) not null default '' comment 'å¾®ä¿¡å…¬ä¼—å·appid',
+   accountType          tinyint(4) not null default 0 comment 'å…¬ä¼—è´¦å·çš„ç»‘å®šæ–¹å¼,1ä¸ºæˆæƒç»‘å®š,2ä¸ºæ‰‹åŠ¨ç»‘å®š
             ',
-   serviceTypeInfo      tinyint(4) not null default 0 comment '¹«ÖÚºÅÀàĞÍ£¬0´ú±í¶©ÔÄºÅ£¬1´ú±íÓÉÀúÊ·ÀÏÕÊºÅÉı¼¶ºóµÄ¶©ÔÄºÅ£¬2´ú±í·şÎñºÅ',
-   verifyTypeInfo       tinyint(4) not null default 0 comment 'ÊÚÈ¨·½ÈÏÖ¤ÀàĞÍ£¬-1´ú±íÎ´ÈÏÖ¤£¬0´ú±íÎ¢ĞÅÈÏÖ¤£¬1´ú±íĞÂÀËÎ¢²©ÈÏÖ¤£¬2´ú±íÌÚÑ¶Î¢²©ÈÏÖ¤£¬3´ú±íÒÑ×ÊÖÊÈÏÖ¤Í¨¹ıµ«»¹Î´Í¨¹ıÃû³ÆÈÏÖ¤£¬4´ú±íÒÑ×ÊÖÊÈÏÖ¤Í¨¹ı¡¢»¹Î´Í¨¹ıÃû³ÆÈÏÖ¤£¬µ«Í¨¹ıÁËĞÂÀËÎ¢²©ÈÏÖ¤£¬5´ú±íÒÑ×ÊÖÊÈÏÖ¤Í¨¹ı¡¢»¹Î´Í¨¹ıÃû³ÆÈÏÖ¤£¬µ«Í¨¹ıÁËÌÚÑ¶Î¢²©ÈÏÖ¤',
-   nickName             varchar(50) not null default '' comment '¹«ÖÚºÅÃû³Æ',
-   userName             varchar(50) not null default '' comment '¹«ÖÚºÅÔ­Ê¼id',
-   createTime           timestamp not null default CURRENT_TIMESTAMP comment '¼ÇÂ¼´´½¨Ê±¼ä',
+   serviceTypeInfo      tinyint(4) not null default 0 comment 'å…¬ä¼—å·ç±»å‹ï¼Œ0ä»£è¡¨è®¢é˜…å·ï¼Œ1ä»£è¡¨ç”±å†å²è€å¸å·å‡çº§åçš„è®¢é˜…å·ï¼Œ2ä»£è¡¨æœåŠ¡å·',
+   verifyTypeInfo       tinyint(4) not null default 0 comment 'æˆæƒæ–¹è®¤è¯ç±»å‹ï¼Œ-1ä»£è¡¨æœªè®¤è¯ï¼Œ0ä»£è¡¨å¾®ä¿¡è®¤è¯ï¼Œ1ä»£è¡¨æ–°æµªå¾®åšè®¤è¯ï¼Œ2ä»£è¡¨è…¾è®¯å¾®åšè®¤è¯ï¼Œ3ä»£è¡¨å·²èµ„è´¨è®¤è¯é€šè¿‡ä½†è¿˜æœªé€šè¿‡åç§°è®¤è¯ï¼Œ4ä»£è¡¨å·²èµ„è´¨è®¤è¯é€šè¿‡ã€è¿˜æœªé€šè¿‡åç§°è®¤è¯ï¼Œä½†é€šè¿‡äº†æ–°æµªå¾®åšè®¤è¯ï¼Œ5ä»£è¡¨å·²èµ„è´¨è®¤è¯é€šè¿‡ã€è¿˜æœªé€šè¿‡åç§°è®¤è¯ï¼Œä½†é€šè¿‡äº†è…¾è®¯å¾®åšè®¤è¯',
+   nickName             varchar(50) not null default '' comment 'å…¬ä¼—å·åç§°',
+   userName             varchar(50) not null default '' comment 'å…¬ä¼—å·åŸå§‹id',
+   createTime           timestamp not null default CURRENT_TIMESTAMP comment 'è®°å½•åˆ›å»ºæ—¶é—´',
    primary key (id)
 );
 
-alter table WX_OFFICIAL_ACCOUNT comment 'Î¢ĞÅ¹«ÖÚÕËºÅµÄappidºÍ°ó¶¨ÀàĞÍ';
+alter table WX_OFFICIAL_ACCOUNT comment 'å¾®ä¿¡å…¬ä¼—è´¦å·çš„appidå’Œç»‘å®šç±»å‹';
 
 /*==============================================================*/
 /* Table: WX_OFFICIAL_ACCOUNT_ACCESS_TOKEN                      */
@@ -515,34 +605,34 @@ alter table WX_OFFICIAL_ACCOUNT comment 'Î¢ĞÅ¹«ÖÚÕËºÅµÄappidºÍ°ó¶¨ÀàĞÍ';
 create table WX_OFFICIAL_ACCOUNT_ACCESS_TOKEN
 (
    id                   bigint not null,
-   officialAccountId    bigint not null default 0 comment 'Î¢ĞÅ¹«ÖÚºÅ»ù±¾ĞÅÏ¢id£¬¹ØÁªÎ¢ĞÅ¹«ÖÚºÅ»ù±¾ĞÅÏ¢±í',
-   appid                varchar(50) not null default '' comment 'Î¢ĞÅµÄappid',
-   expiresIn            int not null default 0 comment 'ÓĞĞ§ÆÚ',
-   accessToken          varchar(200) not null default '' comment 'Î¢ĞÅ¹«ÖÚºÅµÄaccessToken',
-   createTime           timestamp not null default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '¼ÇÂ¼´´½¨Ê±¼ä',
+   officialAccountId    bigint not null default 0 comment 'å¾®ä¿¡å…¬ä¼—å·åŸºæœ¬ä¿¡æ¯idï¼Œå…³è”å¾®ä¿¡å…¬ä¼—å·åŸºæœ¬ä¿¡æ¯è¡¨',
+   appid                varchar(50) not null default '' comment 'å¾®ä¿¡çš„appid',
+   expiresIn            bigint not null default 0 comment 'æˆªæ­¢æ—¶é—´',
+   accessToken          varchar(200) not null default '' comment 'å¾®ä¿¡å…¬ä¼—å·çš„accessToken',
+   createTime           timestamp not null default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment 'è®°å½•åˆ›å»ºæ—¶é—´',
    primary key (id)
 );
 
-alter table WX_OFFICIAL_ACCOUNT_ACCESS_TOKEN comment 'ÊÖ¶¯°ó¶¨µÄÎ¢ĞÅ¹«ÖÚºÅaccesstokenĞÅÏ¢';
+alter table WX_OFFICIAL_ACCOUNT_ACCESS_TOKEN comment 'æ‰‹åŠ¨ç»‘å®šçš„å¾®ä¿¡å…¬ä¼—å·accesstokenä¿¡æ¯';
 
 /*==============================================================*/
 /* Table: WX_OFFICIAL_ACCOUNT_INFO                              */
 /*==============================================================*/
 create table WX_OFFICIAL_ACCOUNT_INFO
 (
-   id                   bigint not null comment 'Ö÷¼ü',
-   officialAccountId    bigint not null default 0 comment 'Î¢ĞÅ¹«ÖÚÕËºÅ»ù±¾ĞÅÏ¢±íid£¬¹ØÁªÎ¢ĞÅ¹«ÖÚºÅ»ù±¾ĞÅÏ¢±í',
-   appid                varchar(100) not null default '' comment 'Î¢ĞÅµÄ¹«ÖÚºÅappid',
-   appSecret            varchar(100) not null default '' comment 'Î¢ĞÅ¹«ÖÚºÅappSecret',
-   token                varchar(100) not null default '' comment 'Î¢ĞÅ¹«ÖÚºÅµÄtoken',
-   encodingAesKey       varchar(100) not null default '' comment 'Î¢ĞÅ¹«ÖÚºÅencodingAesKey',
-   wechatId             varchar(50) comment 'Î¢ĞÅºÅid',
-   messageUrl           varchar(200) not null default '' comment '¹«ÖÚºÅÏûÏ¢½ÓÊÕµØÖ·',
-   createTime           timestamp not null default CURRENT_TIMESTAMP comment '´´½¨Ê±¼ä',
+   id                   bigint not null comment 'ä¸»é”®',
+   officialAccountId    bigint not null default 0 comment 'å¾®ä¿¡å…¬ä¼—è´¦å·åŸºæœ¬ä¿¡æ¯è¡¨idï¼Œå…³è”å¾®ä¿¡å…¬ä¼—å·åŸºæœ¬ä¿¡æ¯è¡¨',
+   appid                varchar(100) not null default '' comment 'å¾®ä¿¡çš„å…¬ä¼—å·appid',
+   appSecret            varchar(100) not null default '' comment 'å¾®ä¿¡å…¬ä¼—å·appSecret',
+   token                varchar(100) not null default '' comment 'å¾®ä¿¡å…¬ä¼—å·çš„token',
+   encodingAesKey       varchar(100) not null default '' comment 'å¾®ä¿¡å…¬ä¼—å·encodingAesKey',
+   wechatId             varchar(50) comment 'å¾®ä¿¡å·id',
+   messageUrl           varchar(200) not null default '' comment 'å…¬ä¼—å·æ¶ˆæ¯æ¥æ”¶åœ°å€',
+   createTime           timestamp not null default CURRENT_TIMESTAMP comment 'åˆ›å»ºæ—¶é—´',
    primary key (id)
 );
 
-alter table WX_OFFICIAL_ACCOUNT_INFO comment 'ÊÖ¶¯°ó¶¨µÄÎ¢ĞÅ¹«ÖÚÕËºÅĞÅÏ¢';
+alter table WX_OFFICIAL_ACCOUNT_INFO comment 'æ‰‹åŠ¨ç»‘å®šçš„å¾®ä¿¡å…¬ä¼—è´¦å·ä¿¡æ¯';
 
 /*==============================================================*/
 /* Table: WX_PERSONAL_USER                                      */
@@ -550,39 +640,57 @@ alter table WX_OFFICIAL_ACCOUNT_INFO comment 'ÊÖ¶¯°ó¶¨µÄÎ¢ĞÅ¹«ÖÚÕËºÅĞÅÏ¢';
 create table WX_PERSONAL_USER
 (
    id                   bigint not null,
-   officialAccountId    bigint not null default 0 comment 'ÓÃ»§ËùÊôµÄ¹«ÖÚºÅid£¬¹ØÁª¹«ÖÚºÅ»ù±¾ĞÅÏ¢±í',
-   openid               varchar(50) not null default '' comment 'ÓÃ»§µÄ±êÊ¶£¬¶Ôµ±Ç°¹«ÖÚºÅÎ¨Ò»',
-   subscribe            tinyint(4) not null default 0 comment 'ÓÃ»§ÊÇ·ñ¶©ÔÄ¸Ã¹«ÖÚºÅ±êÊ¶£¬ÖµÎª0Ê±£¬´ú±í´ËÓÃ»§Ã»ÓĞ¹Ø×¢¸Ã¹«ÖÚºÅ£¬À­È¡²»µ½ÆäÓàĞÅÏ¢£¬Ö»ÓĞopenidºÍUnionID£¨ÔÚ¸Ã¹«ÖÚºÅ°ó¶¨µ½ÁËÎ¢ĞÅ¿ª·ÅÆ½Ì¨ÕËºÅÊ±²ÅÓĞ£©¡£',
-   nickName             varchar(20) not null default '' comment 'ÓÃ»§µÄêÇ³Æ',
-   sex                  tinyint(4) not null default 0 comment 'ÓÃ»§µÄĞÔ±ğ£¬ÖµÎª1Ê±ÊÇÄĞĞÔ£¬ÖµÎª2Ê±ÊÇÅ®ĞÔ£¬ÖµÎª0Ê±ÊÇÎ´Öª',
-   city                 varchar(20) not null default '' comment 'ÓÃ»§ËùÔÚ³ÇÊĞ',
-   country              varchar(20) not null default '' comment 'ÓÃ»§ËùÔÚ¹ú¼Ò',
-   province             varchar(20) not null default '' comment 'ÓÃ»§ËùÔÚÊ¡·İ',
-   language             varchar(0) not null default '' comment 'ÓÃ»§µÄÓïÑÔ£¬¼òÌåÖĞÎÄÎªzh_CN',
-   headimgurl           varchar(200) not null default '' comment 'ÓÃ»§Í·Ïñ£¬×îºóÒ»¸öÊıÖµ´ú±íÕı·½ĞÎÍ·Ïñ´óĞ¡£¨ÓĞ0¡¢46¡¢64¡¢96¡¢132ÊıÖµ¿ÉÑ¡£¬0´ú±í640*640Õı·½ĞÎÍ·Ïñ£©£¬ÓÃ»§Ã»ÓĞÍ·ÏñÊ±¸ÃÏîÎª¿Õ¡£ÈôÓÃ»§¸ü»»Í·Ïñ£¬Ô­ÓĞÍ·ÏñURL½«Ê§Ğ§¡£',
-   subscribeTime        timestamp not null comment 'ÓÃ»§¹Ø×¢Ê±¼ä£¬ÎªÊ±¼ä´Á¡£Èç¹ûÓÃ»§Ôø¶à´Î¹Ø×¢£¬ÔòÈ¡×îºó¹Ø×¢Ê±¼ä',
-   unionid              varchar(50) not null comment 'Ö»ÓĞÔÚÓÃ»§½«¹«ÖÚºÅ°ó¶¨µ½Î¢ĞÅ¿ª·ÅÆ½Ì¨ÕÊºÅºó£¬²Å»á³öÏÖ¸Ã×Ö¶Î¡£',
-   remark               varchar(20) not null comment '¹«ÖÚºÅÔËÓªÕß¶Ô·ÛË¿µÄ±¸×¢£¬¹«ÖÚºÅÔËÓªÕß¿ÉÔÚÎ¢ĞÅ¹«ÖÚÆ½Ì¨ÓÃ»§¹ÜÀí½çÃæ¶Ô·ÛË¿Ìí¼Ó±¸×¢',
-   groupid              varchar(50) not null comment 'ÓÃ»§ËùÔÚµÄ·Ö×éID',
-   createTime           timestamp not null comment 'ÏûÏ¢´´½¨Ê±¼ä',
+   officialAccountId    bigint not null default 0 comment 'ç”¨æˆ·æ‰€å±çš„å…¬ä¼—å·idï¼Œå…³è”å…¬ä¼—å·åŸºæœ¬ä¿¡æ¯è¡¨',
+   openid               varchar(50) not null default '' comment 'ç”¨æˆ·çš„æ ‡è¯†ï¼Œå¯¹å½“å‰å…¬ä¼—å·å”¯ä¸€',
+   subscribe            tinyint(4) not null default 0 comment 'ç”¨æˆ·æ˜¯å¦è®¢é˜…è¯¥å…¬ä¼—å·æ ‡è¯†ï¼Œå€¼ä¸º0æ—¶ï¼Œä»£è¡¨æ­¤ç”¨æˆ·æ²¡æœ‰å…³æ³¨è¯¥å…¬ä¼—å·ï¼Œæ‹‰å–ä¸åˆ°å…¶ä½™ä¿¡æ¯ï¼Œåªæœ‰openidå’ŒUnionIDï¼ˆåœ¨è¯¥å…¬ä¼—å·ç»‘å®šåˆ°äº†å¾®ä¿¡å¼€æ”¾å¹³å°è´¦å·æ—¶æ‰æœ‰ï¼‰ã€‚',
+   nickName             varchar(20) not null default '' comment 'ç”¨æˆ·çš„æ˜µç§°',
+   sex                  tinyint(4) not null default 0 comment 'ç”¨æˆ·çš„æ€§åˆ«ï¼Œå€¼ä¸º1æ—¶æ˜¯ç”·æ€§ï¼Œå€¼ä¸º2æ—¶æ˜¯å¥³æ€§ï¼Œå€¼ä¸º0æ—¶æ˜¯æœªçŸ¥',
+   city                 varchar(20) not null default '' comment 'ç”¨æˆ·æ‰€åœ¨åŸå¸‚',
+   country              varchar(20) not null default '' comment 'ç”¨æˆ·æ‰€åœ¨å›½å®¶',
+   province             varchar(20) not null default '' comment 'ç”¨æˆ·æ‰€åœ¨çœä»½',
+   language             varchar(20) not null default '' comment 'ç”¨æˆ·çš„è¯­è¨€ï¼Œç®€ä½“ä¸­æ–‡ä¸ºzh_CN',
+   headimgurl           varchar(200) not null default '' comment 'ç”¨æˆ·å¤´åƒï¼Œæœ€åä¸€ä¸ªæ•°å€¼ä»£è¡¨æ­£æ–¹å½¢å¤´åƒå¤§å°ï¼ˆæœ‰0ã€46ã€64ã€96ã€132æ•°å€¼å¯é€‰ï¼Œ0ä»£è¡¨640*640æ­£æ–¹å½¢å¤´åƒï¼‰ï¼Œç”¨æˆ·æ²¡æœ‰å¤´åƒæ—¶è¯¥é¡¹ä¸ºç©ºã€‚è‹¥ç”¨æˆ·æ›´æ¢å¤´åƒï¼ŒåŸæœ‰å¤´åƒURLå°†å¤±æ•ˆã€‚',
+   subscribeTime        timestamp not null default CURRENT_TIMESTAMP comment 'ç”¨æˆ·å…³æ³¨æ—¶é—´ï¼Œä¸ºæ—¶é—´æˆ³ã€‚å¦‚æœç”¨æˆ·æ›¾å¤šæ¬¡å…³æ³¨ï¼Œåˆ™å–æœ€åå…³æ³¨æ—¶é—´',
+   unionid              varchar(50) not null default '' comment 'åªæœ‰åœ¨ç”¨æˆ·å°†å…¬ä¼—å·ç»‘å®šåˆ°å¾®ä¿¡å¼€æ”¾å¹³å°å¸å·åï¼Œæ‰ä¼šå‡ºç°è¯¥å­—æ®µã€‚',
+   remark               varchar(20) not null default '' comment 'å…¬ä¼—å·è¿è¥è€…å¯¹ç²‰ä¸çš„å¤‡æ³¨ï¼Œå…¬ä¼—å·è¿è¥è€…å¯åœ¨å¾®ä¿¡å…¬ä¼—å¹³å°ç”¨æˆ·ç®¡ç†ç•Œé¢å¯¹ç²‰ä¸æ·»åŠ å¤‡æ³¨',
+   groupid              varchar(50) default '' comment 'ç”¨æˆ·æ‰€åœ¨çš„åˆ†ç»„ID',
+   createTime           timestamp not null default CURRENT_TIMESTAMP comment 'æ¶ˆæ¯åˆ›å»ºæ—¶é—´',
    primary key (id)
 );
 
-alter table WX_PERSONAL_USER comment '´æ´¢Î¢ĞÅµÄ¸öÈËÓÃ»§ĞÅÏ¢';
+alter table WX_PERSONAL_USER comment 'å­˜å‚¨å¾®ä¿¡çš„ä¸ªäººç”¨æˆ·ä¿¡æ¯';
 
 /*==============================================================*/
 /* Table: WX_PRE_AUTH_CODE                                      */
 /*==============================================================*/
 create table WX_PRE_AUTH_CODE
 (
-   id                   bigint not null comment 'Ö÷¼ü',
-   preAuthCode          varchar(100) not null default '' comment 'Î¢ĞÅÔ¤ÊÚÈ¨Âë',
+   id                   bigint not null comment 'ä¸»é”®',
+   preAuthCode          varchar(100) not null default '' comment 'å¾®ä¿¡é¢„æˆæƒç ',
    createTime           timestamp not null default CURRENT_TIMESTAMP,
-   expiresIn            int default 0 comment 'ÓĞĞ§ÆÚ',
+   expiresIn            int default 0 comment 'æœ‰æ•ˆæœŸ',
    primary key (id)
 );
 
-alter table WX_PRE_AUTH_CODE comment '´æ´¢Î¢ĞÅµÄÔ¤ÊÚÈ¨Âë';
+alter table WX_PRE_AUTH_CODE comment 'å­˜å‚¨å¾®ä¿¡çš„é¢„æˆæƒç ';
+
+/*==============================================================*/
+/* Table: WX_REPLY_SETTING                                      */
+/*==============================================================*/
+create table WX_REPLY_SETTING
+(
+   id                   bigint not null comment 'ä¸»é”®',
+   officialAccountId    bigint not null default 0 comment 'å¾®ä¿¡å…¬ä¼—å·åŸºæœ¬ä¿¡æ¯id',
+   replyOpen            tinyint(4) not null default 0 comment 'å›å¤æ˜¯å¦å¼€å¯ï¼Œ0ä»£è¡¨æœªå¼€å¯ï¼Œ1ä»£è¡¨å¼€å¯',
+   replyType            tinyint(4) not null default 0 comment 'åŠ¨ä½œç±»å‹ï¼Œ1ä»£è¡¨å…³æ³¨å›å¤ï¼Œ2ä»£è¡¨æ¶ˆæ¯è‡ªåŠ¨å›å¤',
+   type                 tinyint(4) default 0 comment 'è‡ªåŠ¨å›å¤çš„ç±»å‹ã€‚å…³æ³¨åè‡ªåŠ¨å›å¤å’Œæ¶ˆæ¯è‡ªåŠ¨å›å¤çš„ç±»å‹ä»…æ”¯æŒæ–‡æœ¬ï¼ˆtextï¼‰ã€å›¾ç‰‡ï¼ˆimgï¼‰ã€è¯­éŸ³ï¼ˆvoiceï¼‰ã€è§†é¢‘ï¼ˆvideoï¼‰ï¼Œå…³é”®è¯è‡ªåŠ¨å›å¤åˆ™è¿˜å¤šäº†å›¾æ–‡æ¶ˆæ¯ï¼ˆnewsï¼‰ ',
+   content              varchar(1000) default '' comment 'å¯¹äºæ–‡æœ¬ç±»å‹ï¼Œcontentæ˜¯æ–‡æœ¬å†…å®¹ï¼Œå¯¹äºå›¾æ–‡ã€å›¾ç‰‡ã€è¯­éŸ³ã€è§†é¢‘ç±»å‹ï¼Œcontentæ˜¯mediaID',
+   plat                 tinyint(4) not null default 0 comment 'è®¾ç½®å¹³å°æ–¹ï¼Œ1,ä»£è¡¨åœ¨å¾®ä¿¡åå°è®¾ç½®ï¼Œ2ä»£è¡¨åœ¨æˆ‘æ–¹åå°è®¾ç½®',
+   createTime           timestamp not null default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment 'åˆ›å»ºæ—¶é—´',
+   primary key (id)
+);
+
+alter table WX_REPLY_SETTING comment 'å­˜å‚¨å¾®ä¿¡çš„è‡ªåŠ¨å›å¤å’Œæ¶ˆæ¯è‡ªåŠ¨å›å¤è®¾ç½®ä¿¡æ¯';
 
 /*==============================================================*/
 /* Table: WX_SYSTEM_USER                                        */
@@ -590,14 +698,14 @@ alter table WX_PRE_AUTH_CODE comment '´æ´¢Î¢ĞÅµÄÔ¤ÊÚÈ¨Âë';
 create table WX_SYSTEM_USER
 (
    id                   bigint not null,
-   userName             varchar(20) not null default '' comment 'ÓÃ»§Ãû³Æ',
-   email                varchar(50) not null default '' comment 'ÓÊÏäÕËºÅ',
-   password             varchar(100) not null default '' comment 'ÃÜÂë',
-   createTime           timestamp not null default CURRENT_TIMESTAMP comment '´´½¨Ê±¼ä',
+   userName             varchar(20) not null default '' comment 'ç”¨æˆ·åç§°',
+   email                varchar(50) not null default '' comment 'é‚®ç®±è´¦å·',
+   password             varchar(100) not null default '' comment 'å¯†ç ',
+   createTime           timestamp not null default CURRENT_TIMESTAMP comment 'åˆ›å»ºæ—¶é—´',
    primary key (id)
 );
 
-alter table WX_SYSTEM_USER comment 'ÏµÍ³ÓÃ»§±í';
+alter table WX_SYSTEM_USER comment 'ç³»ç»Ÿç”¨æˆ·è¡¨';
 
 /*==============================================================*/
 /* Table: WX_USER_DATA                                          */
@@ -605,38 +713,38 @@ alter table WX_SYSTEM_USER comment 'ÏµÍ³ÓÃ»§±í';
 create table WX_USER_DATA
 (
    id                   bigint not null,
-   officialAccountId    bigint not null default 0 comment 'Î¢ĞÅ¹«ÖÚºÅ»ù±¾ĞÅÏ¢id£¬¹ØÁª¹«ÖÚºÅ»ù±¾ĞÅÏ¢±í',
-   refDate              date not null default '0000-00-00' comment 'Êı¾İµÄÈÕÆÚ',
-   userSource           tinyint(4) not null default 0 comment 'ÓÃ»§µÄÇşµÀ£¬ÊıÖµ´ú±íµÄº¬ÒåÈçÏÂ£º
-            0´ú±íÆäËû£¨°üÀ¨´ø²ÎÊı¶şÎ¬Âë£© 3´ú±íÉ¨¶şÎ¬Âë 17´ú±íÃûÆ¬·ÖÏí 35´ú±íËÑºÅÂë£¨¼´Î¢ĞÅÌí¼ÓÅóÓÑÒ³µÄËÑË÷£© 39´ú±í²éÑ¯Î¢ĞÅ¹«ÖÚÕÊºÅ 43´ú±íÍ¼ÎÄÒ³ÓÒÉÏ½Ç²Ëµ¥',
-   newUser              int not null default 0 comment 'ĞÂÔöµÄÓÃ»§ÊıÁ¿',
-   cancel               int not null default 0 comment 'È¡Ïû¹Ø×¢µÄÓÃ»§ÊıÁ¿£¬new_user¼õÈ¥cancel_user¼´Îª¾»ÔöÓÃ»§ÊıÁ¿',
-   cumulateUser         int not null default 0 comment '×ÜÓÃ»§Á¿',
+   officialAccountId    bigint not null default 0 comment 'å¾®ä¿¡å…¬ä¼—å·åŸºæœ¬ä¿¡æ¯idï¼Œå…³è”å…¬ä¼—å·åŸºæœ¬ä¿¡æ¯è¡¨',
+   refDate              date not null default '0000-00-00' comment 'æ•°æ®çš„æ—¥æœŸ',
+   userSource           tinyint(4) not null default 0 comment 'ç”¨æˆ·çš„æ¸ é“ï¼Œæ•°å€¼ä»£è¡¨çš„å«ä¹‰å¦‚ä¸‹ï¼š
+            0ä»£è¡¨å…¶ä»–ï¼ˆåŒ…æ‹¬å¸¦å‚æ•°äºŒç»´ç ï¼‰ 3ä»£è¡¨æ‰«äºŒç»´ç  17ä»£è¡¨åç‰‡åˆ†äº« 35ä»£è¡¨æœå·ç ï¼ˆå³å¾®ä¿¡æ·»åŠ æœ‹å‹é¡µçš„æœç´¢ï¼‰ 39ä»£è¡¨æŸ¥è¯¢å¾®ä¿¡å…¬ä¼—å¸å· 43ä»£è¡¨å›¾æ–‡é¡µå³ä¸Šè§’èœå•',
+   newUser              int not null default 0 comment 'æ–°å¢çš„ç”¨æˆ·æ•°é‡',
+   cancel               int not null default 0 comment 'å–æ¶ˆå…³æ³¨çš„ç”¨æˆ·æ•°é‡ï¼Œnew_userå‡å»cancel_userå³ä¸ºå‡€å¢ç”¨æˆ·æ•°é‡',
+   cumulateUser         int not null default 0 comment 'æ€»ç”¨æˆ·é‡',
    primary key (id)
 );
 
-alter table WX_USER_DATA comment '´æ´¢ÓÃ»§·ÖÎöÊı¾İ';
+alter table WX_USER_DATA comment 'å­˜å‚¨ç”¨æˆ·åˆ†ææ•°æ®';
 
 /*==============================================================*/
 /* Table: WX_USER_LOCATION                                      */
 /*==============================================================*/
 create table WX_USER_LOCATION
 (
-   id                   bigint not null comment 'Ö÷¼ü',
-   toUserId             bigint not null default 0 comment 'ÊÕµ½ÏûÏ¢Ò»·½µÄÓÃ»§id£¬¹ØÁªÎ¢ĞÅ¸öÈËÓÃ»§±í»òÎ¢ĞÅ¹«ÖÚÕËºÅ»ù±¾ĞÅÏ¢±í',
-   fromUserId           bigint not null default 0 comment 'ÏûÏ¢·¢ËÍ·½µÄÓÃ»§id',
-   toUserName           varchar(50) not null default '' comment '½ÓÊÕ·½Î¢ĞÅºÅ',
-   fromUserName         varchar(50) not null default '' comment '·¢ËÍ·½Î¢ĞÅºÅopenid',
-   createTime           timestamp not null default CURRENT_TIMESTAMP comment 'ÏûÏ¢´´½¨Ê±¼ä',
-   msgType              tinyint(4) not null default 0 comment 'ÏûÏ¢ÀàĞÍ',
-   event                tinyint(4) not null default 0 comment 'ÊÂ¼şÀàĞÍ',
-   latitude             varchar(50) not null default '' comment 'µØÀíÎ»ÖÃÎ¬¶È',
-   longitude            varchar(50) not null default '' comment 'µØÀíÎ»ÖÃ¾­¶È',
-   locationPrecision    varchar(50) not null default '' comment 'µØÀíÎ»ÖÃ¾«¶È',
+   id                   bigint not null comment 'ä¸»é”®',
+   toUserId             bigint not null default 0 comment 'æ”¶åˆ°æ¶ˆæ¯ä¸€æ–¹çš„ç”¨æˆ·idï¼Œå…³è”å¾®ä¿¡ä¸ªäººç”¨æˆ·è¡¨æˆ–å¾®ä¿¡å…¬ä¼—è´¦å·åŸºæœ¬ä¿¡æ¯è¡¨',
+   fromUserId           bigint not null default 0 comment 'æ¶ˆæ¯å‘é€æ–¹çš„ç”¨æˆ·id',
+   toUserName           varchar(50) not null default '' comment 'æ¥æ”¶æ–¹å¾®ä¿¡å·',
+   fromUserName         varchar(50) not null default '' comment 'å‘é€æ–¹å¾®ä¿¡å·openid',
+   createTime           timestamp not null default CURRENT_TIMESTAMP comment 'æ¶ˆæ¯åˆ›å»ºæ—¶é—´',
+   msgType              tinyint(4) not null default 0 comment 'æ¶ˆæ¯ç±»å‹',
+   event                tinyint(4) not null default 0 comment 'äº‹ä»¶ç±»å‹',
+   latitude             varchar(50) not null default '' comment 'åœ°ç†ä½ç½®ç»´åº¦',
+   longitude            varchar(50) not null default '' comment 'åœ°ç†ä½ç½®ç»åº¦',
+   locationPrecision    varchar(50) not null default '' comment 'åœ°ç†ä½ç½®ç²¾åº¦',
    primary key (id)
 );
 
-alter table WX_USER_LOCATION comment 'Î¢ĞÅÓÃ»§µØÀíÎ»ÖÃÉÏ±¨ÊÂ¼şĞÅÏ¢';
+alter table WX_USER_LOCATION comment 'å¾®ä¿¡ç”¨æˆ·åœ°ç†ä½ç½®ä¸ŠæŠ¥äº‹ä»¶ä¿¡æ¯';
 
 /*==============================================================*/
 /* Table: WX_USER_OFFICIAL_ACCOUNT                              */
@@ -644,32 +752,32 @@ alter table WX_USER_LOCATION comment 'Î¢ĞÅÓÃ»§µØÀíÎ»ÖÃÉÏ±¨ÊÂ¼şĞÅÏ¢';
 create table WX_USER_OFFICIAL_ACCOUNT
 (
    id                   bigint not null,
-   userId               bigint not null default 0 comment 'ÏµÍ³ÓÃ»§id',
-   officialAccountId    bigint not null default 0 comment 'Î¢ĞÅ¹«ÖÚºÅ»ù±¾ĞÅÏ¢±íid,¹ØÁªÎ¢ĞÅ¹«ÖÚºÅ»ù±¾ĞÅÏ¢±í',
+   userId               bigint not null default 0 comment 'ç³»ç»Ÿç”¨æˆ·id',
+   officialAccountId    bigint not null default 0 comment 'å¾®ä¿¡å…¬ä¼—å·åŸºæœ¬ä¿¡æ¯è¡¨id,å…³è”å¾®ä¿¡å…¬ä¼—å·åŸºæœ¬ä¿¡æ¯è¡¨',
    primary key (id)
 );
 
-alter table WX_USER_OFFICIAL_ACCOUNT comment '¹ØÁªÓÃ»§±íºÍÎ¢ĞÅ¹«ÖÚºÅ»ù±¾ĞÅÏ¢¹ØÁª±í';
+alter table WX_USER_OFFICIAL_ACCOUNT comment 'å…³è”ç”¨æˆ·è¡¨å’Œå¾®ä¿¡å…¬ä¼—å·åŸºæœ¬ä¿¡æ¯å…³è”è¡¨';
 
 /*==============================================================*/
 /* Table: WX_WECHAT_THIRD_PARTY_CONFIG                          */
 /*==============================================================*/
 create table WX_WECHAT_THIRD_PARTY_CONFIG
 (
-   id                   bigint not null comment 'Ö÷¼ü',
-   componentAppid       varchar(50) not null default '' comment 'Î¢ĞÅµÚÈı·½component_appid',
-   componentAppsecret   varchar(50) not null default '' comment 'Î¢ĞÅµÚÈı·½component_appsecret',
-   token                varchar(50) not null default '' comment 'Î¢ĞÅµÚÈı·½tokenĞÅÏ¢',
-   encodeingAesKey      varchar(100) not null default '' comment 'Î¢ĞÅµÚÈı·½¼Ó½âÃÜkey',
-   authorizationUrl     varchar(100) not null default '' comment 'ÊÚÈ¨ÊÂ¼ş½ÓÊÕurl',
-   redirectUrl          varchar(100) not null default '' comment 'ÊÚÈ¨ÊÂ¼şÌø×ªurl',
-   componentAccessToken varchar(200) not null default '' comment 'µÚÈı·½component_access_token',
-   messgesUrl           varchar(100) not null default '' comment '¹«ÖÚºÅÏûÏ¢ÓëÊÂ¼ş½ÓÊÕURL',
-   componentVerifyTicket varchar(200) not null default '' comment 'Î¢ĞÅµÚÈı·½component_verfiy_ticket',
-   createTime           timestamp not null default CURRENT_TIMESTAMP comment '´´½¨Ê±¼ä',
-   updateTime           timestamp not null default CURRENT_TIMESTAMP comment '¸üĞÂÊ±¼ä',
+   id                   bigint not null comment 'ä¸»é”®',
+   componentAppid       varchar(50) not null default '' comment 'å¾®ä¿¡ç¬¬ä¸‰æ–¹component_appid',
+   componentAppsecret   varchar(50) not null default '' comment 'å¾®ä¿¡ç¬¬ä¸‰æ–¹component_appsecret',
+   token                varchar(50) not null default '' comment 'å¾®ä¿¡ç¬¬ä¸‰æ–¹tokenä¿¡æ¯',
+   encodeingAesKey      varchar(100) not null default '' comment 'å¾®ä¿¡ç¬¬ä¸‰æ–¹åŠ è§£å¯†key',
+   authorizationUrl     varchar(100) not null default '' comment 'æˆæƒäº‹ä»¶æ¥æ”¶url',
+   redirectUrl          varchar(100) not null default '' comment 'æˆæƒäº‹ä»¶è·³è½¬url',
+   componentAccessToken varchar(200) not null default '' comment 'ç¬¬ä¸‰æ–¹component_access_token',
+   messgesUrl           varchar(100) not null default '' comment 'å…¬ä¼—å·æ¶ˆæ¯ä¸äº‹ä»¶æ¥æ”¶URL',
+   componentVerifyTicket varchar(200) not null default '' comment 'å¾®ä¿¡ç¬¬ä¸‰æ–¹component_verfiy_ticket',
+   createTime           timestamp not null default CURRENT_TIMESTAMP comment 'åˆ›å»ºæ—¶é—´',
+   updateTime           timestamp not null default CURRENT_TIMESTAMP comment 'æ›´æ–°æ—¶é—´',
    primary key (id)
 );
 
-alter table WX_WECHAT_THIRD_PARTY_CONFIG comment '´æ´¢Î¢ĞÅµÚÈı·½µÄÅäÖÃĞÅÏ¢';
+alter table WX_WECHAT_THIRD_PARTY_CONFIG comment 'å­˜å‚¨å¾®ä¿¡ç¬¬ä¸‰æ–¹çš„é…ç½®ä¿¡æ¯';
 

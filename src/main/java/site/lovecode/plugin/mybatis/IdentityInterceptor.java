@@ -40,7 +40,7 @@ public class IdentityInterceptor implements Interceptor {
 						continue;
 					}
 					identity.setId(IdWorker.getId());
-				} else if ( objs[i] instanceof List || objs[i] instanceof DefaultSqlSession) {
+				} else if ( objs[i] instanceof List ) {
 					List<?> list = (List<?>) objs[i];
 					for ( Object object : list ) {
 						if ( object instanceof Identity ) {
