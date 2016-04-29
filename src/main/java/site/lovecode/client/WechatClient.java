@@ -42,6 +42,48 @@ public interface WechatClient extends WxMpService {
     SelfMenuInfoBean getSelfMenu() throws  WxErrorException;
 
 
+    /**
+     * 模板消息
+     * 设置公众号所属行业
+     * @throws WxErrorException
+     */
+    void setIndustry(IndustryIdBean industryIdBean) throws WxErrorException;
+
+
+    /**
+     * 获取设置的行业信息
+     * @return
+     * @throws WxErrorException
+     */
+    IndustryBean getIndustryInfo() throws  WxErrorException;
+
+
+    /**
+     * 获取模板id
+     * @param templateIdShort
+     * @return
+     * @throws WxErrorException
+     */
+    String getTemplateId(String templateIdShort) throws WxErrorException;
+
+
+    /**
+     * 获取模板列表
+     * @return
+     * @throws WxErrorException
+     */
+    TemplateListBean getTemplateList() throws WxErrorException;
+
+
+    /**
+     * 删除模板
+     * @param templateId
+     * @throws WxErrorException
+     */
+    void deleteTemplate(String templateId) throws  WxErrorException;
+
+
+
 
 
 

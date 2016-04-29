@@ -1026,6 +1026,71 @@ public class WechatClientImpl implements WechatClient {
         return JSONObject.parseObject(str,SelfMenuInfoBean.class);
     }
 
+    /**
+     * 模板消息
+     * 设置公众号所属行业
+     * @throws WxErrorException
+     */
+    @Override
+    public void setIndustry(IndustryIdBean industryIdBean) throws WxErrorException {
+           post("https://api.weixin.qq.com/cgi-bin/template/api_set_industry",JSON.toJSONString(industryIdBean));
+    }
+
+
+    /**
+     * 获取设置的行业信息
+     * @return
+     * @throws WxErrorException
+     */
+    @Override
+    public IndustryBean getIndustryInfo() throws WxErrorException {
+        return JSONObject.parseObject(get("https://api.weixin.qq.com/cgi-bin/template/get_industry",null), IndustryBean.class);
+    }
+
+
+    /**
+     * 获取模板id
+     * @param templateIdShort
+     * @return
+     * @throws WxErrorException
+     */
+    @Override
+    public String getTemplateId(String templateIdShort) throws WxErrorException {
+        JSONObject jsonObject = JSON.parseObject(post("https://api.weixin.qq.com/cgi-bin/template/api_add_template",new JSONObject() {
+            {
+                put("template_id_short",templateIdShort);
+            }
+        }.toJSONString()));
+        return jsonObject.getString("template_id_short");
+    }
+
+
+    /**
+     * 获取模板列表
+     * @return
+     * @throws WxErrorException
+     */
+    @Override
+    public TemplateListBean getTemplateList() throws WxErrorException {
+        return JSON.parseObject(get("https://api.weixin.qq.com/cgi-bin/template/get_all_private_template",null),TemplateListBean.class);
+    }
+
+
+
+    /**
+     * 删除模板
+     * @param templateId
+     * @throws WxErrorException
+     */
+    @Override
+    public void deleteTemplate(String templateId) throws WxErrorException {
+         post("https://api,weixin.qq.com/cgi-bin/template/del_private_template",new JSONObject(){
+             {
+                 put("template_id",templateId);
+             }
+         }.toJSONString());
+    }
+
 
     private List<UserInfoResp> sendGetUserList(List<String> openidList) throws WxErrorException {
        String str =  post("https://api.weixin.qq.com/cgi-bin/user/info/batchget", JSON.toJSONString(new UserListReq(){
