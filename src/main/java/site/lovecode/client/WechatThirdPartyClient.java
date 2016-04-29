@@ -25,7 +25,7 @@ public interface WechatThirdPartyClient {
      * @return
      * @throws IOException
      */
-    PreAuthCodeBean getPreAuthCode() throws IOException, WxErrorException;
+    PreAuthCodeBean getPreAuthCode() throws  WxErrorException;
 
 
     /**
@@ -44,7 +44,7 @@ public interface WechatThirdPartyClient {
      * @return
      * @throws IOException
      */
-    QueryAuthBean queryAuth(String authorizationCode) throws IOException, WxErrorException;
+    QueryAuthBean queryAuth(String authorizationCode) throws  WxErrorException;
 
 
     /**
@@ -53,7 +53,7 @@ public interface WechatThirdPartyClient {
      * @param authorizerAppid
      * @return
      */
-    AuthorizerInfoBean getAuthorizerInfo(String authorizerAppid) throws IOException, WxErrorException;
+    AuthorizerInfoBean getAuthorizerInfo(String authorizerAppid) throws  WxErrorException;
 
 
     /**

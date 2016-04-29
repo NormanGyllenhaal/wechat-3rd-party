@@ -44,7 +44,7 @@ public class WechatThirdPartyClientImpl implements WechatThirdPartyClient {
      * @return
      * @throws IOException
      */
-    public String getComponentAccessToken() throws IOException, WxErrorException {
+    public String getComponentAccessToken() throws  WxErrorException {
         if (!Optional.ofNullable(deadline).isPresent()||deadline < System.currentTimeMillis()) {
             logger.info("component_access_token过期，刷新component_assess_token");
             return refreshComponentAccessToken().getComponentAccessToken();
@@ -67,6 +67,7 @@ public class WechatThirdPartyClientImpl implements WechatThirdPartyClient {
                 put(WechatParameterConstant.COMPONENT_VERIFY_TICKET, wechatThirdPartyConfig.getComponentVerifyTicket());
             }
         }.toJSONString()), ComponentAccessTokenBean.class);
+        wechatThirdPartyConfig.setComponentAccessToken(componentAccessTokenBean.getComponentAccessToken());
         deadline = System.currentTimeMillis() + (componentAccessTokenBean.getExpiresIn() * 1000);
         return componentAccessTokenBean;
     }
@@ -78,7 +79,7 @@ public class WechatThirdPartyClientImpl implements WechatThirdPartyClient {
      * @return
      * @throws IOException
      */
-    public PreAuthCodeBean getPreAuthCode() throws WxErrorException, IOException {
+    public PreAuthCodeBean getPreAuthCode() throws WxErrorException {
         return JSON.parseObject(HttpUtil.doPostSSL(new StringBuffer(WechatUrlConstant.API_CREATE_PREAUTHCODE).append(getComponentAccessToken()).toString(), new JSONObject() {
             {
                 put(WechatParameterConstant.COMPONENT_APPID, wechatThirdPartyConfig.getComponentAppid());
@@ -106,7 +107,7 @@ public class WechatThirdPartyClientImpl implements WechatThirdPartyClient {
      * @return
      * @throws IOException
      */
-    public QueryAuthBean queryAuth(String authorizationCode) throws IOException, WxErrorException {
+    public QueryAuthBean queryAuth(String authorizationCode) throws  WxErrorException {
         return JSON.parseObject(HttpUtil.doPostSSL(new StringBuffer(WechatUrlConstant.API_QUERY_AUTH).append(getComponentAccessToken()).toString(), new JSONObject() {
             {
                 put(WechatParameterConstant.COMPONENT_APPID, wechatThirdPartyConfig.getComponentAppid());
@@ -122,7 +123,7 @@ public class WechatThirdPartyClientImpl implements WechatThirdPartyClient {
      * @param authorizerAppid
      * @return
      */
-    public AuthorizerInfoBean getAuthorizerInfo(String authorizerAppid) throws IOException, WxErrorException {
+    public AuthorizerInfoBean getAuthorizerInfo(String authorizerAppid) throws  WxErrorException {
         return JSON.parseObject(HttpUtil.doPostSSL(new StringBuilder(WechatUrlConstant.API_GET_AUTHORIZER_INFO).append(getComponentAccessToken()).toString(), new JSONObject() {
             {
                 put(WechatParameterConstant.COMPONENT_APPID, wechatThirdPartyConfig.getComponentAppid());
@@ -139,7 +140,7 @@ public class WechatThirdPartyClientImpl implements WechatThirdPartyClient {
      */
     @Override
     public AuthorizerTokenBean refreshAuthorizerToken(String authorizerAppid, String authorizerRefreshToken) throws WxErrorException {
-        return JSON.parseObject(HttpUtil.doPostSSL(Stream.of(WechatUrlConstant.API_AUTHORIZER_TOKEN,wechatThirdPartyConfig.getComponentAccessToken()).reduce("",String::concat),new JSONObject(){
+        return JSON.parseObject(HttpUtil.doPostSSL(Stream.of(WechatUrlConstant.API_AUTHORIZER_TOKEN,getComponentAccessToken()).reduce("",String::concat),new JSONObject(){
             {
                 put(WechatParameterConstant.COMPONENT_APPID,wechatThirdPartyConfig.getComponentAppid());
                 put(WechatParameterConstant.AUTHORIZER_APPID,authorizerAppid);
@@ -157,7 +158,7 @@ public class WechatThirdPartyClientImpl implements WechatThirdPartyClient {
      */
     @Override
     public GetAuthorizerOptionBean getAuthorizerOption(String authorizerAppid, String optionName) throws WxErrorException {
-        return JSON.parseObject(HttpUtil.doPostSSL(Stream.of(WechatUrlConstant.API_GET_AUTHORIZER_OPTION,wechatThirdPartyConfig.getComponentAccessToken()).reduce("",String::concat),new JSONObject(){
+        return JSON.parseObject(HttpUtil.doPostSSL(Stream.of(WechatUrlConstant.API_GET_AUTHORIZER_OPTION,getComponentAccessToken()).reduce("",String::concat),new JSONObject(){
             {
                 put(WechatParameterConstant.COMPONENT_APPID,wechatThirdPartyConfig.getComponentAppid());
                 put(WechatParameterConstant.AUTHORIZER_APPID,authorizerAppid);
@@ -177,7 +178,7 @@ public class WechatThirdPartyClientImpl implements WechatThirdPartyClient {
     public void setAuthorizerOption(String authorizerAppid, Map<String, String> maps)  {
        maps.forEach((key, value) -> {
            try {
-               HttpUtil.doPostSSL(Stream.of(WechatUrlConstant.API_SET_AUTHORIZER_OPTION, wechatThirdPartyConfig.getComponentAccessToken()).reduce("", String::concat), new JSONObject() {
+               HttpUtil.doPostSSL(Stream.of(WechatUrlConstant.API_SET_AUTHORIZER_OPTION, getComponentAccessToken()).reduce("", String::concat), new JSONObject() {
                    {
                        put(WechatParameterConstant.COMPONENT_APPID, wechatThirdPartyConfig.getComponentAppid());
                        put(WechatParameterConstant.AUTHORIZER_APPID, authorizerAppid);
