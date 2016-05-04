@@ -17,7 +17,7 @@
                     获取用户列表：<a href="refreshUserList.html?oaid=$account.id">获取用户列表</a>
                     <a href="saveReplySetting.html?oaid=$account.id">获取自动回复配置</a>
                     <a href="getMenu.html?oaid=$account.id">获取自定义菜单</a>
-                    <a href="createMenu.html?oaid=$account.id">创建自定义菜单</a>
+                    <a href="sendTempMessage.html?oaid=$account.id">发送模板消息</a>
                     公众号id：  $account.id
                     公众号appid: $account.appid
                     <br/>

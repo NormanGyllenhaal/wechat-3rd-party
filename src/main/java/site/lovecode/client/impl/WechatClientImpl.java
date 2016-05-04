@@ -1091,6 +1091,11 @@ public class WechatClientImpl implements WechatClient {
          }.toJSONString());
     }
 
+    @Override
+    public void sendTemplateMessage(String json) throws WxErrorException {
+           post("https://api.weixin.qq.com/cgi-bin/message/template/send",json);
+    }
+
 
     private List<UserInfoResp> sendGetUserList(List<String> openidList) throws WxErrorException {
        String str =  post("https://api.weixin.qq.com/cgi-bin/user/info/batchget", JSON.toJSONString(new UserListReq(){

@@ -86,5 +86,12 @@ public interface WechatClient extends WxMpService {
 
 
 
+    /**
+     * 发送模板消息
+     * @throws WxErrorException
+     */
+    void sendTemplateMessage(String json) throws WxErrorException;
+
+
 
 }

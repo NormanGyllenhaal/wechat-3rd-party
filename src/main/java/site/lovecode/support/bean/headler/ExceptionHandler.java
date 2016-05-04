@@ -29,6 +29,7 @@ public class ExceptionHandler implements HandlerExceptionResolver {
     @Override
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
         Map<String, Object> model = new HashMap<>();
+        logger.error("异常信息",ex);
         if(ex instanceof WxErrorException){
             WxErrorException errorException = (WxErrorException) ex;
             ErrorCode errorCode = errorCodeMapper.selectOne(new ErrorCode(){
@@ -36,11 +37,12 @@ public class ExceptionHandler implements HandlerExceptionResolver {
                     setCode(String.valueOf(errorException.getError().getErrorCode()));
                 }
             });
-            model.put("msg",errorCode.getMsg());
+            if(errorCode!=null){
+                model.put("msg",errorCode.getMsg());
+            }
         }else{
             model.put("ex",ex);
         }
-        logger.error("异常信息",ex);
         return new ModelAndView("error",model);
     }
 }
