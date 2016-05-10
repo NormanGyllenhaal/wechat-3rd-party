@@ -27,47 +27,18 @@ public class TempMessageServiceImpl implements TempMessageService {
         WxMpUserList wxMpUserList = wechatClient.userList(null);
         List<String> openIds = wxMpUserList.getOpenIds();
         String openid = openIds.get(0);
-        WxMpTemplateMessage wxMpTemplateMessage = new WxMpTemplateMessage() {
-            {
-                setToUser(openid);
-                setTemplateId("ngqIpbwh8bUfcSsECmogfXcV14J0tQlEpBO27izEYtY");
-                setUrl("http://weixin.qq.com/download");
-                getDatas().add(new WxMpTemplateData("first", "恭喜你购买成功"));
-                getDatas().add(new WxMpTemplateData("keynote1", "恭喜你购买成功"));
-                getDatas().add(new WxMpTemplateData("keynote2", "恭喜你购买成功"));
-                getDatas().add(new WxMpTemplateData("keynote3", "恭喜你购买成功"));
-                getDatas().add(new WxMpTemplateData("remark", "恭喜你购买成功"));
-            }
-        };
+        WxMpTemplateMessage wxMpTemplateMessage =  new WxMpTemplateMessage();
+        wxMpTemplateMessage.setToUser(openid);
+        wxMpTemplateMessage.setTemplateId("W6Y6ZVhkJJc2lxbcYt6mI57UYwWHfgl9VD9Dqa8NBac");
+        wxMpTemplateMessage.setUrl("http://weixin.qq.com/download");
+        wxMpTemplateMessage.getDatas().add(new WxMpTemplateData("first", "1"));
+        wxMpTemplateMessage.getDatas().add(new WxMpTemplateData("keyword1", "2"));
+        wxMpTemplateMessage.getDatas().add(new WxMpTemplateData("keyword2", "3"));
+        wxMpTemplateMessage.getDatas().add(new WxMpTemplateData("keyword3", "4"));
+        wxMpTemplateMessage.getDatas().add(new WxMpTemplateData("keyword4", "5"));
+        wxMpTemplateMessage.getDatas().add(new WxMpTemplateData("remark", "恭喜你购买成功"));
         String json = wxMpTemplateMessage.toJson();
-        String j = "   {\n" +
-                "           \"touser\":\""+openid+"\",\n" +
-                "           \"template_id\":\"ngqIpbwh8bUfcSsECmogfXcV14J0tQlEpBO27izEYtY\",\n" +
-                "           \"url\":\"http://weixin.qq.com/download\",            \n" +
-                "           \"data\":{\n" +
-                "                   \"first\": {\n" +
-                "                       \"value\":\"恭喜你购买成功！\",\n" +
-                "                       \"color\":\"#173177\"\n" +
-                "                   },\n" +
-                "                   \"keynote1\":{\n" +
-                "                       \"value\":\"巧克力\",\n" +
-                "                       \"color\":\"#173177\"\n" +
-                "                   },\n" +
-                "                   \"keynote2\": {\n" +
-                "                       \"value\":\"39.8元\",\n" +
-                "                       \"color\":\"#173177\"\n" +
-                "                   },\n" +
-                "                   \"keynote3\": {\n" +
-                "                       \"value\":\"2014年9月22日\",\n" +
-                "                       \"color\":\"#173177\"\n" +
-                "                   },\n" +
-                "                   \"remark\":{\n" +
-                "                       \"value\":\"欢迎再次购买！\",\n" +
-                "                       \"color\":\"#173177\"\n" +
-                "                   }\n" +
-                "           }\n" +
-                "       }";
-        wechatClient.sendTemplateMessage(j);
+        wechatClient.templateSend(wxMpTemplateMessage);
 
     }
 }
