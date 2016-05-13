@@ -1,12 +1,12 @@
 package site.lovecode.service.impl;
 
-import jdk.nashorn.internal.ir.annotations.Reference;
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Service;
+
 import site.lovecode.entity.SystemUser;
 import site.lovecode.mapper.SystemUserMapper;
 import site.lovecode.service.SystemUserService;
-
-import javax.annotation.Resource;
 
 /**
  * Created by Administrator on 2016/4/15.

@@ -1,91 +1,15 @@
+
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
 /* Created on:     2016/4/26 13:32:12                           */
 /*==============================================================*/
 
 
-drop table if exists WX_ARTICLE_DAY;
-
-drop table if exists WX_ARTICLE_HOUR;
-
-drop table if exists WX_ARTICLE_SHARE_DAY;
-
-drop table if exists WX_ARTICLE_SHARE_HOUR;
-
-drop table if exists WX_AUTHENTICATION_MESSAGE;
-
-drop index officialAccountId_index on WX_AUTHORIZER_ACCESS_TOKEN;
-
-drop table if exists WX_AUTHORIZER_ACCESS_TOKEN;
-
-drop index officialAccountId_index on WX_AUTHORIZER_INFO;
-
-drop table if exists WX_AUTHORIZER_INFO;
-
-drop table if exists WX_BUSINESS_INFO;
-
-drop table if exists WX_COMPONENT_ACCESS_TOKEN;
-
-drop table if exists WX_COMPONENT_VERIFY_TICKET;
-
-drop table if exists WX_CUSTOM_SERVICE;
-
-drop table if exists WX_ERROR_CODE;
-
-drop table if exists WX_EVENT;
-
-drop table if exists WX_FUNC_INFO;
-
-drop table if exists WX_INTERFACE_SUMMARY;
-
-drop table if exists WX_INTERFACE_SUMMARY_HOUR;
-
-drop table if exists WX_KEYWORD_REPLY_SETTING;
-
-drop table if exists WX_KEYWORD_REPLY_SETTING_KEYWORD;
-
-drop table if exists WX_KEYWORD_REPLY_SETTING_NEWS;
-
-drop table if exists WX_KEYWORD_REPLY_SETTING_REPLY;
-
-drop table if exists WX_MASS_MESSAGE;
-
-drop table if exists WX_MEDIA;
-
-drop table if exists WX_MESSAGE;
-
-drop table if exists WX_MESSAGE_DISTRIBUTION_DAY;
-
-drop table if exists WX_MESSAGE_SEND_DAY;
-
-drop table if exists WX_MESSAGE_SEND_HOUR;
-
-drop table if exists WX_OFFICIAL_ACCOUNT;
-
-drop table if exists WX_OFFICIAL_ACCOUNT_ACCESS_TOKEN;
-
-drop table if exists WX_OFFICIAL_ACCOUNT_INFO;
-
-drop table if exists WX_PERSONAL_USER;
-
-drop table if exists WX_PRE_AUTH_CODE;
-
-drop table if exists WX_REPLY_SETTING;
-
-drop table if exists WX_SYSTEM_USER;
-
-drop table if exists WX_USER_DATA;
-
-drop table if exists WX_USER_LOCATION;
-
-drop table if exists WX_USER_OFFICIAL_ACCOUNT;
-
-drop table if exists WX_WECHAT_THIRD_PARTY_CONFIG;
 
 /*==============================================================*/
 /* Table: WX_ARTICLE_DAY                                        */
 /*==============================================================*/
-create table WX_ARTICLE_DAY
+create table wx_article_day
 (
    id                   bigint not null comment '主键',
    officialAccountId    bigint not null default 0 comment '微信公众账号基本信息id',
@@ -104,12 +28,12 @@ create table WX_ARTICLE_DAY
    primary key (id)
 );
 
-alter table WX_ARTICLE_DAY comment '存储微信文章的统计数据';
+alter table wx_article_day comment '存储微信文章的统计数据';
 
 /*==============================================================*/
 /* Table: WX_ARTICLE_HOUR                                       */
 /*==============================================================*/
-create table WX_ARTICLE_HOUR
+create table wx_article_hour
 (
    id                   bigint not null comment '主键',
    officialAccountId    bigint not null default 0 comment '微信公众账号基本信息id',
@@ -129,12 +53,12 @@ create table WX_ARTICLE_HOUR
    primary key (id)
 );
 
-alter table WX_ARTICLE_HOUR comment '存储微信文章的分时统计数据';
+alter table wx_article_hour comment '存储微信文章的分时统计数据';
 
 /*==============================================================*/
 /* Table: WX_ARTICLE_SHARE_DAY                                  */
 /*==============================================================*/
-create table WX_ARTICLE_SHARE_DAY
+create table wx_article_share_day
 (
    id                   bigint not null,
    officialAccountId    bigint not null default 0 comment '微信公众号基本信息id',
@@ -146,12 +70,12 @@ create table WX_ARTICLE_SHARE_DAY
    primary key (id)
 );
 
-alter table WX_ARTICLE_SHARE_DAY comment '村抽微信图文分享每日统计数据';
+alter table wx_article_share_day comment '村抽微信图文分享每日统计数据';
 
 /*==============================================================*/
 /* Table: WX_ARTICLE_SHARE_HOUR                                 */
 /*==============================================================*/
-create table WX_ARTICLE_SHARE_HOUR
+create table wx_article_share_hour
 (
    id                   bigint not null,
    officialAccountId    bigint not null default 0 comment '微信公众号基本信息id',
@@ -164,12 +88,12 @@ create table WX_ARTICLE_SHARE_HOUR
    primary key (id)
 );
 
-alter table WX_ARTICLE_SHARE_HOUR comment '村抽微信图文分享每日分时统计数据';
+alter table wx_article_share_hour comment '村抽微信图文分享每日分时统计数据';
 
 /*==============================================================*/
 /* Table: WX_AUTHENTICATION_MESSAGE                             */
 /*==============================================================*/
-create table WX_AUTHENTICATION_MESSAGE
+create table wx_authentication_message
 (
    id                   bigint not null,
    officialAccountId    bigint not null default 0 comment '微信公众号基本信息id',
@@ -178,19 +102,19 @@ create table WX_AUTHENTICATION_MESSAGE
    createTime           timestamp not null default CURRENT_TIMESTAMP comment '消息创建时间',
    msgType              tinyint(4) not null default 0 comment '消息类型',
    event                tinyint(4) not null default 0 comment '事件类型 ',
-   expiredTime          timestamp default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '认证过期时间',
-   failTime             timestamp default CURRENT_TIMESTAMP comment '失败发生时间 ',
+   expiredTime          timestamp  comment '认证过期时间',
+   failTime             timestamp  comment '失败发生时间 ',
    failReason           varchar(200) default '' comment '认证失败的原因',
    advised              tinyint(4) not null default 0 comment '消息是否已经通知',
    primary key (id)
 );
 
-alter table WX_AUTHENTICATION_MESSAGE comment '记录微信公众号的认证消息';
+alter table wx_authentication_message comment '记录微信公众号的认证消息';
 
 /*==============================================================*/
 /* Table: WX_AUTHORIZER_ACCESS_TOKEN                            */
 /*==============================================================*/
-create table WX_AUTHORIZER_ACCESS_TOKEN
+create table wx_authorizer_access_token
 (
    id                   bigint not null comment '主键',
    officialAccountId    bigint not null default 0 comment '微信公众账号基本信息表id，关联微信公众号基本信息表',
@@ -202,12 +126,12 @@ create table WX_AUTHORIZER_ACCESS_TOKEN
    primary key (id)
 );
 
-alter table WX_AUTHORIZER_ACCESS_TOKEN comment '存储微信授权方的access_token和refresh_token';
+alter table wx_authorizer_access_token comment '存储微信授权方的access_token和refresh_token';
 
 /*==============================================================*/
 /* Index: officialAccountId_index                               */
 /*==============================================================*/
-create unique index officialAccountId_index on WX_AUTHORIZER_ACCESS_TOKEN
+create unique index officialAccountId_index on wx_authorizer_access_token
 (
    officialAccountId
 );
@@ -215,7 +139,7 @@ create unique index officialAccountId_index on WX_AUTHORIZER_ACCESS_TOKEN
 /*==============================================================*/
 /* Table: WX_AUTHORIZER_INFO                                    */
 /*==============================================================*/
-create table WX_AUTHORIZER_INFO
+create table wx_authorizer_info
 (
    id                   bigint not null comment '主键',
    officialAccountId    bigint not null default 0 comment '微信公众账号基本信息表id，关联微信公众号基本信息表',
@@ -228,12 +152,12 @@ create table WX_AUTHORIZER_INFO
    primary key (id)
 );
 
-alter table WX_AUTHORIZER_INFO comment '存储微信公众账号的基本信息';
+alter table wx_authorizer_info comment '存储微信公众账号的基本信息';
 
 /*==============================================================*/
 /* Index: officialAccountId_index                               */
 /*==============================================================*/
-create unique index officialAccountId_index on WX_AUTHORIZER_INFO
+create unique index officialAccountId_index on wx_authorizer_info
 (
    officialAccountId
 );
@@ -241,7 +165,7 @@ create unique index officialAccountId_index on WX_AUTHORIZER_INFO
 /*==============================================================*/
 /* Table: WX_BUSINESS_INFO                                      */
 /*==============================================================*/
-create table WX_BUSINESS_INFO
+create table wx_business_info
 (
    id                   bigint not null comment '主键',
    officialAccountId    bigint not null default 0 comment '微信公众账号基本信息表id，关联微信公众号基本信息表',
@@ -250,43 +174,43 @@ create table WX_BUSINESS_INFO
    primary key (id)
 );
 
-alter table WX_BUSINESS_INFO comment '存储微信的商业功能开通情况';
+alter table wx_business_info comment '存储微信的商业功能开通情况';
 
 /*==============================================================*/
 /* Table: WX_COMPONENT_ACCESS_TOKEN                             */
 /*==============================================================*/
-create table WX_COMPONENT_ACCESS_TOKEN
+create table wx_component_access_token
 (
    id                   bigint not null comment '主键',
    componentAppid       varchar(50) not null default '' comment 'componentAppid',
    componentAccessToken varchar(200) not null default '' comment '微信第三方component_access_token',
    expiresIn            int not null default 0 comment '有效时间',
    createTime           timestamp not null default CURRENT_TIMESTAMP comment '创建时间',
-   failureTime          timestamp not null default CURRENT_TIMESTAMP comment '失效时间',
+   failureTime          timestamp not null default '0000-00-00 00:00:00' comment '失效时间',
    primary key (id)
 );
 
-alter table WX_COMPONENT_ACCESS_TOKEN comment '存储第三方平台的componentAccessToken';
+alter table wx_component_access_token comment '存储第三方平台的componentAccessToken';
 
 /*==============================================================*/
 /* Table: WX_COMPONENT_VERIFY_TICKET                            */
 /*==============================================================*/
-create table WX_COMPONENT_VERIFY_TICKET
+create table wx_component_verify_ticket
 (
    id                   bigint not null comment '主键',
    componentAppid       varchar(50) not null default '' comment '微信第三方componentAppid',
    componentVerifyTicket varchar(100) not null default '' comment '微信第三方component_verify_ticket',
    createTime           timestamp not null default CURRENT_TIMESTAMP comment '创建时间',
-   deadline             timestamp not null default CURRENT_TIMESTAMP comment '失效时间',
+   deadline             timestamp not null default '0000-00-00 00:00:00' comment '失效时间',
    primary key (id)
 );
 
-alter table WX_COMPONENT_VERIFY_TICKET comment '存储微信第三方平台component_verify_ticket信息';
+alter table wx_component_verify_ticket comment '存储微信第三方平台component_verify_ticket信息';
 
 /*==============================================================*/
 /* Table: WX_CUSTOM_SERVICE                                     */
 /*==============================================================*/
-create table WX_CUSTOM_SERVICE
+create table wx_custom_service
 (
    id                   bigint not null,
    officialAccountId    bigint not null default 0 comment '微信公众号基本信息表id',
@@ -300,12 +224,12 @@ create table WX_CUSTOM_SERVICE
    primary key (id)
 );
 
-alter table WX_CUSTOM_SERVICE comment '存储微信的客服信息';
+alter table wx_custom_service comment '存储微信的客服信息';
 
 /*==============================================================*/
 /* Table: WX_ERROR_CODE                                         */
 /*==============================================================*/
-create table WX_ERROR_CODE
+create table wx_error_code
 (
    id                   bigint not null,
    code                 varchar(10) not null default '' comment '微信错误码',
@@ -313,12 +237,12 @@ create table WX_ERROR_CODE
    primary key (id)
 );
 
-alter table WX_ERROR_CODE comment '存储微信接口调用的所有错误码';
+alter table wx_error_code comment '存储微信接口调用的所有错误码';
 
 /*==============================================================*/
 /* Table: WX_EVENT                                              */
 /*==============================================================*/
-create table WX_EVENT
+create table wx_event
 (
    id                   bigint not null,
    toUserId             bigint not null default 0 comment '收到消息一方的用户id，关联微信个人用户表或微信公众账号基本信息表',
@@ -332,12 +256,12 @@ create table WX_EVENT
    primary key (id)
 );
 
-alter table WX_EVENT comment '存储微信用户事件消息记录';
+alter table wx_event comment '存储微信用户事件消息记录';
 
 /*==============================================================*/
 /* Table: WX_FUNC_INFO                                          */
 /*==============================================================*/
-create table WX_FUNC_INFO
+create table wx_func_info
 (
    id                   bigint not null comment 'zhujian',
    officialAccountId    bigint not null default 0 comment '微信公众账号基本信息表id，关联微信公众号基本信息表',
@@ -345,12 +269,12 @@ create table WX_FUNC_INFO
    primary key (id)
 );
 
-alter table WX_FUNC_INFO comment '存储每个公众号的权限信息';
+alter table wx_func_info comment '存储每个公众号的权限信息';
 
 /*==============================================================*/
 /* Table: WX_INTERFACE_SUMMARY                                  */
 /*==============================================================*/
-create table WX_INTERFACE_SUMMARY
+create table wx_interface_summary
 (
    id                   bigint not null,
    officialAccountId    bigint not null default 0 comment '微信公众账号基本信息id',
@@ -362,12 +286,12 @@ create table WX_INTERFACE_SUMMARY
    primary key (id)
 );
 
-alter table WX_INTERFACE_SUMMARY comment '存储微信的接口分析数据';
+alter table wx_interface_summary comment '存储微信的接口分析数据';
 
 /*==============================================================*/
 /* Table: WX_INTERFACE_SUMMARY_HOUR                             */
 /*==============================================================*/
-create table WX_INTERFACE_SUMMARY_HOUR
+create table wx_interface_summary_hour
 (
    id                   bigint not null,
    officialAccountId    bigint not null default 0 comment '微信公众账号基本信息id',
@@ -380,12 +304,12 @@ create table WX_INTERFACE_SUMMARY_HOUR
    primary key (id)
 );
 
-alter table WX_INTERFACE_SUMMARY_HOUR comment '存储微信的接口分时分析数据';
+alter table wx_interface_summary_hour comment '存储微信的接口分时分析数据';
 
 /*==============================================================*/
 /* Table: WX_KEYWORD_REPLY_SETTING                              */
 /*==============================================================*/
-create table WX_KEYWORD_REPLY_SETTING
+create table wx_keyword_reply_setting
 (
    id                   bigint not null comment '主键',
    officialAccountId    bigint not null default 0 comment '微信公众号基本信息id，关联微信公众号基本信息表',
@@ -397,12 +321,12 @@ create table WX_KEYWORD_REPLY_SETTING
    primary key (id)
 );
 
-alter table WX_KEYWORD_REPLY_SETTING comment '存储微信关键词自动回复设置';
+alter table wx_keyword_reply_setting comment '存储微信关键词自动回复设置';
 
 /*==============================================================*/
 /* Table: WX_KEYWORD_REPLY_SETTING_KEYWORD                      */
 /*==============================================================*/
-create table WX_KEYWORD_REPLY_SETTING_KEYWORD
+create table wx_keyword_reply_setting_keyword
 (
    id                   bigint not null comment '主键',
    keywordReplySettingId bigint not null default 0 comment '微信关键词自动回复设置id',
@@ -412,12 +336,12 @@ create table WX_KEYWORD_REPLY_SETTING_KEYWORD
    primary key (id)
 );
 
-alter table WX_KEYWORD_REPLY_SETTING_KEYWORD comment '存储关键词回复的关键词';
+alter table wx_keyword_reply_setting_keyword comment '存储关键词回复的关键词';
 
 /*==============================================================*/
 /* Table: WX_KEYWORD_REPLY_SETTING_NEWS                         */
 /*==============================================================*/
-create table WX_KEYWORD_REPLY_SETTING_NEWS
+create table wx_keyword_reply_setting_news
 (
    id                   bigint not null,
    keywordReplySettingReplyId bigint not null default 0 comment '微信关键词自动回复设置回复信息id,关联微信关键词自动回复设置回复信息表',
@@ -431,12 +355,12 @@ create table WX_KEYWORD_REPLY_SETTING_NEWS
    primary key (id)
 );
 
-alter table WX_KEYWORD_REPLY_SETTING_NEWS comment '存储微信关键词自动回复设置的回复图文信息';
+alter table wx_keyword_reply_setting_news comment '存储微信关键词自动回复设置的回复图文信息';
 
 /*==============================================================*/
 /* Table: WX_KEYWORD_REPLY_SETTING_REPLY                        */
 /*==============================================================*/
-create table WX_KEYWORD_REPLY_SETTING_REPLY
+create table wx_keyword_reply_setting_reply
 (
    id                   bigint not null,
    keywordReplySettingId bigint not null default 0 comment '微信关键词自动回复设置id',
@@ -445,12 +369,12 @@ create table WX_KEYWORD_REPLY_SETTING_REPLY
    primary key (id)
 );
 
-alter table WX_KEYWORD_REPLY_SETTING_REPLY comment '存储微信关键词自动回复设置回复信息';
+alter table wx_keyword_reply_setting_reply comment '存储微信关键词自动回复设置回复信息';
 
 /*==============================================================*/
 /* Table: WX_MASS_MESSAGE                                       */
 /*==============================================================*/
-create table WX_MASS_MESSAGE
+create table wx_mass_message
 (
    id                   bigint not null comment '主键',
    officialAccountId    bigint not null default 0 comment '微信公众号基本信息id',
@@ -474,31 +398,31 @@ create table WX_MASS_MESSAGE
    primary key (id)
 );
 
-alter table WX_MASS_MESSAGE comment '微信群发消息记录';
+alter table wx_mass_message comment '微信群发消息记录';
 
 /*==============================================================*/
 /* Table: WX_MEDIA                                              */
 /*==============================================================*/
-create table WX_MEDIA
+create table wx_media
 (
    id                   bigint(0) not null comment '主键',
    officialAccountId    bigint not null default 0 comment '微信公众号基本信息id,关联微信公众号基本信息表',
    mediaId              varchar(50) not null default '' comment '媒体文件的唯一标识
             ',
    type                 tinyint(4) not null default 0 comment '媒体文件的类型',
-   createdAt            timestamp default CURRENT_TIMESTAMP comment '媒体文件上传时间',
+   createdAt            timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' comment '媒体文件上传时间',
    path                 varchar(200) not null default '' comment '素材存储本地路径',
    mediaType            tinyint(4) not null default 0 comment '素材类型,永久或临时',
    createTime           timestamp not null default CURRENT_TIMESTAMP comment '创建时间',
    primary key (id)
 );
 
-alter table WX_MEDIA comment '存储微信的素材信息';
+alter table wx_media comment '存储微信的素材信息';
 
 /*==============================================================*/
 /* Table: WX_MESSAGE                                            */
 /*==============================================================*/
-create table WX_MESSAGE
+create table wx_message
 (
    id                   bigint not null comment '消息id',
    toUserId             bigint not null default 0 comment '收到消息一方的用户id，关联微信个人用户表或微信公众账号基本信息表',
@@ -528,12 +452,12 @@ create table WX_MESSAGE
    primary key (id)
 );
 
-alter table WX_MESSAGE comment '存储公众号和用户的消息发送记录';
+alter table wx_message comment '存储公众号和用户的消息发送记录';
 
 /*==============================================================*/
 /* Table: WX_MESSAGE_DISTRIBUTION_DAY                           */
 /*==============================================================*/
-create table WX_MESSAGE_DISTRIBUTION_DAY
+create table wx_message_distribution_day
 (
    id                   bigint not null comment '主键',
    officialAccountId    bigint not null default 0 comment '微信公众号基本信息id',
@@ -543,12 +467,12 @@ create table WX_MESSAGE_DISTRIBUTION_DAY
    primary key (id)
 );
 
-alter table WX_MESSAGE_DISTRIBUTION_DAY comment '存储微信每天发送消息量分布';
+alter table wx_message_distribution_day comment '存储微信每天发送消息量分布';
 
 /*==============================================================*/
 /* Table: WX_MESSAGE_SEND_DAY                                   */
 /*==============================================================*/
-create table WX_MESSAGE_SEND_DAY
+create table wx_message_send_day
 (
    id                   bigint not null comment '主键',
    refDate              date not null default '0000-00-00' comment '数据的日期',
@@ -560,12 +484,12 @@ create table WX_MESSAGE_SEND_DAY
    primary key (id)
 );
 
-alter table WX_MESSAGE_SEND_DAY comment '存储微信消息发送概况数据信息';
+alter table wx_message_send_day comment '存储微信消息发送概况数据信息';
 
 /*==============================================================*/
 /* Table: WX_MESSAGE_SEND_HOUR                                  */
 /*==============================================================*/
-create table WX_MESSAGE_SEND_HOUR
+create table wx_message_send_hour
 (
    id                   bigint not null comment '主键',
    refDate              date not null default '0000-00-00' comment '数据的日期',
@@ -578,12 +502,12 @@ create table WX_MESSAGE_SEND_HOUR
    primary key (id)
 );
 
-alter table WX_MESSAGE_SEND_HOUR comment '存储微信消息发送分时概况数据信息';
+alter table wx_message_send_hour comment '存储微信消息发送分时概况数据信息';
 
 /*==============================================================*/
 /* Table: WX_OFFICIAL_ACCOUNT                                   */
 /*==============================================================*/
-create table WX_OFFICIAL_ACCOUNT
+create table wx_official_account
 (
    id                   bigint not null,
    appid                varchar(100) not null default '' comment '微信公众号appid',
@@ -597,12 +521,12 @@ create table WX_OFFICIAL_ACCOUNT
    primary key (id)
 );
 
-alter table WX_OFFICIAL_ACCOUNT comment '微信公众账号的appid和绑定类型';
+alter table wx_official_account comment '微信公众账号的appid和绑定类型';
 
 /*==============================================================*/
 /* Table: WX_OFFICIAL_ACCOUNT_ACCESS_TOKEN                      */
 /*==============================================================*/
-create table WX_OFFICIAL_ACCOUNT_ACCESS_TOKEN
+create table wx_official_account_access_token
 (
    id                   bigint not null,
    officialAccountId    bigint not null default 0 comment '微信公众号基本信息id，关联微信公众号基本信息表',
@@ -613,12 +537,12 @@ create table WX_OFFICIAL_ACCOUNT_ACCESS_TOKEN
    primary key (id)
 );
 
-alter table WX_OFFICIAL_ACCOUNT_ACCESS_TOKEN comment '手动绑定的微信公众号accesstoken信息';
+alter table wx_official_account_access_token comment '手动绑定的微信公众号accesstoken信息';
 
 /*==============================================================*/
 /* Table: WX_OFFICIAL_ACCOUNT_INFO                              */
 /*==============================================================*/
-create table WX_OFFICIAL_ACCOUNT_INFO
+create table wx_official_account_info
 (
    id                   bigint not null comment '主键',
    officialAccountId    bigint not null default 0 comment '微信公众账号基本信息表id，关联微信公众号基本信息表',
@@ -632,12 +556,12 @@ create table WX_OFFICIAL_ACCOUNT_INFO
    primary key (id)
 );
 
-alter table WX_OFFICIAL_ACCOUNT_INFO comment '手动绑定的微信公众账号信息';
+alter table wx_official_account_info comment '手动绑定的微信公众账号信息';
 
 /*==============================================================*/
 /* Table: WX_PERSONAL_USER                                      */
 /*==============================================================*/
-create table WX_PERSONAL_USER
+create table wx_personal_user
 (
    id                   bigint not null,
    officialAccountId    bigint not null default 0 comment '用户所属的公众号id，关联公众号基本信息表',
@@ -650,7 +574,7 @@ create table WX_PERSONAL_USER
    province             varchar(20) not null default '' comment '用户所在省份',
    language             varchar(20) not null default '' comment '用户的语言，简体中文为zh_CN',
    headimgurl           varchar(200) not null default '' comment '用户头像，最后一个数值代表正方形头像大小（有0、46、64、96、132数值可选，0代表640*640正方形头像），用户没有头像时该项为空。若用户更换头像，原有头像URL将失效。',
-   subscribeTime        timestamp not null default CURRENT_TIMESTAMP comment '用户关注时间，为时间戳。如果用户曾多次关注，则取最后关注时间',
+   subscribeTime        timestamp not null default '0000-00-00 00:00:00' comment '用户关注时间，为时间戳。如果用户曾多次关注，则取最后关注时间',
    unionid              varchar(50) not null default '' comment '只有在用户将公众号绑定到微信开放平台帐号后，才会出现该字段。',
    remark               varchar(20) not null default '' comment '公众号运营者对粉丝的备注，公众号运营者可在微信公众平台用户管理界面对粉丝添加备注',
    groupid              varchar(50) default '' comment '用户所在的分组ID',
@@ -658,12 +582,12 @@ create table WX_PERSONAL_USER
    primary key (id)
 );
 
-alter table WX_PERSONAL_USER comment '存储微信的个人用户信息';
+alter table wx_personal_user comment '存储微信的个人用户信息';
 
 /*==============================================================*/
 /* Table: WX_PRE_AUTH_CODE                                      */
 /*==============================================================*/
-create table WX_PRE_AUTH_CODE
+create table wx_pre_auth_code
 (
    id                   bigint not null comment '主键',
    preAuthCode          varchar(100) not null default '' comment '微信预授权码',
@@ -672,12 +596,12 @@ create table WX_PRE_AUTH_CODE
    primary key (id)
 );
 
-alter table WX_PRE_AUTH_CODE comment '存储微信的预授权码';
+alter table wx_pre_auth_code comment '存储微信的预授权码';
 
 /*==============================================================*/
 /* Table: WX_REPLY_SETTING                                      */
 /*==============================================================*/
-create table WX_REPLY_SETTING
+create table wx_reply_setting
 (
    id                   bigint not null comment '主键',
    officialAccountId    bigint not null default 0 comment '微信公众号基本信息id',
@@ -690,12 +614,12 @@ create table WX_REPLY_SETTING
    primary key (id)
 );
 
-alter table WX_REPLY_SETTING comment '存储微信的自动回复和消息自动回复设置信息';
+alter table wx_reply_setting comment '存储微信的自动回复和消息自动回复设置信息';
 
 /*==============================================================*/
 /* Table: WX_SYSTEM_USER                                        */
 /*==============================================================*/
-create table WX_SYSTEM_USER
+create table wx_system_user
 (
    id                   bigint not null,
    userName             varchar(20) not null default '' comment '用户名称',
@@ -705,12 +629,12 @@ create table WX_SYSTEM_USER
    primary key (id)
 );
 
-alter table WX_SYSTEM_USER comment '系统用户表';
+alter table wx_system_user comment '系统用户表';
 
 /*==============================================================*/
 /* Table: WX_USER_DATA                                          */
 /*==============================================================*/
-create table WX_USER_DATA
+create table wx_user_data
 (
    id                   bigint not null,
    officialAccountId    bigint not null default 0 comment '微信公众号基本信息id，关联公众号基本信息表',
@@ -723,12 +647,12 @@ create table WX_USER_DATA
    primary key (id)
 );
 
-alter table WX_USER_DATA comment '存储用户分析数据';
+alter table wx_user_data comment '存储用户分析数据';
 
 /*==============================================================*/
 /* Table: WX_USER_LOCATION                                      */
 /*==============================================================*/
-create table WX_USER_LOCATION
+create table wx_user_location
 (
    id                   bigint not null comment '主键',
    toUserId             bigint not null default 0 comment '收到消息一方的用户id，关联微信个人用户表或微信公众账号基本信息表',
@@ -744,12 +668,12 @@ create table WX_USER_LOCATION
    primary key (id)
 );
 
-alter table WX_USER_LOCATION comment '微信用户地理位置上报事件信息';
+alter table wx_user_location comment '微信用户地理位置上报事件信息';
 
 /*==============================================================*/
 /* Table: WX_USER_OFFICIAL_ACCOUNT                              */
 /*==============================================================*/
-create table WX_USER_OFFICIAL_ACCOUNT
+create table wx_user_official_account
 (
    id                   bigint not null,
    userId               bigint not null default 0 comment '系统用户id',
@@ -757,12 +681,12 @@ create table WX_USER_OFFICIAL_ACCOUNT
    primary key (id)
 );
 
-alter table WX_USER_OFFICIAL_ACCOUNT comment '关联用户表和微信公众号基本信息关联表';
+alter table wx_user_official_account comment '关联用户表和微信公众号基本信息关联表';
 
 /*==============================================================*/
 /* Table: WX_WECHAT_THIRD_PARTY_CONFIG                          */
 /*==============================================================*/
-create table WX_WECHAT_THIRD_PARTY_CONFIG
+create table wx_wechat_third_party_config
 (
    id                   bigint not null comment '主键',
    componentAppid       varchar(50) not null default '' comment '微信第三方component_appid',
@@ -774,10 +698,9 @@ create table WX_WECHAT_THIRD_PARTY_CONFIG
    componentAccessToken varchar(200) not null default '' comment '第三方component_access_token',
    messgesUrl           varchar(100) not null default '' comment '公众号消息与事件接收URL',
    componentVerifyTicket varchar(200) not null default '' comment '微信第三方component_verfiy_ticket',
-   createTime           timestamp not null default CURRENT_TIMESTAMP comment '创建时间',
+   createTime           timestamp  NOT NULL DEFAULT '0000-00-00 00:00:00' comment '创建时间',
    updateTime           timestamp not null default CURRENT_TIMESTAMP comment '更新时间',
    primary key (id)
 );
 
-alter table WX_WECHAT_THIRD_PARTY_CONFIG comment '存储微信第三方的配置信息';
-
+alter table wx_wechat_third_party_config comment '存储微信第三方的配置信息';

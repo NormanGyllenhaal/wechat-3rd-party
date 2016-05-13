@@ -25,7 +25,7 @@ public class OfficialAccountServiceImpl implements OfficialAccountService {
     private OfficialAccountInfoMapper officialAccountInfoMapper;
 
     @Override
-    public void saveOfficialAccount(OfficialAccountReq officialAccountReq) {
+    public void saveOfficialAccount(final OfficialAccountReq officialAccountReq) {
         OfficialAccount officialAccount = new OfficialAccount() {
             {
                 setAppid(officialAccountReq.getAppid());
