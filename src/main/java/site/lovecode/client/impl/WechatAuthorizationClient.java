@@ -39,8 +39,8 @@ public class WechatAuthorizationClient extends WechatClientImpl {
         if (wxMpConfigStorage.isAccessTokenExpired()) {
             synchronized (globalAccessTokenRefreshLock) {
                 if (wxMpConfigStorage.isAccessTokenExpired()) {
-                    WechatConfig wechatConfig = (WechatConfig) wxMpConfigStorage;
-                    AuthorizerTokenBean authorizerTokenBean = wechatThirdPartyClient.refreshAuthorizerToken(wechatConfig.getAppId(), wechatConfig.getRefreshToken());
+                    final WechatConfig wechatConfig = (WechatConfig) wxMpConfigStorage;
+                    final AuthorizerTokenBean authorizerTokenBean = wechatThirdPartyClient.refreshAuthorizerToken(wechatConfig.getAppId(), wechatConfig.getRefreshToken());
                     wxMpConfigStorage.updateAccessToken(authorizerTokenBean.getAuthorizerAccessToken(), authorizerTokenBean.getExpiresIn());
                     logger.info("更新数据库中的值");
                     authorizerAccessTokenMapper.updateToken(new AuthorizerAccessToken() {
