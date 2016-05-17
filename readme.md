@@ -19,7 +19,8 @@
      * WechatClient 微信公众号接口
      * WechatThridPartyClient 微信第三方平台接口
      * WechatFactory 微信公众号工厂类 
-  * 项目提供常见两种公众号授权绑定方式 
+     
+ * 项目提供常见两种公众号授权绑定方式 
      * 手动绑定 
      * 授权绑定
    
