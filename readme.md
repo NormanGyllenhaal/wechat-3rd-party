@@ -14,4 +14,14 @@
     * 微信sdk weixin-java-mp  https://github.com/chanjarster/weixin-java-tools
     * mybatis工具 mybatis-mapper  https://github.com/abel533/Mapper
  
+ * 项目关键类说明
+   微信所有接口都在site.lovecode.client包下
+     * WechatClient 微信公众号接口
+     * WechatThridPartyClient 微信第三方平台接口
+     * WechatFactory 微信公众号工厂类 
+  * 项目提供常见两种公众号授权绑定方式 
+     * 手动绑定 
+     * 授权绑定
+   
+    
  
