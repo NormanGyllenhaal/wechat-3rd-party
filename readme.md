@@ -15,6 +15,7 @@
     * mybatis工具 mybatis-mapper  https://github.com/abel533/Mapper
     * web server jetty9
     * 开发工具 IntelliJ IDEA 15
+    * 前端框架 Bootstrap angluarJS
     
  * 项目关键类说明
    微信所有接口都在site.lovecode.client包下
