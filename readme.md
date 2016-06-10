@@ -17,7 +17,6 @@
     * 开发工具 IntelliJ IDEA 15
     * 前端框架 Bootstrap angluarJS
     * 数据建模 powerdesgin
-    
  * 项目结构
      数据字典在db文件夹下
  * 项目关键类说明
