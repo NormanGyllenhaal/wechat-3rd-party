@@ -19,7 +19,7 @@ import java.io.IOException;
 /**
  * Created by Administrator on 2016/4/7.
  */
-@Controller
+//@Controller
 public class WechatController {
 
 

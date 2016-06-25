@@ -1,10 +1,9 @@
 package site.lovecode.support.bean.enums;
 
 /**
- * Created by Administrator on 2016/4/12.
+ * Created by yang on 2016/6/9.
  */
-public enum BusinessInfoEnum {
-
+public enum BusinessInfoEnum1 {
 
     OPEN_STORE(1,"open_store"),
 
@@ -23,7 +22,7 @@ public enum BusinessInfoEnum {
     private final String desc;
 
 
-    BusinessInfoEnum(final int key, final String desc) {
+    BusinessInfoEnum1(final int key, final String desc) {
         this.key = key;
         this.desc = desc;
     }
