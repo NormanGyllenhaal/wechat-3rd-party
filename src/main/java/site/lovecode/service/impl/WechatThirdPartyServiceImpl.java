@@ -14,7 +14,7 @@ import site.lovecode.support.bean.AuthorizerInfoBean;
 import site.lovecode.support.bean.QueryAuthBean;
 import site.lovecode.support.bean.XmlDecryptingBean;
 import site.lovecode.support.bean.enums.AuthorizationStatusEnum;
-import site.lovecode.support.bean.enums.BusinessInfoEnum1;
+import site.lovecode.support.bean.enums.BusinessInfoEnum;
 import site.lovecode.support.bean.enums.OfficialAccountTypeEnum;
 import site.lovecode.util.IdWorker;
 
@@ -165,7 +165,7 @@ public class WechatThirdPartyServiceImpl implements  WechatThridPartyService {
             }
         });
         logger.info("删除旧的商业信息：" + businessInfoNum);
-        List<BusinessInfo> businessInfoList = Stream.of(new BusinessInfo(IdWorker.getId(), finalOfficialAccount.getId(), BusinessInfoEnum1.OPEN_CARD.key(), authorizerInfoBean.getAuthorizerInfo().getBusinessInfoBean().getOpenCard()), new BusinessInfo(IdWorker.getId(), finalOfficialAccount.getId(), BusinessInfoEnum1.OPEN_PAY.key(), authorizerInfoBean.getAuthorizerInfo().getBusinessInfoBean().getOpenPay()), new BusinessInfo(IdWorker.getId(), finalOfficialAccount.getId(), BusinessInfoEnum1.OPEN_SCAN.key(), authorizerInfoBean.getAuthorizerInfo().getBusinessInfoBean().getOpenScan()), new BusinessInfo(IdWorker.getId(), finalOfficialAccount.getId(), BusinessInfoEnum1.OPEN_SHAKE.key(), authorizerInfoBean.getAuthorizerInfo().getBusinessInfoBean().getOpenShake()), new BusinessInfo(IdWorker.getId(), finalOfficialAccount.getId(), BusinessInfoEnum1.OPEN_STORE.key(), authorizerInfoBean.getAuthorizerInfo().getBusinessInfoBean().getOpenStore())).collect(Collectors.toList());
+        List<BusinessInfo> businessInfoList = Stream.of(new BusinessInfo(IdWorker.getId(), finalOfficialAccount.getId(), BusinessInfoEnum.OPEN_CARD.key(), authorizerInfoBean.getAuthorizerInfo().getBusinessInfoBean().getOpenCard()), new BusinessInfo(IdWorker.getId(), finalOfficialAccount.getId(), BusinessInfoEnum.OPEN_PAY.key(), authorizerInfoBean.getAuthorizerInfo().getBusinessInfoBean().getOpenPay()), new BusinessInfo(IdWorker.getId(), finalOfficialAccount.getId(), BusinessInfoEnum.OPEN_SCAN.key(), authorizerInfoBean.getAuthorizerInfo().getBusinessInfoBean().getOpenScan()), new BusinessInfo(IdWorker.getId(), finalOfficialAccount.getId(), BusinessInfoEnum.OPEN_SHAKE.key(), authorizerInfoBean.getAuthorizerInfo().getBusinessInfoBean().getOpenShake()), new BusinessInfo(IdWorker.getId(), finalOfficialAccount.getId(), BusinessInfoEnum.OPEN_STORE.key(), authorizerInfoBean.getAuthorizerInfo().getBusinessInfoBean().getOpenStore())).collect(Collectors.toList());
         businessInfoMapper.batchInsert(businessInfoList);
         logger.info(funcInfoList.toString());
         return authorizerInfoBean;
