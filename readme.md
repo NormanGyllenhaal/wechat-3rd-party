@@ -18,22 +18,21 @@
     * 前端框架 Bootstrap angluarJS
     * 数据建模 powerdesgin
  * 项目结构
-     数据字典在db文件夹下
+    db 数据字典和sql执行文件
  * 项目关键类说明
     - 微信所有接口都在site.lovecode.client包下
      * WechatClient 微信公众号接口
      * WechatThridPartyClient 微信第三方平台接口
      * WechatFactory 微信公众号工厂类 
  * 项目实现的功能
-     * 微信第三方平台授权绑定
-        * 手动绑定 
-        * 授权绑定
+     * 微信第三方平台授权绑定 手动绑定和授权绑定
      * 微信消息自动回复设置
      * 公众号数据统计
      * 自定义菜单管理
      * 素材管理
      * 用户管理
-  * 项目部署说明
+
+ * 项目部署说明
     * 首先执行db文件夹中的sql，创建数据库
     * 启动redis
     * 启动jetty，运行项目
