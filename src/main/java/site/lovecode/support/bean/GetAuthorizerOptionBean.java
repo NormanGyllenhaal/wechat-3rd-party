@@ -6,52 +6,56 @@ package site.lovecode.support.bean;
 public class GetAuthorizerOptionBean {
 
 
-    /**
-     * 授权公众号appid
-     */
-    private String authorizerAppid;
+	/**
+	 * 授权公众号appid
+	 */
+	private String authorizerAppid;
 
-    /**
-     * 选项名称
-     */
-    private String OptionName;
+	/**
+	 * 选项名称
+	 */
+	private String OptionName;
 
-    /**
-     * 选项值
-     */
-    private String OptionValue;
+	/**
+	 * 选项值
+	 */
+	private String OptionValue;
 
 
-    public String getAuthorizerAppid() {
-        return authorizerAppid;
-    }
+	public String getAuthorizerAppid() {
+		return authorizerAppid;
+	}
 
-    public void setAuthorizerAppid(String authorizerAppid) {
-        this.authorizerAppid = authorizerAppid;
-    }
 
-    public String getOptionName() {
-        return OptionName;
-    }
+	public void setAuthorizerAppid( String authorizerAppid ) {
+		this.authorizerAppid = authorizerAppid;
+	}
 
-    public void setOptionName(String optionName) {
-        OptionName = optionName;
-    }
 
-    public String getOptionValue() {
-        return OptionValue;
-    }
+	public String getOptionName() {
+		return OptionName;
+	}
 
-    public void setOptionValue(String optionValue) {
-        OptionValue = optionValue;
-    }
 
-    @Override
-    public String toString() {
-        return "GetAuthorizerOptionBean{" +
-                "authorizerAppid='" + authorizerAppid + '\'' +
-                ", OptionName='" + OptionName + '\'' +
-                ", OptionValue='" + OptionValue + '\'' +
-                '}';
-    }
+	public void setOptionName( String optionName ) {
+		OptionName = optionName;
+	}
+
+
+	public String getOptionValue() {
+		return OptionValue;
+	}
+
+
+	public void setOptionValue( String optionValue ) {
+		OptionValue = optionValue;
+	}
+
+
+	@Override
+	public String toString() {
+		return "GetAuthorizerOptionBean{"
+				+ "authorizerAppid='" + authorizerAppid + '\'' + ", OptionName='" + OptionName + '\''
+				+ ", OptionValue='" + OptionValue + '\'' + '}';
+	}
 }

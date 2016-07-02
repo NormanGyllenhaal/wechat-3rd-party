@@ -7,45 +7,50 @@ import com.alibaba.fastjson.annotation.JSONField;
  */
 public class AuthorizerTokenBean {
 
-    @JSONField(name="authorizer_access_token")
-    private String authorizerAccessToken;
+	@JSONField( name = "authorizer_access_token" )
+	private String authorizerAccessToken;
 
-    @JSONField(name="expires_in")
-    private Integer expiresIn;
+	@JSONField( name = "expires_in" )
+	private Integer expiresIn;
 
-    @JSONField(name="authorizer_refresh_token")
-    private String authorizerRefreshToken;
+	@JSONField( name = "authorizer_refresh_token" )
+	private String authorizerRefreshToken;
 
-    public String getAuthorizerAccessToken() {
-        return authorizerAccessToken;
-    }
 
-    public void setAuthorizerAccessToken(String authorizerAccessToken) {
-        this.authorizerAccessToken = authorizerAccessToken;
-    }
+	public String getAuthorizerAccessToken() {
+		return authorizerAccessToken;
+	}
 
-    public Integer getExpiresIn() {
-        return expiresIn;
-    }
 
-    public void setExpiresIn(Integer expiresIn) {
-        this.expiresIn = expiresIn;
-    }
+	public void setAuthorizerAccessToken( String authorizerAccessToken ) {
+		this.authorizerAccessToken = authorizerAccessToken;
+	}
 
-    public String getAuthorizerRefreshToken() {
-        return authorizerRefreshToken;
-    }
 
-    public void setAuthorizerRefreshToken(String authorizerRefreshToken) {
-        this.authorizerRefreshToken = authorizerRefreshToken;
-    }
+	public Integer getExpiresIn() {
+		return expiresIn;
+	}
 
-    @Override
-    public String toString() {
-        return "AuthorizerTokenBean{" +
-                "authorizerAccessToken='" + authorizerAccessToken + '\'' +
-                ", expiresIn=" + expiresIn +
-                ", authorizerRefreshToken='" + authorizerRefreshToken + '\'' +
-                '}';
-    }
+
+	public void setExpiresIn( Integer expiresIn ) {
+		this.expiresIn = expiresIn;
+	}
+
+
+	public String getAuthorizerRefreshToken() {
+		return authorizerRefreshToken;
+	}
+
+
+	public void setAuthorizerRefreshToken( String authorizerRefreshToken ) {
+		this.authorizerRefreshToken = authorizerRefreshToken;
+	}
+
+
+	@Override
+	public String toString() {
+		return "AuthorizerTokenBean{"
+				+ "authorizerAccessToken='" + authorizerAccessToken + '\'' + ", expiresIn=" + expiresIn
+				+ ", authorizerRefreshToken='" + authorizerRefreshToken + '\'' + '}';
+	}
 }

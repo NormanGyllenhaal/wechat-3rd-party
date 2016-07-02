@@ -10,68 +10,75 @@ import java.util.List;
 public class OpenidBean {
 
 
-    private Integer total;
+	private Integer total;
 
-    private Integer count;
+	private Integer count;
 
-    private Openid data;
+	private Openid data;
 
-    @JSONField(name="next_openid")
-    private String nextOpenid;
-
-
-    public class Openid{
-        protected List<String> openid;
-
-        public List<String> getOpenid() {
-            return openid;
-        }
-
-        public void setOpenid(List<String> openid) {
-            this.openid = openid;
-        }
-    }
+	@JSONField( name = "next_openid" )
+	private String nextOpenid;
 
 
-    public Integer getTotal() {
-        return total;
-    }
+	public class Openid {
 
-    public void setTotal(Integer total) {
-        this.total = total;
-    }
+		protected List<String> openid;
 
-    public Integer getCount() {
-        return count;
-    }
 
-    public void setCount(Integer count) {
-        this.count = count;
-    }
+		public List<String> getOpenid() {
+			return openid;
+		}
 
-    public Openid getData() {
-        return data;
-    }
 
-    public void setData(Openid data) {
-        this.data = data;
-    }
+		public void setOpenid( List<String> openid ) {
+			this.openid = openid;
+		}
+	}
 
-    public String getNextOpenid() {
-        return nextOpenid;
-    }
 
-    public void setNextOpenid(String nextOpenid) {
-        this.nextOpenid = nextOpenid;
-    }
+	public Integer getTotal() {
+		return total;
+	}
 
-    @Override
-    public String toString() {
-        return "OpenidBean{" +
-                "total=" + total +
-                ", count=" + count +
-                ", data=" + data +
-                ", nextOpenid='" + nextOpenid + '\'' +
-                '}';
-    }
+
+	public void setTotal( Integer total ) {
+		this.total = total;
+	}
+
+
+	public Integer getCount() {
+		return count;
+	}
+
+
+	public void setCount( Integer count ) {
+		this.count = count;
+	}
+
+
+	public Openid getData() {
+		return data;
+	}
+
+
+	public void setData( Openid data ) {
+		this.data = data;
+	}
+
+
+	public String getNextOpenid() {
+		return nextOpenid;
+	}
+
+
+	public void setNextOpenid( String nextOpenid ) {
+		this.nextOpenid = nextOpenid;
+	}
+
+
+	@Override
+	public String toString() {
+		return "OpenidBean{"
+				+ "total=" + total + ", count=" + count + ", data=" + data + ", nextOpenid='" + nextOpenid + '\'' + '}';
+	}
 }

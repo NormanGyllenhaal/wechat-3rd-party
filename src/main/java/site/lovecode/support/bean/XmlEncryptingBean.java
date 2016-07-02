@@ -9,39 +9,43 @@ import java.io.Serializable;
 /**
  * Created by Administrator on 2016/4/1.
  */
-@XStreamAlias("xml")
+@XStreamAlias( "xml" )
 public class XmlEncryptingBean implements Serializable {
 
-    @XStreamAlias("AppId")
-    @XStreamConverter(value=XStreamCDataConverter.class)
-    private String appId;
 
-    @XStreamAlias("Encrypt")
-    @XStreamConverter(value=XStreamCDataConverter.class)
-    private String encrypt;
+	private static final long serialVersionUID = 1L;
 
-    public String getEncrypt() {
-        return encrypt;
-    }
+	@XStreamAlias( "AppId" )
+	@XStreamConverter( value = XStreamCDataConverter.class )
+	private String appId;
 
-    public void setEncrypt(String encrypt) {
-        this.encrypt = encrypt;
-    }
-
-    public String getAppId() {
-        return appId;
-    }
-
-    public void setAppId(String appId) {
-        this.appId = appId;
-    }
+	@XStreamAlias( "Encrypt" )
+	@XStreamConverter( value = XStreamCDataConverter.class )
+	private String encrypt;
 
 
-    @Override
-    public String toString() {
-        return "XmlEncryptingBean{" +
-                "appId='" + appId + '\'' +
-                ", encrypt='" + encrypt + '\'' +
-                '}';
-    }
+	public String getEncrypt() {
+		return encrypt;
+	}
+
+
+	public void setEncrypt( String encrypt ) {
+		this.encrypt = encrypt;
+	}
+
+
+	public String getAppId() {
+		return appId;
+	}
+
+
+	public void setAppId( String appId ) {
+		this.appId = appId;
+	}
+
+
+	@Override
+	public String toString() {
+		return "XmlEncryptingBean{" + "appId='" + appId + '\'' + ", encrypt='" + encrypt + '\'' + '}';
+	}
 }

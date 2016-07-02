@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 import site.lovecode.client.WechatThirdPartyClient;
 import site.lovecode.entity.WechatThirdPartyConfig;
 import site.lovecode.support.bean.*;
-import site.lovecode.support.bean.constant.WechatParameterConstant;
-import site.lovecode.support.bean.constant.WechatUrlConstant;
+import site.lovecode.support.constant.WechatParameterConstant;
+import site.lovecode.support.constant.WechatUrlConstant;
 import site.lovecode.util.HttpUtil;
 
 import java.io.IOException;
@@ -185,7 +185,7 @@ public class WechatThirdPartyClientImpl implements WechatThirdPartyClient {
 	 * @return
 	 */
 	@Override
-	public AuthorizerTokenBean refreshAuthorizerToken(String authorizerAppid, String authorizerRefreshToken )
+	public AuthorizerTokenBean refreshAuthorizerToken( String authorizerAppid, String authorizerRefreshToken )
 		throws WxErrorException {
 		return JSON.parseObject(HttpUtil.doPostSSL(
 			Stream.of(WechatUrlConstant.API_AUTHORIZER_TOKEN, getComponentAccessToken()).reduce("", String::concat),
@@ -213,7 +213,7 @@ public class WechatThirdPartyClientImpl implements WechatThirdPartyClient {
 	 * @return
 	 */
 	@Override
-	public GetAuthorizerOptionBean getAuthorizerOption( String authorizerAppid, String optionName )
+	public GetAuthorizerOptionBean getAuthorizerOption(String authorizerAppid, String optionName )
 		throws WxErrorException {
 		return JSON.parseObject(HttpUtil.doPostSSL(
 			Stream.of(WechatUrlConstant.API_GET_AUTHORIZER_OPTION, getComponentAccessToken())

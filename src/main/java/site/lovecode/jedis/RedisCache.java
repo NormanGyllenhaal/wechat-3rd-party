@@ -7,10 +7,8 @@ package site.lovecode.jedis;
 import com.alibaba.fastjson.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import site.lovecode.util.SerializeUtil;
 
 import java.io.Serializable;
-
 
 /**
  * redis 缓存工具类
@@ -22,63 +20,55 @@ import java.io.Serializable;
  */
 public class RedisCache {
 
+
 	private static final Logger logger = LoggerFactory.getLogger(RedisCache.class);
 
 	private RedisCommands redis;
 
 
-
 	/**
 	 * redis里面添加key-value格式的数据
 	 * <p>
-	 * 
-	 * @param key
-	 *            缓存关键字
-
-	 */
-	/*public boolean set( final String key, final Serializable value ) {
-		return set(key, 0, value);
-	}*/
-
-
-	/**
 	 *
 	 * @param key
-	 * @param value
-     * @return
-     */
-	public String set(final String key,final String value){
-		return redis.set(key,value);
-	}
+	 *            缓存关键字
+	 *            有效时长
+	 */
+
+
+
 
 	/**
 	 *
 	 * @param key
 	 * @param object
-     * @return
-     */
-	public String set(final Long key,final Object object){
-		return set(key.toString(), JSON.toJSONString(object));
+	 * @return
+	 */
+	public String setValue( final Long key, final Object object ) {
+		return redis.set(key.toString(), JSON.toJSONString(object));
 	}
 
 
-	public String get(final Long key){
+	public String setValue( final String key, final String str ) {
+		return redis.set(key, str);
+	}
+
+
+	public String getValue( final Long key ) {
 		return redis.get(key.toString());
 	}
 
 
-
-	public String get(final String key){
+	public String getValue( final String key ) {
 		return redis.get(key);
 	}
-
 
 
 
 	/**
 	 * redis里面添加key-value格式的数据
 	 * <p>
-	 * 
+	 *
 	 * @param key
 	 *            缓存关键字
 	 * @param seconds
@@ -86,9 +76,9 @@ public class RedisCache {
 	 * @param value
 	 *            缓存值
 	 */
-	/*public boolean set( final String key, final int seconds, final Serializable value ) {
+	public boolean set( final String key, final int seconds, final Serializable value ) {
 		boolean rlt = false;
-		try {
+		/*try {
 			byte[] key_ = key.getBytes();
 			byte[] value_ = SerializeUtil.serialize(value);
 			String result = "NO";
@@ -102,9 +92,9 @@ public class RedisCache {
 			}
 		} catch ( Exception e ) {
 			logger.error(e.getMessage(), e);
-		}
+		}*/
 		return rlt;
-	}*/
+	}
 
 
 	/**
@@ -116,17 +106,18 @@ public class RedisCache {
 	 *            缓存关键字
 	 * @return Serializable
 	 */
-	/*public Object get( final String key ) {
+	public Object get( final String key ) {
 		Object t = null;
-		try {
-			byte[] keyBytes = key.getBytes();
-			byte[] bytes = redis.get(keyBytes);
-			t = SerializeUtil.unserialize(bytes);
-		} catch ( Exception e ) {
-			logger.error(e.getMessage(), e);
-		}
+//		/*try {
+//			byte[] keyBytes = key.getBytes();
+//			byte[] bytes = redis.get(keyBytes);
+//			t = SerializeUtil.unserialize(bytes);
+//		} catch ( Exception e ) {
+//			logger.error(e.getMessage(), e);
+//		}*/
 		return t;
-	}*/
+	}
+
 
 
 	/**
@@ -167,15 +158,13 @@ public class RedisCache {
 	}
 
 
-	public static Logger getLogger() {
-		return logger;
-	}
-
 	public RedisCommands getRedis() {
 		return redis;
 	}
 
-	public void setRedis(RedisCommands redis) {
+
+	public void setRedis( RedisCommands redis ) {
 		this.redis = redis;
 	}
+
 }

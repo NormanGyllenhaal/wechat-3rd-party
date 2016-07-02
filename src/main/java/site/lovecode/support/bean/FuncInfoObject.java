@@ -5,25 +5,26 @@ import com.alibaba.fastjson.annotation.JSONField;
 /**
  * Created by Administrator on 2016/4/6.
  */
-public class FuncInfoObject{
+public class FuncInfoObject {
 
-    @JSONField(name="funcscope_category")
-    private IdBean  funcscopeCategory;
+	@JSONField( name = "funcscope_category" )
+	private IdBean funcscopeCategory;
 
-    public IdBean getFuncscopeCategory() {
-        return funcscopeCategory;
-    }
 
-    public void setFuncscopeCategory(IdBean funcscopeCategory) {
-        this.funcscopeCategory = funcscopeCategory;
-    }
+	public IdBean getFuncscopeCategory() {
+		return funcscopeCategory;
+	}
 
-    @Override
-    public String toString() {
-        return "FuncInfoObject{" +
-                "funcscopeCategory=" + funcscopeCategory +
-                '}';
-    }
+
+	public void setFuncscopeCategory( IdBean funcscopeCategory ) {
+		this.funcscopeCategory = funcscopeCategory;
+	}
+
+
+	@Override
+	public String toString() {
+		return "FuncInfoObject{" + "funcscopeCategory=" + funcscopeCategory + '}';
+	}
 
 
 }

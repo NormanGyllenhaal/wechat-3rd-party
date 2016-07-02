@@ -5,20 +5,21 @@ package site.lovecode.support.bean;
  */
 public class IdBean {
 
-    private Integer Id;
+	private Integer Id;
 
-    public Integer getId() {
-        return Id;
-    }
 
-    public void setId(Integer id) {
-        Id = id;
-    }
+	public Integer getId() {
+		return Id;
+	}
 
-    @Override
-    public String toString() {
-        return "IdBean{" +
-                "Id='" + Id + '\'' +
-                '}';
-    }
+
+	public void setId( Integer id ) {
+		Id = id;
+	}
+
+
+	@Override
+	public String toString() {
+		return "IdBean{" + "Id='" + Id + '\'' + '}';
+	}
 }

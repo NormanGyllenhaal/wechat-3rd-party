@@ -12,7 +12,7 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import org.springframework.stereotype.Service;
 import site.lovecode.jedis.RedisCache;
 import site.lovecode.mapper.OfficialAccountAccessTokenMapper;
-import site.lovecode.support.bean.config.WechatConfig;
+import site.lovecode.support.config.WechatConfig;
 
 import javax.annotation.Resource;
 import java.io.IOException;

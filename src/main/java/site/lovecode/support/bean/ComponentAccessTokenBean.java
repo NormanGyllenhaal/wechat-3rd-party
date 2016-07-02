@@ -7,34 +7,36 @@ import com.alibaba.fastjson.annotation.JSONField;
  */
 public class ComponentAccessTokenBean {
 
-    @JSONField(name="component_access_token")
-    private String componentAccessToken;
+	@JSONField( name = "component_access_token" )
+	private String componentAccessToken;
 
-    @JSONField(name="expires_in")
-    private Integer expiresIn;
+	@JSONField( name = "expires_in" )
+	private Integer expiresIn;
 
 
-    public String getComponentAccessToken() {
-        return componentAccessToken;
-    }
+	public String getComponentAccessToken() {
+		return componentAccessToken;
+	}
 
-    public void setComponentAccessToken(String componentAccessToken) {
-        this.componentAccessToken = componentAccessToken;
-    }
 
-    public Integer getExpiresIn() {
-        return expiresIn;
-    }
+	public void setComponentAccessToken( String componentAccessToken ) {
+		this.componentAccessToken = componentAccessToken;
+	}
 
-    public void setExpiresIn(Integer expiresIn) {
-        this.expiresIn = expiresIn;
-    }
 
-    @Override
-    public String toString() {
-        return "ComponentAccessTokenBean{" +
-                "componentAccessToken='" + componentAccessToken + '\'' +
-                ", expiresIn='" + expiresIn + '\'' +
-                '}';
-    }
+	public Integer getExpiresIn() {
+		return expiresIn;
+	}
+
+
+	public void setExpiresIn( Integer expiresIn ) {
+		this.expiresIn = expiresIn;
+	}
+
+
+	@Override
+	public String toString() {
+		return "ComponentAccessTokenBean{"
+				+ "componentAccessToken='" + componentAccessToken + '\'' + ", expiresIn='" + expiresIn + '\'' + '}';
+	}
 }
