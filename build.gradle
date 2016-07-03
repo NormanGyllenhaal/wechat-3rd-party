@@ -1,10 +1,9 @@
-group 'site.lovecode'
+group 'site.lovecode.wechat'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
 apply plugin: 'war'
 apply plugin: 'jetty'
-apply plugin: 'eclipse'
 sourceCompatibility = 1.8
 
 repositories {
