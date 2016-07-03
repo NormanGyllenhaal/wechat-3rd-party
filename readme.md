@@ -1,4 +1,4 @@
-## weixin-tool 微信第三方平台介绍
+## wechat-3rd-party 微信第三方平台介绍
  微信第三方平台使用使用java8开发，使用了较多的java8的新特性，如lambda表达式和stream api，该项目使用了 [weixin-java-tools](https://github.com/chanjarster/weixin-java-tools)已经实现的功能，在其上又做了扩展，使其具备了微信第三方平台的功能，并增加数据持久化支持和简单的界面，使用它可以快速搭建一个微信的第三方平台,项目功能将不断增加完善，非常欢迎对本项目发起Pull Request
  ---
  * 已经使用的技术列表
