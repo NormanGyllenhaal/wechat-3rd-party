@@ -1,8 +1,9 @@
 package site.lovecode.wechat.util;
 
-import com.qq.weixin.mp.aes.AesException;
-import com.qq.weixin.mp.aes.WXBizMsgCrypt;
+
 import com.thoughtworks.xstream.XStream;
+import site.lovecode.wechat.ase.AesException;
+import site.lovecode.wechat.ase.WXBizMsgCrypt;
 import site.lovecode.wechat.client.impl.WechatThirdPartyClientImpl;
 import site.lovecode.wechat.support.bean.XmlEncryptingBean;
 
