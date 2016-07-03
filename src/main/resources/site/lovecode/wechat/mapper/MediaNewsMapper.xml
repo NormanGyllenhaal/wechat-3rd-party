@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="site.lovecode.wechat.mapper.MediaNewsMapper" >
+  <resultMap id="BaseResultMap" type="site.lovecode.wechat.entity.MediaNews" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="myMediaId" property="myMediaId" jdbcType="BIGINT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="thumbMediaId" property="thumbMediaId" jdbcType="VARCHAR" />
+    <result column="thumbUrl" property="thumbUrl" jdbcType="VARCHAR" />
+    <result column="showCoverPic" property="showCoverPic" jdbcType="TINYINT" />
+    <result column="author" property="author" jdbcType="VARCHAR" />
+    <result column="digest" property="digest" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="contentSourceUrl" property="contentSourceUrl" jdbcType="VARCHAR" />
+    <result column="orderNum" property="orderNum" jdbcType="INTEGER" />
+  </resultMap>
+</mapper>

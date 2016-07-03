@@ -9,7 +9,7 @@
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd ">
 
 	<!-- RedisCache 配置 -->
-	<bean id="redisCache" class="site.lovecode.jedis.RedisCache">
+	<bean id="redisCache" class="site.lovecode.wechat.jedis.RedisCache">
 		<property name="redis" ref="redisProxyCommands" />
 	</bean>
 
@@ -36,7 +36,7 @@
 	</bean>
 	
 	<!-- 类中需要注入的 -->
-	<bean name="redisProxyCommands" class="site.lovecode.jedis.RedisProxyFactory">
+	<bean name="redisProxyCommands" class="site.lovecode.wechat.jedis.RedisProxyFactory">
 		<constructor-arg index="0" ref="shardedJedisPool" />
 	</bean>
 </beans>

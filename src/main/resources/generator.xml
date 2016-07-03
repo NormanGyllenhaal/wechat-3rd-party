@@ -16,14 +16,14 @@
 
 
         <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
-            <property name="mappers" value="site.lovecode.common.mybatis.CommonMapper"/>
+            <property name="mappers" value="site.lovecode.wechat.common.mybatis.CommonMapper"/>
             <!-- caseSensitive默认false，当数据库表名区分大小写时，可以将该属性设置为true -->
             <property name="caseSensitive" value="true"/>
         </plugin>
 
         <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
         <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
-        <plugin type="site.lovecode.plugin.mybatisGenerator.IdentityPlugin"/>
+        <plugin type="site.lovecode.wechat.plugin.mybatisGenerator.IdentityPlugin"/>
 
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
@@ -31,7 +31,7 @@
                         password="">
         </jdbcConnection>
 
-        <javaTypeResolver type="site.lovecode.plugin.mybatisGenerator.JavaTypeResolverImpl"></javaTypeResolver>
+        <javaTypeResolver type="site.lovecode.wechat.plugin.mybatisGenerator.JavaTypeResolverImpl"></javaTypeResolver>
 
         <javaModelGenerator targetPackage="site.lovecode.entity"
                             targetProject="C:\Users\Administrator\IdeaProjects\weixin-tool\src\main\java"/>

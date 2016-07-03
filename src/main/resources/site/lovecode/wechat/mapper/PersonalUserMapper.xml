@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="site.lovecode.wechat.mapper.PersonalUserMapper">
+    <resultMap id="BaseResultMap" type="site.lovecode.wechat.entity.PersonalUser">
+        <!-- WARNING - @mbggenerated -->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="officialAccountId" jdbcType="BIGINT" property="officialAccountId"/>
+        <result column="openid" jdbcType="VARCHAR" property="openid"/>
+        <result column="subscribe" jdbcType="TINYINT" property="subscribe"/>
+        <result column="nickName" jdbcType="VARCHAR" property="nickName"/>
+        <result column="sex" jdbcType="TINYINT" property="sex"/>
+        <result column="city" jdbcType="VARCHAR" property="city"/>
+        <result column="country" jdbcType="VARCHAR" property="country"/>
+        <result column="province" jdbcType="VARCHAR" property="province"/>
+        <result column="language" jdbcType="VARCHAR" property="language"/>
+        <result column="headimgurl" jdbcType="VARCHAR" property="headimgurl"/>
+        <result column="subscribeTime" jdbcType="TIMESTAMP" property="subscribeTime"/>
+        <result column="unionid" jdbcType="VARCHAR" property="unionid"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="status" jdbcType="TINYINT" property="status"/>
+        <result column="groupid" jdbcType="VARCHAR" property="groupid"/>
+        <result column="createTime" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+		id,officialAccountId
+		,openid,subscribe,nickName,sex,city,country,province,language,headimgurl,subscribeTime,unionid,remark,status,groupid,createTime
+	</sql>
+
+
+    <resultMap id="JoinResultMap" type="site.lovecode.wechat.dto.PersonalUserDto">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="officialAccountId" jdbcType="BIGINT" property="officialAccountId"/>
+        <result column="openid" jdbcType="VARCHAR" property="openid"/>
+        <result column="subscribe" jdbcType="TINYINT" property="subscribe"/>
+        <result column="nickName" jdbcType="VARCHAR" property="nickName"/>
+        <result column="sex" jdbcType="TINYINT" property="sex"/>
+        <result column="city" jdbcType="VARCHAR" property="city"/>
+        <result column="country" jdbcType="VARCHAR" property="country"/>
+        <result column="province" jdbcType="VARCHAR" property="province"/>
+        <result column="language" jdbcType="VARCHAR" property="language"/>
+        <result column="headimgurl" jdbcType="VARCHAR" property="headimgurl"/>
+        <result column="subscribeTime" jdbcType="TIMESTAMP" property="subscribeTime"/>
+        <result column="unionid" jdbcType="VARCHAR" property="unionid"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="status" jdbcType="TINYINT" property="status"/>
+        <result column="groupid" jdbcType="VARCHAR" property="groupid"/>
+        <result column="createTime" jdbcType="TIMESTAMP" property="createTime"/>
+        <collection column="personalUserId" ofType="site.lovecode.wechat.entity.PersonalUserTags"
+                    property="tagsList">
+            <id column="b_id" jdbcType="BIGINT" property="id"/>
+            <result column="personalUserId" jdbcType="BIGINT" property="personalUserId"/>
+            <result column="tagId" jdbcType="INTEGER" property="tagId"/>
+            <result column="tagName" jdbcType="VARCHAR" property="tagName"/>
+        </collection>
+    </resultMap>
+
+
+    <resultMap id="JoinGroupByResultMap" type="site.lovecode.wechat.dto.PersonalUserGroupJoinDto">
+        <collection ofType="site.lovecode.wechat.dto.PersonalUserGroupDto" column="a_id"
+                    property="sexList">
+            <id column="a_id" jdbcType="BIGINT" property="id"/>
+            <result column="sex_count" jdbcType="INTEGER" property="count"/>
+            <result column="sex" jdbcType="VARCHAR" property="name"/>
+        </collection>
+        <collection ofType="site.lovecode.wechat.dto.PersonalUserGroupDto" column="b_id"
+                    property="languageList">
+            <id column="b_id" jdbcType="BIGINT" property="id"/>
+            <result column="language_count" jdbcType="INTEGER" property="count"/>
+            <result column="language" jdbcType="VARCHAR" property="name"/>
+        </collection>
+        <collection ofType="site.lovecode.wechat.dto.PersonalUserGroupDto" column="c_id"
+                    property="provinceList">
+            <id column="c_id" jdbcType="BIGINT" property="id"/>
+            <result column="province_count" jdbcType="INTEGER" property="count"/>
+            <result column="province" jdbcType="VARCHAR" property="name"/>
+        </collection>
+        <collection ofType="site.lovecode.wechat.dto.PersonalUserGroupDto" column="d_id"
+                    property="cityList">
+            <id column="d_id" jdbcType="BIGINT" property="id"/>
+            <result column="city_count" jdbcType="INTEGER" property="count"/>
+            <result column="city" jdbcType="VARCHAR" property="name"/>
+        </collection>
+    </resultMap>
+
+    <delete id="deleteByOfficialAccountIdAndSubscribe">
+		delete from WX_PERSONAL_USER where officialAccountId = #{officialAccountId} and subscribe != 0
+	</delete>
+
+    <select id="selectJoinTags" resultMap="JoinResultMap">
+        select
+        a.id,a.officialAccountId,a.openid,a.subscribe,a.nickName,a.sex,a.city,a.country,a.province,a.language,a.headimgurl,a.subscribeTime,a.unionid,a.remark,a.status,a.groupid,a.createTime,
+        b.id as b_id,b.personalUserId,b.tagId,c.tagName from WX_PERSONAL_USER a left join WX_PERSONAL_USER_TAGS b on
+        a.id =
+        b.personalUserId inner join WX_TAGS c on b.tagId = c.tagId
+        <where>
+            <if test="term.officialAccountId != null">
+                a.officialAccountId = #{term.officialAccountId}
+            </if>
+            <if test="term.tagId != null">
+                and b.tagId = #{term.tagId}
+            </if>
+            <if test="term.status != null">
+                and a.status = #{term.status}
+            </if>
+            <if test="term.nickName != null">
+                and a.nickName like "%"#{term.nickName}"%"
+            </if>
+            <if test="term.openId != null">
+                and a.openid = #{term.openId}
+            </if>
+            <if test="term.personalUserId !=null">
+                and a.id = #{term.personalUserId}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectJoinByTags" resultMap="JoinResultMap">
+        select
+        a.id,a.officialAccountId,a.openid,a.subscribe,a.nickName,a.sex,a.city,a.country,a.province,a.language,a.headimgurl,a.subscribeTime,a.unionid,a.remark,a.status,a.groupid,a.createTime,
+        f.c_id as b_id,f.personalUserId,f.tagId,f.tagName from WX_PERSONAL_USER a left join WX_PERSONAL_USER_TAGS b on
+        a.id =
+        b.personalUserId inner join (select c.id as c_id, c.personalUserId,c.tagId,d.tagName from WX_PERSONAL_USER_TAGS
+        c
+        inner join WX_TAGS d on c.tagId = d.tagId) f on a.id = f.personalUserId
+        <where>
+            <if test="term.officialAccountId != null">
+                a.officialAccountId = #{term.officialAccountId}
+            </if>
+            <if test="term.tagId != null">
+                and b.tagId = #{term.tagId}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectInId" resultType="java.lang.String">
+        select openid from WX_PERSONAL_USER where id in
+        <foreach close=")" collection="idList" index="index" item="item" open="(" separator=",">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="selectGroupBy" resultMap="JoinGroupByResultMap">
+		select  * from (select id as a_id, count(*) as sex_count,sex from WX_PERSONAL_USER where officialAccountId = #{oaid} group by sex ) a ,
+		(select id as b_id ,count(*) as language_count,language from WX_PERSONAL_USER where officialAccountId = #{oaid} group by language) b ,(select  u.id as c_id , count(DISTINCT u.id) as province_count
+		,city.shortname as province from WX_PERSONAL_USER as u inner join  WX_CITY  as city on u.province = city.pinyin where officialAccountId = #{oaid}  group by province ) c,(select p.id as d_id ,count(DISTINCT p.id) city_count,i.shortname as city from WX_PERSONAL_USER as p inner join WX_CITY as i on p.city = i.pinyin where officialAccountId = #{oaid} group by city ) d
+	</select>
+
+
+    <select id="selectUserCountByProvince" resultType="site.lovecode.wechat.dto.PersonalUserGroupDto">
+        select count(DISTINCT a.id) as count,b.shortname as name from WX_PERSONAL_USER a inner join WX_CITY b on a.city = b.pinyin where a.officialAccountId = #{oaid} and a.province = #{province} group by a.city;
+    </select>
+
+
+</mapper>

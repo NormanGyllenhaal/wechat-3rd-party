@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="site.lovecode.wechat.mapper.ArticleDayMapper">
+    <resultMap id="BaseResultMap" type="site.lovecode.wechat.entity.ArticleDay">
+        <!-- WARNING - @mbggenerated -->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="officialAccountId" jdbcType="BIGINT" property="officialAccountId"/>
+        <result column="refDate" jdbcType="DATE" property="refDate"/>
+        <result column="intPageReadUser" jdbcType="INTEGER" property="intPageReadUser"/>
+        <result column="intPageReadCount" jdbcType="INTEGER" property="intPageReadCount"/>
+        <result column="oriPageReadUser" jdbcType="INTEGER" property="oriPageReadUser"/>
+        <result column="oriPageReadCount" jdbcType="INTEGER" property="oriPageReadCount"/>
+        <result column="shareUser" jdbcType="INTEGER" property="shareUser"/>
+        <result column="shareCount" jdbcType="INTEGER" property="shareCount"/>
+        <result column="addToFavUser" jdbcType="INTEGER" property="addToFavUser"/>
+        <result column="addToFavCount" jdbcType="INTEGER" property="addToFavCount"/>
+    </resultMap>
+
+    <resultMap type="site.lovecode.wechat.dto.ArticleSummaryDto" id="JoinArticleSummaryResultMap">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="officialAccountId" jdbcType="BIGINT" property="officialAccountId"/>
+        <result column="refDate" jdbcType="DATE" property="refDate"/>
+        <result column="msgid" jdbcType="VARCHAR" property="msgid"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="intPageReadUser" jdbcType="INTEGER" property="intPageReadUser"/>
+        <result column="intPageReadCount" jdbcType="INTEGER" property="intPageReadCount"/>
+        <result column="oriPageReadUser" jdbcType="INTEGER" property="oriPageReadUser"/>
+        <result column="oriPageReadCount" jdbcType="INTEGER" property="oriPageReadCount"/>
+        <result column="shareUser" jdbcType="INTEGER" property="shareUser"/>
+        <result column="shareCount" jdbcType="INTEGER" property="shareCount"/>
+        <result column="addToFavUser" jdbcType="INTEGER" property="addToFavUser"/>
+        <result column="addToFavCount" jdbcType="INTEGER" property="addToFavCount"/>
+        <result column="intPageFromSessionReadUser" jdbcType="INTEGER" property="intPageFromSessionReadUser"/>
+        <result column="intPageFromSessionReadCount" jdbcType="INTEGER" property="intPageFromSessionReadCount"/>
+        <result column="intPageFromHistMsgReadUser" jdbcType="INTEGER" property="intPageFromHistMsgReadUser"/>
+        <result column="intPageFromHistMsgReadCount" jdbcType="INTEGER" property="intPageFromHistMsgReadCount"/>
+        <result column="intPageFromFeedReadUser" jdbcType="INTEGER" property="intPageFromFeedReadUser"/>
+        <result column="intPageFromFeedReadCount" jdbcType="INTEGER" property="intPageFromFeedReadCount"/>
+        <result column="intPageFromFriendsReadUser" jdbcType="INTEGER" property="intPageFromFriendsReadUser"/>
+        <result column="intPageFromFriendReadCount" jdbcType="INTEGER" property="intPageFromFriendReadCount"/>
+        <result column="intPageFromOtherReadUser" jdbcType="INTEGER" property="intPageFromOtherReadUser"/>
+        <result column="intPageFromOtherReadCount" jdbcType="INTEGER" property="intPageFromOtherReadCount"/>
+        <collection property="list" ofType="site.lovecode.wechat.dto.ArticleDayDto"
+                    column="officialAccountId">
+            <id column="b_id" jdbcType="BIGINT" property="id"/>
+            <result column="officialAccountId" jdbcType="BIGINT" property="officialAccountId"/>
+            <result column="b_refDate" jdbcType="DATE" property="refDate"/>
+            <result column="b_intPageReadUser" jdbcType="INTEGER" property="intPageReadUser"/>
+            <result column="b_intPageReadCount" jdbcType="INTEGER" property="intPageReadCount"/>
+            <result column="b_oriPageReadUser" jdbcType="INTEGER" property="oriPageReadUser"/>
+            <result column="b_oriPageReadCount" jdbcType="INTEGER" property="oriPageReadCount"/>
+            <result column="b_shareUser" jdbcType="INTEGER" property="shareUser"/>
+            <result column="b_shareCount" jdbcType="INTEGER" property="shareCount"/>
+            <result column="b_addToFavUser" jdbcType="INTEGER" property="addToFavUser"/>
+            <result column="b_addToFavCount" jdbcType="INTEGER" property="addToFavCount"/>
+            <result column="c_intPageFromSessionReadUser" jdbcType="INTEGER" property="intPageFromSessionReadUser"/>
+            <result column="c_intPageFromSessionReadCount" jdbcType="INTEGER" property="intPageFromSessionReadCount"/>
+            <result column="c_intPageFromHistMsgReadUser" jdbcType="INTEGER" property="intPageFromHistMsgReadUser"/>
+            <result column="c_intPageFromHistMsgReadCount" jdbcType="INTEGER" property="intPageFromHistMsgReadCount"/>
+            <result column="c_intPageFromFeedReadUser" jdbcType="INTEGER" property="intPageFromFeedReadUser"/>
+            <result column="c_intPageFromFeedReadCount" jdbcType="INTEGER" property="intPageFromFeedReadCount"/>
+            <result column="c_intPageFromFriendsReadUser" jdbcType="INTEGER" property="intPageFromFriendsReadUser"/>
+            <result column="c_intPageFromFriendReadCount" jdbcType="INTEGER" property="intPageFromFriendReadCount"/>
+            <result column="c_intPageFromOtherReadUser" jdbcType="INTEGER" property="intPageFromOtherReadUser"/>
+            <result column="c_intPageFromOtherReadCount" jdbcType="INTEGER" property="intPageFromOtherReadCount"/>
+        </collection>
+    </resultMap>
+
+
+    <select id="selectJoinArticleSummary" resultMap="JoinArticleSummaryResultMap">
+        select a.*,b.id as
+        b_id,b.refDate as b_refDate,b.intPageReadUser as b_intPageReadUser,b.intPageReadCount as
+        b_intPageReadCount,b.oriPageReadUser as b_oriPageReadUser,b.oriPageReadCount as
+        b_oriPageReadCount,b.shareUser as b_shareUser,b.shareCount as b_shareCount,b.addToFavUser as b_addToFavUser,b.addToFavCount as b_addToFavCount,c.intPageFromSessionReadUser as c_intPageFromSessionReadUser,c.intPageFromSessionReadCount as c_intPageFromSessionReadCount,c.intPageFromHistMsgReadUser as c_intPageFromHistMsgReadUser,c.intPageFromHistMsgReadCount as c_intPageFromHistMsgReadCount,c.intPageFromFeedReadUser as c_intPageFromFeedReadUser,c.intPageFromFeedReadCount as c_intPageFromFeedReadCount,c.intPageFromFriendsReadUser as c_intPageFromFriendsReadUser,c.intPageFromFriendReadCount as c_intPageFromFriendReadCount,
+        c.intPageFromOtherReadUser as c_intPageFromOtherReadUser,c.intPageFromOtherReadCount as c_intPageFromOtherReadCount
+        from (select id,officialAccountId,
+        sum(intPageReadCount) as intPageReadCount,sum(intPageReadUser) as
+        intPageReadUser ,sum(intPageFromSessionReadUser) as
+        intPageFromSessionReadUser,sum(intPageFromSessionReadCount) as intPageFromSessionReadCount,
+        sum(intPageFromHistMsgReadUser) as intPageFromHistMsgReadUser, sum(intPageFromHistMsgReadCount) as
+        intPageFromHistMsgReadCount,sum(intPageFromFeedReadUser) as intPageFromFeedReadUser
+        ,sum(intPageFromFeedReadCount) as intPageFromFeedReadCount,sum(intPageFromFriendsReadUser) as
+        intPageFromFriendsReadUser,sum(intPageFromFriendReadCount) as
+        intPageFromFriendReadCount,sum(intPageFromOtherReadUser) as
+        intPageFromOtherReadUser,sum(intPageFromOtherReadCount) as intPageFromOtherReadCount
+        from WX_ARTICLE_SUMMARY where
+        officialAccountId = #{oaid}
+        <if test="beginDate != null and endDate !=null">
+            and refDate between #{beginDate} and #{endDate}
+        </if>
+        ) a inner join WX_ARTICLE_DAY b on a.officialAccountId = b.officialAccountId inner join (select refDate,
+        sum(intPageFromSessionReadUser) as
+        intPageFromSessionReadUser,sum(intPageFromSessionReadCount) as intPageFromSessionReadCount,
+        sum(intPageFromHistMsgReadUser) as intPageFromHistMsgReadUser ,sum(intPageFromHistMsgReadCount) as
+        intPageFromHistMsgReadCount,sum(intPageFromFeedReadUser) as intPageFromFeedReadUser
+        ,sum(intPageFromFeedReadCount) as intPageFromFeedReadCount,sum(intPageFromFriendsReadUser) as
+        intPageFromFriendsReadUser,sum(intPageFromFriendReadCount) as
+        intPageFromFriendReadCount,sum(intPageFromOtherReadUser) as
+        intPageFromOtherReadUser,sum(intPageFromOtherReadCount) as intPageFromOtherReadCount
+        from WX_ARTICLE_SUMMARY where officialAccountId = #{oaid} group by refDate ) c on b.refDate = c.refDate where b.officialAccountId = #{oaid}
+        <if test="beginDate != null and endDate !=null">
+            and c.refDate between #{beginDate} and #{endDate}
+        </if>
+        order by c.refDate DESC
+    </select>
+
+    <select id="selectJoinSummaryPage" resultType="site.lovecode.wechat.dto.ArticleDayDto">
+        select * from  WX_ARTICLE_DAY a inner join (select refDate,
+        sum(intPageFromSessionReadUser) as
+        intPageFromSessionReadUser,sum(intPageFromSessionReadCount) as intPageFromSessionReadCount,
+        sum(intPageFromHistMsgReadUser) as intPageFromHistMsgReadUser ,sum(intPageFromHistMsgReadCount) as
+        intPageFromHistMsgReadCount,sum(intPageFromFeedReadUser) as intPageFromFeedReadUser
+        ,sum(intPageFromFeedReadCount) as intPageFromFeedReadCount,sum(intPageFromFriendsReadUser) as
+        intPageFromFriendsReadUser,sum(intPageFromFriendReadCount) as
+        intPageFromFriendReadCount,sum(intPageFromOtherReadUser) as
+        intPageFromOtherReadUser,sum(intPageFromOtherReadCount) as intPageFromOtherReadCount
+        from WX_ARTICLE_SUMMARY where officialAccountId = #{oaid} group by refDate ) b on a.refDate = b.refDate where a.officialAccountId = #{oaid}
+        <if test="beginDate != null and endDate !=null">
+            and b.refDate between #{beginDate} and #{endDate}
+        </if>
+        order by b.refDate DESC
+        <if test="index!=null and size!=null">
+            limit #{index},#{size}
+        </if>
+    </select>
+
+    <select id="selectJoinSummaryCount" resultType="java.lang.Integer">
+        select count(*) from  WX_ARTICLE_DAY a inner join (select refDate,
+        sum(intPageFromSessionReadUser) as
+        intPageFromSessionReadUser,sum(intPageFromSessionReadCount) as intPageFromSessionReadCount,
+        sum(intPageFromHistMsgReadUser) as intPageFromHistMsgReadUser ,sum(intPageFromHistMsgReadCount) as
+        intPageFromHistMsgReadCount,sum(intPageFromFeedReadUser) as intPageFromFeedReadUser
+        ,sum(intPageFromFeedReadCount) as intPageFromFeedReadCount,sum(intPageFromFriendsReadUser) as
+        intPageFromFriendsReadUser,sum(intPageFromFriendReadCount) as
+        intPageFromFriendReadCount,sum(intPageFromOtherReadUser) as
+        intPageFromOtherReadUser,sum(intPageFromOtherReadCount) as intPageFromOtherReadCount
+        from WX_ARTICLE_SUMMARY where officialAccountId = #{oaid} group by refDate ) b on a.refDate = b.refDate where a.officialAccountId = #{oaid}
+        <if test="beginDate != null and endDate !=null">
+            and b.refDate between #{beginDate} and #{endDate}
+        </if>
+    </select>
+</mapper>

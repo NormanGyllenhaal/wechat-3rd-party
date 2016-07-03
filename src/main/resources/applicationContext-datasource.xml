@@ -35,7 +35,7 @@
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="configLocation" value="classpath:mybatis-config.xml" />
 		<property name="dataSource" ref="dataSource" />
-		<property name="mapperLocations" value="classpath:site/lovecode/mapper/*.xml"></property>
+		<property name="mapperLocations" value="classpath:site/lovecode/wechat/mapper/*.xml"></property>
 		<property name="typeAliasesPackage" value="site.lovecode.entity" />
 		<!--<property name="plugins">
 			<array>
@@ -56,7 +56,7 @@
 		<property name="basePackage" value="site.lovecode.mapper" />
 		<property name="properties">
 			<value>
-				mappers=site.lovecode.common.mybatis.CommonMapper
+				mappers=site.lovecode.wechat.common.mybatis.CommonMapper
 				style=normal
 			</value>
 		</property>

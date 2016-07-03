@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="site.lovecode.wechat.mapper.KeywordReplySettingMapper">
+	<resultMap id="BaseResultMap" type="site.lovecode.wechat.entity.KeywordReplySetting">
+		<!-- WARNING - @mbggenerated -->
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="officialAccountId" property="officialAccountId" jdbcType="BIGINT" />
+		<result column="ruleName" property="ruleName" jdbcType="VARCHAR" />
+		<result column="replyMod" property="replyMod" jdbcType="TINYINT" />
+		<result column="replyOpen" property="replyOpen" jdbcType="TINYINT" />
+		<result column="plat" property="plat" jdbcType="TINYINT" />
+		<result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<resultMap id="JoinResultMap" type="site.lovecode.wechat.dto.KeywordReplySettingDto">
+		<id column="a_id" jdbcType="BIGINT" property="id" />
+		<result column="a_officialAccountId" jdbcType="BIGINT" property="officialAccountId" />
+		<result column="ruleName" jdbcType="VARCHAR" property="ruleName" />
+		<result column="replyMod" jdbcType="TINYINT" property="replyMod" />
+		<result column="replyOpen" jdbcType="TINYINT" property="replyOpen" />
+		<result column="plat" jdbcType="TINYINT" property="plat" />
+		<result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
+		<collection property="keywordReplySettingKeywordList" column="keywordReplySettingId"
+			ofType="site.lovecode.wechat.entity.KeywordReplySettingKeyword">
+			<id column="b_id" property="id" jdbcType="BIGINT" />
+			<result column="b_keywordReplySettingId" property="keywordReplySettingId" jdbcType="BIGINT" />
+			<result column="type" property="type" jdbcType="TINYINT" />
+			<result column="matchMode" property="matchMode" jdbcType="TINYINT" />
+			<result column="content" property="content" jdbcType="VARCHAR" />
+		</collection>
+		<collection property="keywordReplySettingReplyVoList" column="keywordReplySettingId"
+			ofType="site.lovecode.wechat.dto.KeywordReplySettingReplyDto">
+			<id column="c_id" jdbcType="BIGINT" property="id" />
+			<result column="c_keywordReplySettingId" jdbcType="BIGINT" property="keywordReplySettingId" />
+			<result column="c_type" jdbcType="TINYINT" property="type" />
+			<result column="c_content" jdbcType="VARCHAR" property="content" />
+			<collection property="keywordReplySettingNewList" column="keywordReplySettingReplyId"
+				ofType="site.lovecode.wechat.entity.KeywordReplySettingNew">
+				<id column="d_id" jdbcType="BIGINT" property="id" />
+				<result column="keywordReplySettingReplyId" jdbcType="BIGINT" property="keywordReplySettingReplyId" />
+				<result column="title" jdbcType="VARCHAR" property="title" />
+				<result column="author" jdbcType="VARCHAR" property="author" />
+				<result column="digest" jdbcType="VARCHAR" property="digest" />
+				<result column="showCover" jdbcType="TINYINT" property="showCover" />
+				<result column="coverUrl" jdbcType="VARCHAR" property="coverUrl" />
+				<result column="contentUrl" jdbcType="VARCHAR" property="contentUrl" />
+				<result column="sourceUrl" jdbcType="VARCHAR" property="sourceUrl" />
+			</collection>
+		</collection>
+	</resultMap>
+
+	<select id="selectJoin" resultMap="JoinResultMap">
+		select a.id as a_id,a.officialAccountId as a_officialAccountId,a.ruleName,a.replyMod,a.replyOpen,a.plat,b.id as
+		b_id,b.keywordReplySettingId as b_keywordReplySettingId,b.type,b.matchMode,b.content,e.* from WX_KEYWORD_REPLY_SETTING	                
+		as a inner join WX_KEYWORD_REPLY_SETTING_KEYWORD as b on a.id = b.keywordReplySettingId inner join (select c.id as
+		c_id,c.keywordReplySettingId as c_keywordReplySettingId,c.type as c_type,c.content as c_content,d.id as
+		d_id,d.keywordReplySettingReplyId,d.title,d.author,d.digest,d.showCover,d.coverUrl,d.contentUrl,d.sourceUrl from
+		 WX_KEYWORD_REPLY_SETTING_REPLY as c left join WX_KEYWORD_REPLY_SETTING_NEWS as d on c.id =
+		d.keywordReplySettingReplyId) as e on a.id = c_keywordReplySettingId where a.officialAccountId = #{officialAccountId}
+		and a.replyOpen = #{replyOpen} and a.plat = #{plat};
+	</select>
+</mapper>

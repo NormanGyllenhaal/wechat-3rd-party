@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="site.lovecode.wechat.mapper.ReplySettingMapper" >
+  <resultMap id="BaseResultMap" type="site.lovecode.wechat.entity.ReplySetting" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="officialAccountId" property="officialAccountId" jdbcType="BIGINT" />
+    <result column="replyOpen" property="replyOpen" jdbcType="TINYINT" />
+    <result column="replyType" property="replyType" jdbcType="TINYINT" />
+    <result column="type" property="type" jdbcType="TINYINT" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="plat" property="plat" jdbcType="TINYINT" />
+    <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+</mapper>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="site.lovecode.wechat.mapper.OfficialAccountMapper">
+	<resultMap id="BaseResultMap" type="site.lovecode.wechat.entity.OfficialAccount">
+		<!-- WARNING - @mbggenerated -->
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="appid" property="appid" jdbcType="VARCHAR" />
+		<result column="accountType" property="accountType" jdbcType="TINYINT" />
+		<result column="serviceTypeInfo" property="serviceTypeInfo" jdbcType="TINYINT" />
+		<result column="verifyTypeInfo" property="verifyTypeInfo" jdbcType="TINYINT" />
+		<result column="nickName" property="nickName" jdbcType="VARCHAR" />
+		<result column="userName" property="userName" jdbcType="VARCHAR" />
+		<result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+
+	<resultMap id="JoinAuthorizerResultMap" type="site.lovecode.wechat.dto.OfficialAccountDto">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="appid" property="appid" jdbcType="VARCHAR" />
+		<result column="accountType" property="accountType" jdbcType="TINYINT" />
+		<result column="serviceTypeInfo" property="serviceTypeInfo" jdbcType="TINYINT" />
+		<result column="verifyTypeInfo" property="verifyTypeInfo" jdbcType="TINYINT" />
+		<result column="nickName" property="nickName" jdbcType="VARCHAR" />
+		<result column="userName" property="userName" jdbcType="VARCHAR" />
+		<result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+		<association property="authorizerAccessToken" javaType="site.lovecode.wechat.entity.AuthorizerAccessToken">
+			<result column="officialAccountId" property="officialAccountId" jdbcType="BIGINT" />
+			<result column="authorizerAppid" property="authorizerAppid" jdbcType="VARCHAR" />
+			<result column="authorizerAccessToken" property="authorizerAccessToken" jdbcType="VARCHAR" />
+			<result column="expiresIn" property="expiresIn" jdbcType="INTEGER" />
+			<result column="authorizerRefreshToken" property="authorizerRefreshToken" jdbcType="VARCHAR" />
+			<result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+		</association>
+	</resultMap>
+
+	<resultMap id="JoinInfoAndAccessTokenResultMap" type="site.lovecode.wechat.dto.OfficialAccountDto">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="appid" property="appid" jdbcType="VARCHAR" />
+		<result column="accountType" property="accountType" jdbcType="TINYINT" />
+		<result column="serviceTypeInfo" property="serviceTypeInfo" jdbcType="TINYINT" />
+		<result column="verifyTypeInfo" property="verifyTypeInfo" jdbcType="TINYINT" />
+		<result column="nickName" property="nickName" jdbcType="VARCHAR" />
+		<result column="userName" property="userName" jdbcType="VARCHAR" />
+		<result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+		<association property="officialAccountInfo" javaType="site.lovecode.wechat.entity.OfficialAccountInfo">
+			<result column="officialAccountId" property="officialAccountId" jdbcType="BIGINT" />
+			<result column="appid" property="appid" jdbcType="VARCHAR" />
+			<result column="appSecret" property="appSecret" jdbcType="VARCHAR" />
+			<result column="token" property="token" jdbcType="VARCHAR" />
+			<result column="encodingAesKey" property="encodingAesKey" jdbcType="VARCHAR" />
+			<result column="wechatId" property="wechatId" jdbcType="VARCHAR" />
+			<result column="messageUrl" property="messageUrl" jdbcType="VARCHAR" />
+			<result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+		</association>
+		<association property="officialAccountAccessToken" javaType="site.lovecode.wechat.entity.OfficialAccountAccessToken">
+			<result column="officialAccountId" property="officialAccountId" jdbcType="BIGINT" />
+			<result column="appid" property="appid" jdbcType="VARCHAR" />
+			<result column="expiresIn" property="expiresIn" jdbcType="INTEGER" />
+			<result column="accessToken" property="accessToken" jdbcType="VARCHAR" />
+			<result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+		</association>
+	</resultMap>
+
+
+	<resultMap id="JoinAuthorizerInfo" type="site.lovecode.wechat.dto.OfficialAccountAuthorizerInfoDto">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="appid" property="appid" jdbcType="VARCHAR" />
+		<result column="accountType" property="accountType" jdbcType="TINYINT" />
+		<result column="serviceTypeInfo" property="serviceTypeInfo" jdbcType="TINYINT" />
+		<result column="verifyTypeInfo" property="verifyTypeInfo" jdbcType="TINYINT" />
+		<result column="nickName" property="nickName" jdbcType="VARCHAR" />
+		<result column="userName" property="userName" jdbcType="VARCHAR" />
+		<result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+		<association property="authorizerInfo" javaType="site.lovecode.wechat.entity.AuthorizerInfo">
+			<result column="officialAccountId" property="officialAccountId" jdbcType="BIGINT" />
+			<result column="authorizerAppid" property="authorizerAppid" jdbcType="VARCHAR" />
+			<result column="headImg" property="headImg" jdbcType="VARCHAR" />
+			<result column="alias" property="alias" jdbcType="VARCHAR" />
+			<result column="qrcodeUrl" property="qrcodeUrl" jdbcType="VARCHAR" />
+			<result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+			<result column="authorizationStatus" property="authorizationStatus" jdbcType="TINYINT" />
+		</association>
+	</resultMap>
+
+
+	<select id="selectJoinAuthorizerAccessToken" resultMap="JoinAuthorizerResultMap">
+		select * from WX_OFFICIAL_ACCOUNT a,WX_AUTHORIZER_ACCESS_TOKEN b where a.id = b.officialAccountId
+		<if test="id != null">
+			and a.id = #{id}
+		</if>
+	</select>
+
+
+	<select id="selectJoinInfoAndAccessToken" resultMap="JoinInfoAndAccessTokenResultMap">
+		select * from WX_OFFICIAL_ACCOUNT a left join
+		WX_OFFICIAL_ACCOUNT_INFO b on a.id = b.officialAccountId left JOIN
+		WX_OFFICIAL_ACCOUNT_ACCESS_TOKEN c on a.id =
+		c.officialAccountId where a.accountType = 2
+	</select>
+
+
+
+	<select id="selectJoinAuthorizerInfo" resultMap="JoinAuthorizerInfo">
+		select * from WX_OFFICIAL_ACCOUNT a INNER JOIN WX_AUTHORIZER_INFO b ON a.id = b.officialAccountId
+		<where>
+			<if test="accountType!=null">
+				a.accountType = #{accountType}
+			</if>
+			<if test="verifyTypeInfo!=null">
+				and a.verifyTypeInfo = #{verifyTypeInfo}
+			</if>
+			<if test="authorizationStatus!=null">
+				and b.authorizationStatus = #{authorizationStatus}
+			</if>
+		</where>
+	</select>
+
+</mapper>

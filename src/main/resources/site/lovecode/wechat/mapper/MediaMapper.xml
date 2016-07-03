@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="site.lovecode.wechat.mapper.MediaMapper">
+  <resultMap id="BaseResultMap" type="site.lovecode.wechat.entity.Media">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="officialAccountId" jdbcType="BIGINT" property="officialAccountId" />
+    <result column="mediaId" jdbcType="VARCHAR" property="mediaId" />
+    <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="createdAt" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="introduction" jdbcType="VARCHAR" property="introduction" />
+    <result column="path" jdbcType="VARCHAR" property="path" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="mediaType" jdbcType="TINYINT" property="mediaType" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="updateTime" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+
+	<resultMap id="JoinResultMap" type="site.lovecode.wechat.dto.MediaDto">
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="officialAccountId" jdbcType="BIGINT" property="officialAccountId" />
+		<result column="mediaId" jdbcType="VARCHAR" property="mediaId" />
+		<result column="type" jdbcType="TINYINT" property="type" />
+		<result column="createdAt" jdbcType="TIMESTAMP" property="createdAt" />
+		<result column="title" jdbcType="VARCHAR" property="title" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="introduction" jdbcType="VARCHAR" property="introduction" />
+		<result column="path" jdbcType="VARCHAR" property="path" />
+		<result column="url" jdbcType="VARCHAR" property="url" />
+		<result column="mediaType" jdbcType="TINYINT" property="mediaType" />
+		<result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
+		<result column="updateTime" jdbcType="TIMESTAMP" property="updateTime" />
+		<collection column="myMediaId" ofType="site.lovecode.wechat.entity.MediaNews" property="mediaNewsList">
+			<id column="b_id" jdbcType="BIGINT" property="id" />
+			<result column="myMediaId" jdbcType="BIGINT" property="myMediaId" />
+			<result column="b_title" jdbcType="VARCHAR" property="title" />
+			<result column="thumbMediaId" jdbcType="VARCHAR" property="thumbMediaId" />
+			<result column="c_url" jdbcType="VARCHAR" property="thumbUrl" />
+			<result column="showCoverPic" jdbcType="TINYINT" property="showCoverPic" />
+			<result column="author" jdbcType="VARCHAR" property="author" />
+			<result column="digest" jdbcType="VARCHAR" property="digest" />
+			<result column="content" jdbcType="VARCHAR" property="content" />
+			<result column="b_url" jdbcType="VARCHAR" property="url" />
+			<result column="contentSourceUrl" jdbcType="VARCHAR" property="contentSourceUrl" />
+		</collection>
+	</resultMap>
+
+
+	<select id="selectJoinMediaNews" resultMap="JoinResultMap">
+		select
+		a.id,a.officialAccountId,a.mediaId,a.Type,a.createdAt,a.title,a.name,a.introduction,a.path,a.url,a.mediaType,a.createTime,a.updateTime,b.id
+		as b_id,b.myMediaId,
+		b.title as b_title,b.thumbMediaId,c.url as c_url,b.showCoverPic,b.author,b.digest,b.content,b.url
+		as b_url,b.contentSourceUrl
+		from WX_MEDIA a left join WX_MEDIA_NEWS b on a.id = b.myMediaId inner join WX_MEDIA c on
+		c.mediaId = b.thumbMediaId where a.officialAccountId = #{oaid}
+		<if test="type !=null">
+			and a.type = #{type}
+		</if>
+		<if test="mediaType !=null">
+			and a.mediaType = #{mediaType}
+		</if>
+	</select>
+
+	<select id="selectByTypePage" resultType="site.lovecode.wechat.entity.Media">
+		select id,officialAccountId,mediaId,Type,createdAt,title,name,introduction,path,url,mediaType,createTime,updateTime
+		from WX_MEDIA where officialAccountId = #{oaid}
+		<if test="type!=null">
+			and type = #{type}
+		</if>
+	</select>
+</mapper>

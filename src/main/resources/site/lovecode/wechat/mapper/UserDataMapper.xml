@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="site.lovecode.wechat.mapper.UserDataMapper">
+    <resultMap id="BaseResultMap" type="site.lovecode.wechat.entity.UserData">
+        <!--
+          WARNING - @mbggenerated
+        -->
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="officialAccountId" property="officialAccountId" jdbcType="BIGINT"/>
+        <result column="refDate" property="refDate" jdbcType="DATE"/>
+        <result column="userSource" property="userSource" jdbcType="TINYINT"/>
+        <result column="newUser" property="newUser" jdbcType="INTEGER"/>
+        <result column="cancel" property="cancel" jdbcType="INTEGER"/>
+        <result column="cumulateUser" property="cumulateUser" jdbcType="INTEGER"/>
+    </resultMap>
+
+
+    <select id="selectByItem" resultType="site.lovecode.wechat.entity.UserData">
+        select id,officialAccountId,refDate,userSource,newUser,cancel,cumulateUser from WX_USER_DATA where
+        officialAccountId = #{officialAccountId}
+        <if test="beginDate!=null and endDate!=null">
+           and refDate between #{beginDate}  and  #{endDate}
+        </if>
+        <if test="userSource!=null">
+            and userSource = #{userSource}
+        </if>
+        order by refDate DESC
+    </select>
+</mapper>

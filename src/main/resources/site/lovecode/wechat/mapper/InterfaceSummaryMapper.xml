@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="site.lovecode.wechat.mapper.InterfaceSummaryMapper" >
+  <resultMap id="BaseResultMap" type="site.lovecode.wechat.entity.InterfaceSummary" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="officialAccountId" property="officialAccountId" jdbcType="BIGINT" />
+    <result column="refDate" property="refDate" jdbcType="DATE" />
+    <result column="callbackCount" property="callbackCount" jdbcType="INTEGER" />
+    <result column="failCount" property="failCount" jdbcType="INTEGER" />
+    <result column="totalTimeCost" property="totalTimeCost" jdbcType="INTEGER" />
+    <result column="maxTimeCost" property="maxTimeCost" jdbcType="INTEGER" />
+  </resultMap>
+</mapper>

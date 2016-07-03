@@ -35,7 +35,7 @@
 
 	<!-- AOP相关配置 -->
 	<aop:config>
-		<aop:pointcut expression="execution(* site.lovecode.service.impl..*.*(..))" id="servicePointcut" />
+		<aop:pointcut expression="execution(* site.lovecode.wechat.service.impl..*.*(..))" id="servicePointcut" />
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="servicePointcut" />
 	</aop:config>
 

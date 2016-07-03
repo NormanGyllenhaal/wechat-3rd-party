@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="site.lovecode.wechat.mapper.ArticleTotalDetailMapper">
+  <resultMap id="BaseResultMap" type="site.lovecode.wechat.entity.ArticleTotalDetail">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="articleTotalId" jdbcType="BIGINT" property="articleTotalId" />
+    <result column="officialAccountId" jdbcType="BIGINT" property="officialAccountId" />
+    <result column="statDate" jdbcType="DATE" property="statDate" />
+    <result column="targetUser" jdbcType="INTEGER" property="targetUser" />
+    <result column="intPageReadUser" jdbcType="INTEGER" property="intPageReadUser" />
+    <result column="intPageReadCount" jdbcType="INTEGER" property="intPageReadCount" />
+    <result column="oriPageReadUser" jdbcType="INTEGER" property="oriPageReadUser" />
+    <result column="oriPageReadCount" jdbcType="INTEGER" property="oriPageReadCount" />
+    <result column="shareUser" jdbcType="INTEGER" property="shareUser" />
+    <result column="shareCount" jdbcType="INTEGER" property="shareCount" />
+    <result column="addToFavUser" jdbcType="INTEGER" property="addToFavUser" />
+    <result column="addToFavCount" jdbcType="INTEGER" property="addToFavCount" />
+    <result column="intPageFromSessionReadUser" jdbcType="INTEGER" property="intPageFromSessionReadUser" />
+    <result column="intPageFromSessionReadCount" jdbcType="INTEGER" property="intPageFromSessionReadCount" />
+    <result column="intPageFromHistMsgReadUser" jdbcType="INTEGER" property="intPageFromHistMsgReadUser" />
+    <result column="intPageFromHistMsgReadCount" jdbcType="INTEGER" property="intPageFromHistMsgReadCount" />
+    <result column="intPageFromFeedReadUser" jdbcType="INTEGER" property="intPageFromFeedReadUser" />
+    <result column="intPageFromFeedReadCount" jdbcType="INTEGER" property="intPageFromFeedReadCount" />
+    <result column="intPageFromFriendsReadUser" jdbcType="INTEGER" property="intPageFromFriendsReadUser" />
+    <result column="intPageFromFriendReadCount" jdbcType="INTEGER" property="intPageFromFriendReadCount" />
+    <result column="intPageFromOtherReadUser" jdbcType="INTEGER" property="intPageFromOtherReadUser" />
+    <result column="intPageFromOtherReadCount" jdbcType="INTEGER" property="intPageFromOtherReadCount" />
+    <result column="feedShareFromSessionUser" jdbcType="INTEGER" property="feedShareFromSessionUser" />
+    <result column="feedShareFromSessionCnt" jdbcType="INTEGER" property="feedShareFromSessionCnt" />
+    <result column="feedShareFromFeedUser" jdbcType="INTEGER" property="feedShareFromFeedUser" />
+    <result column="feedShareFromFeedCnt" jdbcType="INTEGER" property="feedShareFromFeedCnt" />
+    <result column="feedShareFromOtherUser" jdbcType="INTEGER" property="feedShareFromOtherUser" />
+    <result column="feedShareFromOtherCnt" jdbcType="INTEGER" property="feedShareFromOtherCnt" />
+  </resultMap>
+</mapper>

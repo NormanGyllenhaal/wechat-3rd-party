@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="site.lovecode.wechat.mapper.AuthenticationMessageMapper" >
+  <resultMap id="BaseResultMap" type="site.lovecode.wechat.entity.AuthenticationMessage" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="officialAccountId" property="officialAccountId" jdbcType="BIGINT" />
+    <result column="toUserName" property="toUserName" jdbcType="VARCHAR" />
+    <result column="fromUserName" property="fromUserName" jdbcType="VARCHAR" />
+    <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="msgType" property="msgType" jdbcType="TINYINT" />
+    <result column="event" property="event" jdbcType="TINYINT" />
+    <result column="expiredTime" property="expiredTime" jdbcType="TIMESTAMP" />
+    <result column="failTime" property="failTime" jdbcType="TIMESTAMP" />
+    <result column="failReason" property="failReason" jdbcType="VARCHAR" />
+    <result column="advised" property="advised" jdbcType="TINYINT" />
+  </resultMap>
+</mapper>

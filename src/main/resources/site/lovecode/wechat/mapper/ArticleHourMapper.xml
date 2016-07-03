@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="site.lovecode.wechat.mapper.ArticleHourMapper">
+    <resultMap id="BaseResultMap" type="site.lovecode.wechat.entity.ArticleHour">
+        <!-- WARNING - @mbggenerated -->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="officialAccountId" jdbcType="BIGINT" property="officialAccountId"/>
+        <result column="refDate" jdbcType="DATE" property="refDate"/>
+        <result column="refHour" jdbcType="INTEGER" property="refHour"/>
+        <result column="userSource" jdbcType="INTEGER" property="userSource"/>
+        <result column="intPageReadUser" jdbcType="INTEGER" property="intPageReadUser"/>
+        <result column="intPageReadCount" jdbcType="INTEGER" property="intPageReadCount"/>
+        <result column="oriPageReadUser" jdbcType="INTEGER" property="oriPageReadUser"/>
+        <result column="oriPageReadUser" jdbcType="INTEGER" property="oriPageReadCount"/>
+        <result column="shareUser" jdbcType="INTEGER" property="shareUser"/>
+        <result column="shareCount" jdbcType="INTEGER" property="shareCount"/>
+        <result column="addToFavUser" jdbcType="INTEGER" property="addToFavUser"/>
+        <result column="addToFavCount" jdbcType="INTEGER" property="addToFavCount"/>
+    </resultMap>
+
+
+    <select id="selectArticleHour" resultType="site.lovecode.wechat.dto.ArticleHourGroupDto">
+        select
+        id,officialAccountId,refDate,a.refHour,intPageReadUser,intPageReadCount,oriPageReadUser,oriPageReadCount,shareUser,shareCount,addToFavUser,addToFavCount,IFNULL(intPageFromSessionReadUser,0)
+        as intPageFromSessionReadUser,IFNULL(intPageFromSessionReadCount,0) as
+        intPageFromSessionReadCount,IFNULL(intPageFromHistMsgReadUser,0) as
+        intPageFromHistMsgReadUser,IFNULL(intPageFromHistMsgReadCount,0) as
+        intPageFromHistMsgReadCount,IFNULL(intPageFromFeedReadUser,0) as
+        intPageFromFeedReadUser,IFNULL(intPageFromFeedReadCount,0) as
+        intPageFromFeedReadCount,IFNULL(intPageFromFriendsReadUser,0) as intPageFromFriendsReadUser,
+        IFNULL(intPageFromFriendReadCount,0) as intPageFromFriendReadCount,IFNULL(intPageFromOtherReadUser,0) as
+        intPageFromOtherReadUser,IFNULL(intPageFromOtherReadCount,0) as intPageFromOtherReadCount from (select
+        id,officialAccountId,refDate,refHour,
+        sum(intPageReadUser) as intPageReadUser,sum(intPageReadCount) as intPageReadCount,sum(oriPageReadUser) as
+        oriPageReadUser,sum(oriPageReadCount) as oriPageReadCount,sum(shareUser) as shareUser,sum(shareCount) as
+        shareCount,sum(addToFavUser) as addToFavUser,sum(addToFavCount) as addToFavCount
+        from WX_ARTICLE_HOUR where officialAccountId = #{oaid}
+        and refDate = #{refDate} group by refHour ) a left join (select
+        refHour,ifnull(intPageReadUser,0) as intPageFromSessionReadUser,ifnull(intPageReadCount,0) as
+        intPageFromSessionReadCount from WX_ARTICLE_HOUR
+        where officialAccountId = #{oaid} and userSource = 0 and refDate = #{refDate} ) b on a.refHour = b.refHour left
+        join (select
+        refHour,intPageReadUser as intPageFromFriendsReadUser ,intPageReadCount as intPageFromFriendReadCount from
+        WX_ARTICLE_HOUR where officialAccountId = #{oaid}
+        and userSource = 1 and refDate = #{refDate}) c on c.refHour = b.refHour left join (select
+        refHour,intPageReadUser as intPageFromFeedReadUser,intPageReadCount as intPageFromFeedReadCount from
+        WX_ARTICLE_HOUR
+        where officialAccountId = #{oaid} and userSource = 2 and refDate = #{refDate} ) d on a.refHour = d.refHour left
+        join (select
+        refHour,intPageReadUser as intPageFromHistMsgReadUser ,intPageReadCount as intPageFromHistMsgReadCount from
+        WX_ARTICLE_HOUR
+        where officialAccountId = #{oaid} and userSource = 4 and refDate = #{refDate} ) f on a.refHour = f.refHour left
+        join (select
+        refHour,intPageReadUser as intPageFromOtherReadUser,intPageReadCount as intPageFromOtherReadCount from
+        WX_ARTICLE_HOUR
+        where officialAccountId = #{oaid} and userSource = 5 and refDate = #{refDate} ) g on a.refHour = g.refHour
+        <if test="index!=null and size!=null">
+            limit #{index},#{size}
+        </if>
+    </select>
+
+
+    <select id="selectArticleHourCount" resultType="java.lang.Integer">
+        select count(*) from (select id,officialAccountId,refDate,refHour,
+		sum(intPageReadUser) as intPageReadUser,sum(intPageReadCount) as intPageReadCount,sum(oriPageReadUser) as oriPageReadUser,sum(oriPageReadCount) as oriPageReadCount,sum(shareUser) as shareUser,sum(shareCount) as shareCount,sum(addToFavUser) as addToFavUser,sum(addToFavCount) as addToFavCount
+		from WX_ARTICLE_HOUR where officialAccountId = #{oaid}
+		and refDate = #{refDate} group by refHour ) a left join (select
+		refHour,ifnull(intPageReadUser,0) as intPageFromSessionReadUser,ifnull(intPageReadCount,0) as intPageFromSessionReadCount from WX_ARTICLE_HOUR
+		where officialAccountId = #{oaid} and userSource = 0 and refDate = #{refDate} ) b on a.refHour = b.refHour left join (select
+		refHour,intPageReadUser as intPageFromFriendsReadUser ,intPageReadCount as intPageFromFriendReadCount  from WX_ARTICLE_HOUR where officialAccountId = #{oaid}
+		and userSource = 1 and refDate = #{refDate}) c on c.refHour = b.refHour left join (select
+		refHour,intPageReadUser as intPageFromFeedReadUser,intPageReadCount as intPageFromFeedReadCount from WX_ARTICLE_HOUR
+		where officialAccountId = #{oaid} and userSource = 2 and refDate = #{refDate} ) d on a.refHour = d.refHour left join (select
+		refHour,intPageReadUser as intPageFromHistMsgReadUser ,intPageReadCount as intPageFromHistMsgReadCount from WX_ARTICLE_HOUR
+		where officialAccountId = #{oaid} and userSource = 4 and refDate = #{refDate} ) f on a.refHour = f.refHour left join (select
+		refHour,intPageReadUser as intPageFromOtherReadUser,intPageReadCount as intPageFromOtherReadCount from WX_ARTICLE_HOUR
+		where officialAccountId = #{oaid}  and userSource = 5 and refDate = #{refDate} ) g on a.refHour = g.refHour
+    </select>
+
+
+    <select id="selectArticleHourTotal" resultType="site.lovecode.wechat.dto.ArticleHourDto">
+       select  intPageReadUser,intPageReadCount,IFNULL(intPageFromSessionReadUser,0)
+        as intPageFromSessionReadUser,IFNULL(intPageFromSessionReadCount,0) as
+        intPageFromSessionReadCount,IFNULL(intPageFromHistMsgReadUser,0) as
+        intPageFromHistMsgReadUser,IFNULL(intPageFromHistMsgReadCount,0) as
+        intPageFromHistMsgReadCount,IFNULL(intPageFromFeedReadUser,0) as
+        intPageFromFeedReadUser,IFNULL(intPageFromFeedReadCount,0) as
+        intPageFromFeedReadCount,IFNULL(intPageFromFriendsReadUser,0) as intPageFromFriendsReadUser,
+        IFNULL(intPageFromFriendReadCount,0) as intPageFromFriendReadCount,IFNULL(intPageFromOtherReadUser,0) as
+        intPageFromOtherReadUser,IFNULL(intPageFromOtherReadCount,0) as intPageFromOtherReadCount from (select sum(intPageReadUser) as intPageReadUser,sum(intPageReadCount) as intPageReadCount from  WX_ARTICLE_HOUR
+       where officialAccountId = #{oaid} and refDate = #{refDate}) a
+      ,(select sum(intPageReadUser) as intPageFromSessionReadUser,sum(intPageReadCount) as intPageFromSessionReadCount from  WX_ARTICLE_HOUR
+       where officialAccountId = #{oaid} and refDate = #{refDate} and userSource = 0) b,(select sum(intPageReadUser) as intPageFromFriendsReadUser,sum(intPageReadCount) as intPageFromFriendReadCount from  WX_ARTICLE_HOUR
+       where officialAccountId = #{oaid} and refDate = #{refDate} and userSource = 1) c,(select sum(intPageReadUser) as intPageFromFeedReadUser,sum(intPageReadCount) as
+       intPageFromFeedReadCount from  WX_ARTICLE_HOUR
+       where officialAccountId = #{oaid} and refDate = #{refDate} and userSource = 2) d,(select sum(intPageReadUser) as intPageFromHistMsgReadUser,sum(intPageReadCount) as intPageFromHistMsgReadCount from  WX_ARTICLE_HOUR
+       where officialAccountId = #{oaid} and refDate = #{refDate} and userSource = 4) e,(select sum(intPageReadUser) as intPageFromOtherReadUser,sum(intPageReadCount) as intPageFromOtherReadCount from  WX_ARTICLE_HOUR
+       where officialAccountId = #{oaid} and refDate = #{refDate} and userSource = 5) f
+    </select>
+
+</mapper>

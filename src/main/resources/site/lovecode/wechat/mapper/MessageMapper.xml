@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="site.lovecode.wechat.mapper.MessageMapper" >
+  <resultMap id="BaseResultMap" type="site.lovecode.wechat.entity.Message" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="toUserId" property="toUserId" jdbcType="BIGINT" />
+    <result column="fromUserId" property="fromUserId" jdbcType="BIGINT" />
+    <result column="toUserName" property="toUserName" jdbcType="VARCHAR" />
+    <result column="fromUserName" property="fromUserName" jdbcType="VARCHAR" />
+    <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="msgType" property="msgType" jdbcType="TINYINT" />
+    <result column="msgId" property="msgId" jdbcType="BIGINT" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="picUrl" property="picUrl" jdbcType="VARCHAR" />
+    <result column="mediaId" property="mediaId" jdbcType="VARCHAR" />
+    <result column="format" property="format" jdbcType="VARCHAR" />
+    <result column="recongnition" property="recongnition" jdbcType="VARCHAR" />
+    <result column="thumbMediaId" property="thumbMediaId" jdbcType="VARCHAR" />
+    <result column="locationX" property="locationX" jdbcType="VARCHAR" />
+    <result column="locationY" property="locationY" jdbcType="VARCHAR" />
+    <result column="scale" property="scale" jdbcType="INTEGER" />
+    <result column="locationLabel" property="locationLabel" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="ticket" property="ticket" jdbcType="VARCHAR" />
+    <result column="musicUrl" property="musicUrl" jdbcType="VARCHAR" />
+    <result column="hqMusicUrl" property="hqMusicUrl" jdbcType="VARCHAR" />
+    <result column="articleCount" property="articleCount" jdbcType="INTEGER" />
+  </resultMap>
+</mapper>

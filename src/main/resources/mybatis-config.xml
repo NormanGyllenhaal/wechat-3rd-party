@@ -5,6 +5,6 @@
 
 <configuration>
 	<plugins>
-		<plugin interceptor="site.lovecode.plugin.mybatis.IdentityInterceptor" />
+		<plugin interceptor="site.lovecode.wechat.plugin.mybatis.IdentityInterceptor" />
 	</plugins>
 </configuration>

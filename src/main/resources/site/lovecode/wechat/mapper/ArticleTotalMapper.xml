@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="site.lovecode.wechat.mapper.ArticleTotalMapper">
+    <resultMap id="BaseResultMap" type="site.lovecode.wechat.entity.ArticleTotal">
+        <!-- WARNING - @mbggenerated -->
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="officialAccountId" property="officialAccountId" jdbcType="BIGINT"/>
+        <result column="refDate" property="refDate" jdbcType="DATE"/>
+        <result column="msgid" property="msgid" jdbcType="VARCHAR"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap type="site.lovecode.wechat.dto.ArticleTotalDto" id="JoinDetailSummaryResultMap">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="officialAccountId" property="officialAccountId" jdbcType="BIGINT"/>
+        <result column="refDate" property="refDate" jdbcType="DATE"/>
+        <result column="msgid" property="msgid" jdbcType="VARCHAR"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <association property="articleTotalDetail" column="articleTotalId"
+                     javaType="site.lovecode.wechat.entity.ArticleTotalDetail">
+            <id column="d_id" property="id" jdbcType="BIGINT"/>
+            <result column="articleTotalId" property="articleTotalId" jdbcType="BIGINT"/>
+            <result column="officialAccountId" property="officialAccountId" jdbcType="BIGINT"/>
+            <result column="statDate" property="statDate" jdbcType="DATE"/>
+            <result column="targetUser" property="targetUser" jdbcType="INTEGER"/>
+            <result column="intPageReadUser" property="intPageReadUser" jdbcType="INTEGER"/>
+            <result column="intPageReadCount" property="intPageReadCount" jdbcType="INTEGER"/>
+            <result column="oriPageReadUser" property="oriPageReadUser" jdbcType="INTEGER"/>
+            <result column="oriPageReadCount" property="oriPageReadCount" jdbcType="INTEGER"/>
+            <result column="shareUser" property="shareUser" jdbcType="INTEGER"/>
+            <result column="shareCount" property="shareCount" jdbcType="INTEGER"/>
+            <result column="addToFavUser" property="addToFavUser" jdbcType="INTEGER"/>
+            <result column="addToFavCount" property="addToFavCount" jdbcType="INTEGER"/>
+            <result column="intPageFromSessionReadUser" property="intPageFromSessionReadUser" jdbcType="INTEGER"/>
+            <result column="intPageFromSessionReadCount" property="intPageFromSessionReadCount" jdbcType="INTEGER"/>
+            <result column="intPageFromHistMsgReadUser" property="intPageFromHistMsgReadUser" jdbcType="INTEGER"/>
+            <result column="intPageFromHistMsgReadCount" property="intPageFromHistMsgReadCount" jdbcType="INTEGER"/>
+            <result column="intPageFromFeedReadUser" property="intPageFromFeedReadUser" jdbcType="INTEGER"/>
+            <result column="intPageFromFriendsReadUser" property="intPageFromFriendsReadUser" jdbcType="INTEGER"/>
+            <result column="intPageFromFriendReadCount" property="intPageFromFriendReadCount" jdbcType="INTEGER"/>
+            <result column="intPageFromOtherReadUser" property="intPageFromOtherReadUser" jdbcType="INTEGER"/>
+            <result column="intPageFromOtherReadCount" property="intPageFromOtherReadCount" jdbcType="INTEGER"/>
+            <result column="feedShareFromSessionUser" property="feedShareFromSessionUser" jdbcType="INTEGER"/>
+            <result column="feedShareFromSessionCnt" property="feedShareFromSessionCnt" jdbcType="INTEGER"/>
+            <result column="feedShareFromFeedUser" property="feedShareFromFeedUser" jdbcType="INTEGER"/>
+            <result column="feedShareFromFeedCnt" property="feedShareFromFeedCnt" jdbcType="INTEGER"/>
+            <result column="feedShareFromOtherUser" property="feedShareFromOtherUser" jdbcType="INTEGER"/>
+            <result column="feedShareFromOtherCnt" property="feedShareFromOtherCnt" jdbcType="INTEGER"/>
+        </association>
+        <collection property="articleSummaryList" ofType="site.lovecode.wechat.entity.ArticleSummary"
+                    column="msgid">
+            <id column="e_id" jdbcType="BIGINT" property="id"/>
+            <result column="officialAccountId" jdbcType="BIGINT" property="officialAccountId"/>
+            <result column="e_refDate" jdbcType="DATE" property="refDate"/>
+            <result column="msgid" jdbcType="VARCHAR" property="msgid"/>
+            <result column="title" jdbcType="VARCHAR" property="title"/>
+            <result column="e_intPageReadUser" jdbcType="INTEGER" property="intPageReadUser"/>
+            <result column="e_intPageReadCount" jdbcType="INTEGER" property="intPageReadCount"/>
+            <result column="e_oriPageReadUser" jdbcType="INTEGER" property="oriPageReadUser"/>
+            <result column="e_oriPageReadCount" jdbcType="INTEGER" property="oriPageReadCount"/>
+            <result column="e_shareUser" jdbcType="INTEGER" property="shareUser"/>
+            <result column="e_shareCount" jdbcType="INTEGER" property="shareCount"/>
+            <result column="e_addToFavUser" jdbcType="INTEGER" property="addToFavUser"/>
+            <result column="e_addToFavCount" jdbcType="INTEGER" property="addToFavCount"/>
+            <result column="e_intPageFromSessionReadUser" jdbcType="INTEGER" property="intPageFromSessionReadUser"/>
+            <result column="e_intPageFromSessionReadCount" jdbcType="INTEGER" property="intPageFromSessionReadCount"/>
+            <result column="e_intPageFromHistMsgReadUser" jdbcType="INTEGER" property="intPageFromHistMsgReadUser"/>
+            <result column="e_intPageFromHistMsgReadCount" jdbcType="INTEGER" property="intPageFromHistMsgReadCount"/>
+            <result column="e_intPageFromFeedReadUser" jdbcType="INTEGER" property="intPageFromFeedReadUser"/>
+            <result column="e_intPageFromFeedReadCount" jdbcType="INTEGER" property="intPageFromFeedReadCount"/>
+            <result column="e_intPageFromFriendsReadUser" jdbcType="INTEGER" property="intPageFromFriendsReadUser"/>
+            <result column="e_intPageFromFriendReadCount" jdbcType="INTEGER" property="intPageFromFriendReadCount"/>
+            <result column="e_intPageFromOtherReadUser" jdbcType="INTEGER" property="intPageFromOtherReadUser"/>
+            <result column="e_intPageFromOtherReadCount" jdbcType="INTEGER" property="intPageFromOtherReadCount"/>
+        </collection>
+    </resultMap>
+
+
+    <resultMap type="site.lovecode.wechat.dto.ArticleTotalDto" id="JoinDetailResultMap">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="officialAccountId" property="officialAccountId" jdbcType="BIGINT"/>
+        <result column="refDate" property="refDate" jdbcType="DATE"/>
+        <result column="msgid" property="msgid" jdbcType="VARCHAR"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <association property="articleTotalDetail" column="articleTotalId"
+                     javaType="site.lovecode.wechat.entity.ArticleTotalDetail">
+            <id column="id" property="id" jdbcType="BIGINT"/>
+            <result column="articleTotalId" property="articleTotalId" jdbcType="BIGINT"/>
+            <result column="officialAccountId" property="officialAccountId" jdbcType="BIGINT"/>
+            <result column="statDate" property="statDate" jdbcType="DATE"/>
+            <result column="targetUser" property="targetUser" jdbcType="INTEGER"/>
+            <result column="intPageReadUser" property="intPageReadUser" jdbcType="INTEGER"/>
+            <result column="intPageReadCount" property="intPageReadCount" jdbcType="INTEGER"/>
+            <result column="oriPageReadUser" property="oriPageReadUser" jdbcType="INTEGER"/>
+            <result column="oriPageReadCount" property="oriPageReadCount" jdbcType="INTEGER"/>
+            <result column="shareUser" property="shareUser" jdbcType="INTEGER"/>
+            <result column="shareCount" property="shareCount" jdbcType="INTEGER"/>
+            <result column="addToFavUser" property="addToFavUser" jdbcType="INTEGER"/>
+            <result column="addToFavCount" property="addToFavCount" jdbcType="INTEGER"/>
+            <result column="intPageFromSessionReadUser" property="intPageFromSessionReadUser" jdbcType="INTEGER"/>
+            <result column="intPageFromSessionReadCount" property="intPageFromSessionReadCount" jdbcType="INTEGER"/>
+            <result column="intPageFromHistMsgReadUser" property="intPageFromHistMsgReadUser" jdbcType="INTEGER"/>
+            <result column="intPageFromHistMsgReadCount" property="intPageFromHistMsgReadCount" jdbcType="INTEGER"/>
+            <result column="intPageFromFeedReadUser" property="intPageFromFeedReadUser" jdbcType="INTEGER"/>
+            <result column="intPageFromFriendsReadUser" property="intPageFromFriendsReadUser" jdbcType="INTEGER"/>
+            <result column="intPageFromFriendReadCount" property="intPageFromFriendReadCount" jdbcType="INTEGER"/>
+            <result column="intPageFromOtherReadUser" property="intPageFromOtherReadUser" jdbcType="INTEGER"/>
+            <result column="intPageFromOtherReadCount" property="intPageFromOtherReadCount" jdbcType="INTEGER"/>
+            <result column="feedShareFromSessionUser" property="feedShareFromSessionUser" jdbcType="INTEGER"/>
+            <result column="feedShareFromSessionCnt" property="feedShareFromSessionCnt" jdbcType="INTEGER"/>
+            <result column="feedShareFromFeedUser" property="feedShareFromFeedUser" jdbcType="INTEGER"/>
+            <result column="feedShareFromFeedCnt" property="feedShareFromFeedCnt" jdbcType="INTEGER"/>
+            <result column="feedShareFromOtherUser" property="feedShareFromOtherUser" jdbcType="INTEGER"/>
+            <result column="feedShareFromOtherCnt" property="feedShareFromOtherCnt" jdbcType="INTEGER"/>
+        </association>
+    </resultMap>
+
+
+    <select id="selectJoinDetailAndSummary" resultMap="JoinDetailSummaryResultMap">
+        select
+        c.id,c.officialAccountId,c.refDate,c.msgid,c.title,d.id as d_id,d.intPageReadUser,d.targetUser,d.shareUser,d.intPageFromSessionReadUser,
+        d.intPageFromSessionReadCount,d.intPageFromHistMsgReadUser,d.intPageFromHistMsgReadCount,d.intPageFromFeedReadUser,d.intPageFromFriendReadCount,
+        d.intPageFromFriendsReadUser,d.intPageFromOtherReadUser,d.intPageFromOtherReadCount,e.id as e_id,e.refDate as e_refDate,e.intPageReadUser as e_intPageReadUser,e.intPageReadCount as
+        e_intPageReadCount,e.oriPageReadUser as e_oriPageReadUser,e.oriPageReadCount as e_oriPageReadCount,
+        e.shareUser as e_shareUser,e.shareCount as e_shareCount,e.addToFavUser as e_addToFavUser,e.addToFavCount as
+        e_addToFavCount,e.intPageFromSessionReadUser as e_intPageFromSessionReadUser,e.intPageFromSessionReadCount as
+        e_intPageFromSessionReadCount,e.intPageFromHistMsgReadUser as
+        e_intPageFromHistMsgReadUser,e.intPageFromHistMsgReadCount as
+        e_intPageFromHistMsgReadCount,e.intPageFromFeedReadUser as e_intPageFromFeedReadUser,e.intPageFromFeedReadCount
+        as e_intPageFromFeedReadCount,e.intPageFromFriendsReadUser as
+        e_intPageFromFriendsReadUser,e.intPageFromFriendReadCount as
+        e_intPageFromFriendReadCount,e.intPageFromOtherReadUser as
+        e_intPageFromOtherReadUser,e.intPageFromOtherReadCount as e_intPageFromOtherReadCount
+        from WX_ARTICLE_TOTAL c
+        inner join (select * from
+        WX_ARTICLE_TOTAL_DETAIL b where statDate =
+        (select max(statDate) from
+        WX_ARTICLE_TOTAL_DETAIL
+        a where a.articleTotalId
+        = b.articleTotalId )) d on c.id = d.articleTotalId inner join
+        WX_ARTICLE_SUMMARY e on c.msgid
+        = e.msgid where  c.id = #{articleTotalId}
+        <if test="beginDate != null and endDate !=null">
+          and c.refDate between #{beginDate} and #{endDate}
+        </if>
+    </select>
+
+
+    <select id="selectJoinDetail" resultMap="JoinDetailResultMap">
+        select
+        c.id,c.officialAccountId,c.refDate,c.msgid,c.title,d.intPageReadUser,d.targetUser,d.shareUser,d.intPageFromSessionReadUser,
+        d.intPageFromSessionReadCount,d.intPageFromHistMsgReadUser,d.intPageFromHistMsgReadCount,d.intPageFromFeedReadUser,d.intPageFromFriendReadCount,
+        d.intPageFromFriendsReadUser,d.intPageFromOtherReadUser,d.intPageFromOtherReadCount
+        from WX_ARTICLE_TOTAL c
+        inner join (select * from
+        WX_ARTICLE_TOTAL_DETAIL b where statDate =
+        (select max(statDate) from
+        WX_ARTICLE_TOTAL_DETAIL
+        a where a.articleTotalId
+        = b.articleTotalId )) d on c.id = d.articleTotalId where c.officialAccountId = #{oaid}
+        <if test="beginDate != null and endDate !=null">
+          and  c.refDate between #{beginDate} and #{endDate}
+        </if>
+    </select>
+
+
+</mapper>
