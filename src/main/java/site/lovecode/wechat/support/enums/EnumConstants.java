@@ -1958,7 +1958,7 @@ public final class EnumConstants extends EnumMethod {
 	// 定义班级排课记录表中的记录状态枚举类型(JW_CLASS_COURSE_SCHEDULEING)
 	public enum ClassCourseScheduleingOfStatus implements IEnum {
 
-		normal(1, "正常状态"), del(2, "删除状态");
+		normal(1, "正常状态"), del(2, "删除状态"), ;
 
 		// 枚举类型
 		private final int key;

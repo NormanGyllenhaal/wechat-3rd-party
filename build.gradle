@@ -60,5 +60,9 @@ dependencies {
     compile 'redis.clients:jedis:2.8.0'
     compile 'de.ruedigermoeller:fst:1.58'
 
+    compile group: 'org.apache.poi', name: 'poi', version: '3.14'
+
+
+
 
 }
