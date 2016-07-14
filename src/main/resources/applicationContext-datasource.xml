@@ -36,7 +36,7 @@
 		<property name="configLocation" value="classpath:mybatis-config.xml" />
 		<property name="dataSource" ref="dataSource" />
 		<property name="mapperLocations" value="classpath:site/lovecode/wechat/mapper/*.xml"></property>
-		<property name="typeAliasesPackage" value="site.lovecode.entity" />
+		<property name="typeAliasesPackage" value="site.lovecode.wechat.entity" />
 		<!--<property name="plugins">
 			<array>
 				<bean class="com.github.pagehelper.PageHelper">
@@ -53,7 +53,7 @@
 
 	<!-- mapper-->
 	<bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="site.lovecode.mapper" />
+		<property name="basePackage" value="site.lovecode.wechat.mapper" />
 		<property name="properties">
 			<value>
 				mappers=site.lovecode.wechat.common.mybatis.CommonMapper
