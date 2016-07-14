@@ -172,7 +172,7 @@ public class PersonalUserController extends BaseController {
 	 */
 	@RequestMapping( "/batchAddTags" )
 	@ResponseBody
-	public String batchAddTags( PersonalUserTagBatchReqDto dto ) {
+	public String batchAddTags( PersonalUserTagBatchReqDto dto ) throws ModuleException {
 		return callbackSuccess(personalUserModuleImpl.batchAddUserTags(
 			getPage(), getOrgId(), dto.getPersonalUserIdList(), dto.getTagIdList()).getBody());
 	}
@@ -188,7 +188,7 @@ public class PersonalUserController extends BaseController {
 	 */
 	@RequestMapping( "/modifyUserTags" )
 	@ResponseBody
-	public String modifyUserTags( PersonalUserTagReqDto reqDto ) {
+	public String modifyUserTags( PersonalUserTagReqDto reqDto ) throws ModuleException {
 		return callbackSuccess(personalUserModuleImpl.modifyUserTags(
 			getOrgId(), reqDto.getPersonalUserId(), reqDto.getTagIdList()).getBody());
 	}
@@ -256,7 +256,7 @@ public class PersonalUserController extends BaseController {
 	 */
 	@RequestMapping( "/modifyRemark" )
 	@ResponseBody
-	public String modifyRemark( String remark, Long personalUserId, Long orgId ) {
+	public String modifyRemark( String remark, Long personalUserId, Long orgId ) throws ModuleException {
 		return callbackSuccess(personalUserModuleImpl.modifyRemark(remark, personalUserId, orgId));
 	}
 

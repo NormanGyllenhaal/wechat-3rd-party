@@ -2,16 +2,12 @@ package site.lovecode.wechat.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import site.lovecode.wechat.support.AjaxResult;
-import site.lovecode.wechat.support.HttpUtil;
-import site.lovecode.wechat.support.Invocation;
 import site.lovecode.wechat.support.common.CodeConstants;
 import site.lovecode.wechat.support.common.WebException;
-import site.lovecode.wechat.util.JsonUtil;
 import site.lovecode.wechat.util.Page;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,9 +32,6 @@ public abstract class BaseController implements HandlerInterceptor {
 	protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
 
-
-	@Autowired
-	protected Invocation inv;
 
 
 
@@ -89,10 +82,11 @@ public abstract class BaseController implements HandlerInterceptor {
 	 */
 	@SuppressWarnings( "unchecked" )
 	protected <T> Page<T> getPage( int size ) {
-		int pageSize = HttpUtil.getInt(inv.getRequest(), "_size", size);
-		int pageIndex = HttpUtil.getInt(inv.getRequest(), "_index", 1);
+		/*int pageSize = HttpUtil.getInt(inv.getRequest(), "_size", size);
+		int pageIndex = HttpUtil.getInt(inv.getRequest(), "_index", 1);*//**//*
 		Page page = new Page(pageIndex, pageSize);
-		return page;
+		return page;*/
+		return null;
 	}
 
 
@@ -105,7 +99,8 @@ public abstract class BaseController implements HandlerInterceptor {
 	 * @return 
 	 */
 	protected Long getOaid() {
-		return HttpUtil.getLong(inv.getRequest(), "oaid");
+		/*return HttpUtil.getLong(inv.getRequest(), "oaid");*/
+		return null;
 	}
 
 
@@ -118,7 +113,8 @@ public abstract class BaseController implements HandlerInterceptor {
 	 * @return TODO(这里描述每个参数,如果有返回值描述返回值,如果有异常描述异常)
 	 */
 	protected Long getOrgId() {
-		return HttpUtil.getLong(inv.getRequest(), "orgId");
+		/*return HttpUtil.getLong(inv.getRequest(), "orgId");*/
+		return null;
 	}
 
 
@@ -157,7 +153,7 @@ public abstract class BaseController implements HandlerInterceptor {
 	 * 
 	 * @return 返回JSON字符串
 	 */
-	protected String callback( AjaxResult ajax, String format ) {
+	/*protected String callback( AjaxResult ajax, String format ) {
 		String callback = inv.getRequest().getParameter("callback");
 		// 如果不是跨域请求
 		if ( callback == null ) { return JsonUtil.toCompatibleJSON(ajax, format); }
@@ -168,7 +164,7 @@ public abstract class BaseController implements HandlerInterceptor {
 
 		return json.toString();
 	}
-
+*/
 
 	/**
 	 * 自动判断是否跨域
@@ -181,7 +177,7 @@ public abstract class BaseController implements HandlerInterceptor {
 	 * @return 返回JSON字符串
 	 */
 	protected String callback( Object obj, String format ) {
-		String callback = inv.getRequest().getParameter("callback");
+		/*String callback = inv.getRequest().getParameter("callback");
 		// 如果不是跨域请求
 		if ( callback == null ) { return JsonUtil.toCompatibleJSON(obj, format); }
 		// 是跨域请求
@@ -189,7 +185,8 @@ public abstract class BaseController implements HandlerInterceptor {
 		json.append(callback).append("(");
 		json.append(JsonUtil.toCompatibleJSON(obj, format)).append(")");
 
-		return json.toString();
+		return json.toString();*/
+		return null;
 	}
 
 
@@ -229,12 +226,12 @@ public abstract class BaseController implements HandlerInterceptor {
 	}
 
 
-	protected String redirectTo( String url ) {
+	/*protected String redirectTo( String url ) {
 		StringBuffer rto = new StringBuffer("redirect:");
 		rto.append(inv.getRequest().getContextPath());
 		rto.append(url);
 		return rto.toString();
-	}
+	}*/
 
 
 

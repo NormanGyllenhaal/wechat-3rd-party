@@ -7,6 +7,7 @@
 package site.lovecode.wechat.controller;
 
 
+import org.apache.struts.util.ModuleException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -36,7 +37,7 @@ public class MenuController extends BaseController {
 
 	@RequestMapping( "/createMenu" )
 	@ResponseBody
-	public String createMenu( MenuReqDto menuReqDto ) {
+	public String createMenu( MenuReqDto menuReqDto ) throws ModuleException {
 		return callback(menuModuleImpl.createMenu(menuReqDto, getOrgId()).getBody(), "创建失败");
 	}
 

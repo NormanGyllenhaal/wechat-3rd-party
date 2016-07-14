@@ -7,6 +7,7 @@
 package site.lovecode.wechat.controller;
 
 
+import org.apache.struts.util.ModuleException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -113,7 +114,7 @@ public class MediaController extends BaseController {
 	 * @return TODO(这里描述每个参数,如果有返回值描述返回值,如果有异常描述异常)
 	 */
 	@RequestMapping( value = "/delMedia" )
-	public String delMedia( Long id ) {
+	public String delMedia( Long id ) throws ModuleException {
 		Boolean result = mediaModuleImpl.deleteMedia(id, getOrgId()).getBody();
 		return callback(result, "删除失败");
 	}
@@ -130,7 +131,7 @@ public class MediaController extends BaseController {
 	 */
 	@RequestMapping( value = "/addMediaNews" )
 	@ResponseBody
-	public String addMediaNews( @RequestBody MediaNewsReqDto dto ) {
+	public String addMediaNews( @RequestBody MediaNewsReqDto dto ) throws ModuleException {
 		Boolean result = mediaModuleImpl.addMediaNews(dto).getBody();
 		return callback(result, "添加图文素材失败");
 	}
@@ -145,7 +146,7 @@ public class MediaController extends BaseController {
 	 * @param dto
 	 * @return TODO(这里描述每个参数,如果有返回值描述返回值,如果有异常描述异常)
 	 */
-	public String medifyMediaNews( MediaNewsReqDto dto ) {
+	public String medifyMediaNews( MediaNewsReqDto dto ) throws ModuleException {
 		Boolean result = mediaModuleImpl.modifyMediaNews(dto).getBody();
 		return callback(result, "修改图文素材失败");
 	}

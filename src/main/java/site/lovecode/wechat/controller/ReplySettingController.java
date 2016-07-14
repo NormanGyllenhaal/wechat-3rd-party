@@ -6,6 +6,7 @@
 
 package site.lovecode.wechat.controller;
 
+import org.apache.struts.util.ModuleException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,7 +58,7 @@ public class ReplySettingController extends BaseController {
 	 * @return TODO(这里描述每个参数,如果有返回值描述返回值,如果有异常描述异常)
 	 */
 	@RequestMapping( value = "/addFriendReplySetting" )
-	public String addFriendReplySetting( Integer type, String content ) {
+	public String addFriendReplySetting( Integer type, String content ) throws ModuleException {
 		Long oaid = super.getOaid();
 		Boolean result = replySettingModuleImpl.addFriendReplySetting(oaid, type, content).getBody();
 		return callback(result, "系统异常");
@@ -75,7 +76,7 @@ public class ReplySettingController extends BaseController {
 	 * @return TODO(这里描述每个参数,如果有返回值描述返回值,如果有异常描述异常)
 	 */
 	@RequestMapping( value = "/addAutoReplySetting" )
-	public String addAutoReplySetting( Integer type, String content ) {
+	public String addAutoReplySetting( Integer type, String content ) throws ModuleException {
 		Long oaid = super.getOaid();
 		Boolean result = replySettingModuleImpl.addAutoReplySetting(oaid, type, content).getBody();
 		return callback(result, "系统异常");
