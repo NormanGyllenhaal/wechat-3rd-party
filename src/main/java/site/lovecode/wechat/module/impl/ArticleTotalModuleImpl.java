@@ -7,6 +7,7 @@
 package site.lovecode.wechat.module.impl;
 
 
+import org.springframework.stereotype.Service;
 import site.lovecode.wechat.dto.*;
 import site.lovecode.wechat.module.IArticleTotalModule;
 import site.lovecode.wechat.service.IArticleDayService;
@@ -32,7 +33,7 @@ import java.util.stream.Collectors;
  * @version  1.0.0
  */
 
-
+@Service
 public class ArticleTotalModuleImpl extends AbstractModule implements IArticleTotalModule {
 
 	@Resource

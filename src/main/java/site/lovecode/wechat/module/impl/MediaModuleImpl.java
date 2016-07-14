@@ -9,6 +9,7 @@ package site.lovecode.wechat.module.impl;
 
 import me.chanjar.weixin.common.exception.WxErrorException;
 import org.apache.struts.util.ModuleException;
+import org.springframework.stereotype.Service;
 import site.lovecode.wechat.dto.MediaDto;
 import site.lovecode.wechat.dto.MediaNewsReqDto;
 import site.lovecode.wechat.dto.MediaReqDto;
@@ -31,6 +32,7 @@ import java.io.File;
  * @date	 2016年5月18日 
  * @version  1.0.0	 
  */
+@Service
 public class MediaModuleImpl extends AbstractModule implements IMediaModule {
 
 

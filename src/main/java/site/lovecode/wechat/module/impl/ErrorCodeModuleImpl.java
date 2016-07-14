@@ -7,6 +7,7 @@
 package site.lovecode.wechat.module.impl;
 
 
+import org.springframework.stereotype.Service;
 import site.lovecode.wechat.entity.ErrorCode;
 import site.lovecode.wechat.module.IErrorCodeModule;
 import site.lovecode.wechat.service.IErrorCodeService;
@@ -25,6 +26,7 @@ import javax.annotation.Resource;
  * @date	 2016年5月5日 
  * @version  1.0.0	 
  */
+@Service
 public class ErrorCodeModuleImpl extends AbstractModule implements IErrorCodeModule {
 
 

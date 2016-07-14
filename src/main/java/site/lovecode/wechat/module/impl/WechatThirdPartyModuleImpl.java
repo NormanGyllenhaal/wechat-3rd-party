@@ -4,6 +4,7 @@ package site.lovecode.wechat.module.impl;
 import me.chanjar.weixin.mp.bean.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.WxMpXmlOutMessage;
 import org.apache.struts.util.ModuleException;
+import org.springframework.stereotype.Service;
 import site.lovecode.wechat.client.impl.WechatThirdPartyClientImpl;
 import site.lovecode.wechat.dto.AuthorizerInfoDto;
 import site.lovecode.wechat.module.IWechatThirdPartyModule;
@@ -21,6 +22,7 @@ import javax.annotation.Resource;
 /**
  * Created by Administrator on 2016/3/25.
  */
+@Service
 public class WechatThirdPartyModuleImpl extends AbstractModule implements IWechatThirdPartyModule {
 
 

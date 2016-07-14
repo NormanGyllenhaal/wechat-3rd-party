@@ -9,6 +9,7 @@ package site.lovecode.wechat.module.impl;
 
 import me.chanjar.weixin.common.exception.WxErrorException;
 import org.apache.struts.util.ModuleException;
+import org.springframework.stereotype.Service;
 import site.lovecode.wechat.dto.PersonalUserDto;
 import site.lovecode.wechat.dto.PersonalUserTagsDto;
 import site.lovecode.wechat.dto.TagsDto;
@@ -33,6 +34,7 @@ import java.util.List;
  * @date	 2016年5月10日 
  * @version  1.0.0	 
  */
+@Service
 public class PersonalUserModuleImpl extends AbstractModule implements IPersonalUserModule {
 
 

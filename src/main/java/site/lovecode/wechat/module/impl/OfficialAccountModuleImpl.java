@@ -7,6 +7,7 @@
 package site.lovecode.wechat.module.impl;
 
 
+import org.springframework.stereotype.Service;
 import site.lovecode.wechat.dto.OfficialAccountReqDto;
 import site.lovecode.wechat.entity.OfficialAccount;
 import site.lovecode.wechat.module.IOfficialAccountModule;
@@ -26,6 +27,7 @@ import java.util.List;
  * @date	 2016年5月9日 
  * @version  1.0.0	 
  */
+@Service
 public class OfficialAccountModuleImpl extends AbstractModule implements IOfficialAccountModule {
 
 	@Resource

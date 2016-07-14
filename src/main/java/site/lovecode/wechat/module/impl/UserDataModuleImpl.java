@@ -1,6 +1,7 @@
 package site.lovecode.wechat.module.impl;
 
 
+import org.springframework.stereotype.Service;
 import site.lovecode.wechat.dto.PersonalUserGroupDto;
 import site.lovecode.wechat.dto.PersonalUserGroupJoinDto;
 import site.lovecode.wechat.entity.UserData;
@@ -24,6 +25,7 @@ import java.util.List;
  * @date	 2016年5月20日
  * @version  1.0.0
  */
+@Service
 public class UserDataModuleImpl extends AbstractModule implements IUserDataModule {
 
 

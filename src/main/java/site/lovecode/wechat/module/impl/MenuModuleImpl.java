@@ -9,6 +9,7 @@ package site.lovecode.wechat.module.impl;
 
 import me.chanjar.weixin.common.exception.WxErrorException;
 import org.apache.struts.util.ModuleException;
+import org.springframework.stereotype.Service;
 import site.lovecode.wechat.dto.MenuDto;
 import site.lovecode.wechat.dto.MenuMediaDto;
 import site.lovecode.wechat.dto.MenuReqDto;
@@ -31,7 +32,7 @@ import javax.annotation.Resource;
  * @version  1.0.0
  */
 
-
+@Service
 public class MenuModuleImpl extends AbstractModule implements IMenuModule {
 
 

@@ -8,6 +8,7 @@ package site.lovecode.wechat.module.impl;
 
 
 import org.apache.struts.util.ModuleException;
+import org.springframework.stereotype.Service;
 import site.lovecode.wechat.module.IReplySettingModule;
 import site.lovecode.wechat.service.IReplySettingService;
 import site.lovecode.wechat.support.common.Response;
@@ -26,6 +27,7 @@ import javax.annotation.Resource;
  * @date	 2016年5月17日 
  * @version  1.0.0	 
  */
+@Service
 public class ReplySettingModuleImpl extends AbstractModule implements IReplySettingModule {
 
 	@Resource
